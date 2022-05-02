@@ -1,0 +1,7 @@
+.device {
+    background-color: #AE9A91;
+}
+
+.device .head-section h2:after {
+    background-color: var(--second-color);
+}

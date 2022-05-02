@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wired Beauty - Beauty and parfum{% endblock %}
+
+{% block body %}
+
+    <section class="banner">
+        <div class="overlay">
+            <div class="container">
+                <div class="col-lg-8" data-aos="fade-bottom">
+                    <h1>WIRED BEAUTY</h1>
+                    <p class="text-justify color-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Ut pellentesque nisi sed turpis cursus lacinia. Integer et ipsum
+                        sed eros tincidunt lacinia nec at turpis.</p>
+                    <a class="main-link mt-3" href="">
+                        Become a tester
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="padding-section bg-second-color position-relative about-presentation">
+        <div class="container">
+            <div class="head-section right-position" data-aos="zoom-in">
+                <h2 class="main-color">WHAT WE DO</h2>
+            </div>
+            <div class="col-lg-6 position-relative">
+                <img src="{{ asset('build/core-img/parfum.jpg') }}" class="img-fluid" data-aos="fade-right">
+                <div class="content-absolute" data-aos="fade-left" data-aos-delay="200">
+                    <p class="text-justify">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Nam interdum purus vitae viverra ultricies. Suspendisse vitae
+                        ornare ligula, eu egestas lorem. Pellentesque congue lobortis
+                        tincidunt. Nulla consectetur justo nulla, quis elementum enim
+                        luctus in. Mauris eu erat dapibus, malesuada risus et, varius ex.
+                    </p>
+                    <a class="main-link mt-3" href="{{ path('what') }}">
+                        Read More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-banner">
+        <div class="padding-section overlay">
+            <div class="head-section center-position"  data-aos="fade-bottom">
+                <h2>WHO WE ARE</h2>
+            </div>
+            <div class="col-lg-8 mx-auto text-center"  data-aos="zoom-in">
+                <p class="text-center text-white">Suspendisse potenti. Donec non consectetur tellus, eget lacinia arcu.
+                    Sed vitae
+                    sem a leo faucibus
+                    dictum. Praesent ultricies lacinia nulla eget rhoncus. Integer auctor mauris nec risus varius
+                    tempus.
+                    Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                <a class="main-link mt-3" href="">
+                    Read More
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="padding-section scientific-presentation">
+        <div class="container">
+            <div class="content">
+                <div class="head-section left-position">
+                    <h2 data-aos="fade-right">Scientific Validation</h2>
+                </div>
+                <p class="text-justify text-white"  data-aos="zoom-in">
+                    Suspendisse potenti. Donec non consectetur tellus, eget lacinia arcu. Sed vitae sem a leo faucibus
+                    dictum. Praesent ultricies lacinia nulla eget rhoncus. Integer auctor mauris nec risus varius
+                    tempus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                    <br><br>
+                    Duis at dui elit. Maecenas sodales turpis quam, et tempor dolor posuere quis. Nulla faucibus libero
+                    sed aliquet viverra. Sed id ipsum ligula. Praesent fermentum ante quis lacinia cursus. Duis
+                    venenatis orci vitae justo cursus ultrices. Pellentesque vel auctor purus, in iaculis velit.
+                </p>
+                <a class="main-link green mt-3"  data-aos="zoom-in" href="">
+                    Read More
+                </a>
+            </div>
+            <div class="brand">
+                <h2 data-aos="zoom-in">MARKS OF CONFIDENCE</h2>
+                <div class="list">
+                    <img src="{{ asset('build/brand/nestle-logo.png') }}" class="img-fluid" data-aos="fade-bottom">
+                    <img src="{{ asset('build/brand/nestle-logo.png') }}" class="img-fluid" data-aos="fade-bottom">
+                    <img src="{{ asset('build/brand/nestle-logo.png') }}" class="img-fluid" data-aos="fade-bottom">
+                    <img src="{{ asset('build/brand/nestle-logo.png') }}" class="img-fluid" data-aos="fade-bottom">
+                    <img src="{{ asset('build/brand/nestle-logo.png') }}" class="img-fluid" data-aos="fade-bottom">
+                    <img src="{{ asset('build/brand/nestle-logo.png') }}" class="img-fluid" data-aos="fade-bottom">
+                    <img src="{{ asset('build/brand/nestle-logo.png') }}" class="img-fluid" data-aos="fade-bottom">
+                    <img src="{{ asset('build/brand/nestle-logo.png') }}" class="img-fluid" data-aos="fade-bottom">
+                    <img src="{{ asset('build/brand/nestle-logo.png') }}" class="img-fluid" data-aos="fade-bottom">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="padding-section device">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <img src="{{ asset('build/core-img/application.png') }}" class="img-fluid" data-aos="fade-right">
+                </div>
+                <div class="col-lg-6" data-aos="zoom-in">
+                    <div class="head-section text-lg-end" data-aos="fade-left">
+                        <h2>DEVICE & APP</h2>
+                    </div>
+                    <p class="text-justify text-white" data-aos="fade-left">
+                        Suspendisse potenti. Donec non consectetur tellus, eget lacinia arcu. Sed vitae sem a leo
+                        faucibus dictum. Praesent ultricies lacinia nulla eget rhoncus. Integer auctor mauris nec risus
+                        varius tempus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+                        mus.
+
+                        Duis at dui elit. Maecenas sodales turpis quam, et tempor dolor posuere quis. Nulla faucibus
+                        libero sed aliquet viverra. Sed id ipsum ligula. Praesent fermentum ante quis lacinia cursus.
+                        Duis venenatis orci vitae justo cursus ultrices. Pellentesque vel auctor purus, in iaculis
+                        velit.
+                    </p>
+                    <div class="text-end">
+                        <a class="main-link ms-auto green" href="">
+                            Read More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tester-banner">
+        <div class="padding-section overlay">
+            <div class="head-section center-position" data-aos="fade-bottom">
+                <h2>BECOME A TESTER</h2>
+            </div>
+            <div class="col-lg-8 mx-auto text-center" data-aos="zoom-in">
+                <p class="text-center text-white">Suspendisse potenti. Donec non consectetur tellus, eget lacinia arcu.
+                    Sed vitae
+                    sem a leo faucibus
+                    dictum. Praesent ultricies lacinia nulla eget rhoncus. Integer auctor mauris nec risus varius
+                    tempus.
+                    Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                <a class="main-link mt-3" href="">
+                    Read More
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
