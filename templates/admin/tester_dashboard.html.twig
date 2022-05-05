@@ -2,6 +2,53 @@
 
 {% block main %}
 
-    <h1>TESTER</h1>
+    <h1>tester</h1>
+    <div class="container" style="align-items: center; display: flex; justify-content: center">
+    <button id="allcampaign">Liste des campagnes</button>
+    <button id="mycampaign">Mes campagnes</button>
+    </div>
+    <div id="listcampaign" style="position: absolute">
+    {% for allcampaign in allCurrentCampaign %}
+    <div class="card">
+        <div class="container">
+            <h4><b>{{ allcampaign.name }}</b></h4>
+            <p>{{allcampaign.description}}</p>
+            <p>{{allcampaign.datestart |date("m/d/Y")}}</p>
+            <p>{{allcampaign.dateend |date("m/d/Y")}}</p>
+            <p>status :{{ allcampaign.status.name }}</p>
+            <button>Voir la liste des sessions</button>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
 
+    <div id="mycampaigns" style="position: absolute">
+        <h1>mes campagnes</h1>
+    </div>
+    {% block javascripts %}
+        <script type="text/javascript">
+            let allcampaign = document.getElementById("allcampaign");
+            let mycampaign = document.getElementById("mycampaign");
+            let listcampaign = document.getElementById("listcampaign");
+            let mycampaigns = document.getElementById("mycampaigns");
+            mycampaigns.style.visibility = "hidden";
+            listcampaign.style.visibility = "visible";
+
+            allcampaign.addEventListener("click", function() {
+                listcampaign.style.visibility = "visible";
+                mycampaigns.style.visibility = "hidden";
+            });
+
+            mycampaign.addEventListener("click", function() {
+                listcampaign.style.visibility = "hidden";
+                mycampaigns.style.visibility = "visible";
+            });
+
+        </script>
+
+    {% endblock %}
 {% endblock %}
+
+
+
+
