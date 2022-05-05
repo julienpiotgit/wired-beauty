@@ -26,17 +26,3 @@
 .page-item.active .page-link {
     background-color: #BE8D90;
 }
-
-
-/***** DASHBOARD *****/
-
-.dashboard .item {
-    background-color: #f7f7f7;
-    border: 1px solid rgba(0,0,0,0.2);
-    border-radius: 15px;
-    padding: 10px 20px;
-}
-
-.dashboard .item h3 {
-    text-transform: uppercase;
-}

@@ -1,0 +1,38 @@
+.dashboard {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.dashboard .item {
+    background-color: #f7f7f7;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 15px;
+    padding: 10px 20px;
+}
+
+.dashboard .item h3 {
+    text-transform: uppercase;
+}
+
+.sliderCampaign {
+    margin-top: 60px;
+}
+
+.sliderCampaign .splide__arrow--prev {
+    bottom: 0;
+    left: 0;
+}
+
+.campaign {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.campaign img {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+}

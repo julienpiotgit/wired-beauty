@@ -2,23 +2,49 @@
 
 {% block main %}
 
-   <div class="container dashboard">
-       <div class="row">
-           <div class="col-lg-4">
-               <div class="item">
-                   <h3>{{ numberNewRequest }} New Request</h3>
-                   <p>New requests for companionship have been requested !</p>
-                   <a href="" class="btn btn-primary">See here</a>
-               </div>
-           </div>
-           <div class="col-lg-4">
-               <div class="item">
-                   <h3>{{ numberNewRequest }} New Request</h3>
-                   <p>New requests for companionship have been requested !</p>
-                   <a href="" class="btn btn-primary">See here</a>
-               </div>
-           </div>
-       </div>
-   </div>
+    <div class="container dashboard">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="item">
+                    <h3>{{ numberNewRequest }} New Request</h3>
+                    <p>New requests for companionship have been requested !</p>
+                    <a href="" class="btn btn-primary">See here</a>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="item">
+                    <h3>{{ numberNewRequest }} New Request</h3>
+                    <p>New requests for companionship have been requested !</p>
+                    <a href="" class="btn btn-primary">See here</a>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="sliderCampaign splide">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            {% for campaign in allCurrentCampaign %}
+                                <li class="splide__slide px-3">
+                                    <div class="item campaign">
+                                        <img src="{{ asset('build/brand/nestle-logo.png') }}" class="img-fluid">
+                                        <h3>Campaign of Nestle</h3>
+                                        <span>{{ campaign.datestart|date("m/d/Y") }} - {{ campaign.dateend|date("m/d/Y") }}</span>
+                                        <p>{{ campaign.description }}</p>
+                                        <a href="">See the statistics</a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
+
+
+    {% block body_javascript %}
+
+        {{ encore_entry_script_tags('admin') }}
+
+    {% endblock %}

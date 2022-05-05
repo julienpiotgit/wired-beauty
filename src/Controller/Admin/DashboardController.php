@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Campaign;
 use App\Entity\Session;
+use App\Entity\Status;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -32,9 +33,10 @@ class DashboardController extends AbstractDashboardController
     public function index(): Response
     {
         if ($this->isGranted('ROLE_ADMIN')) {
-            $allCurrentCampaign = $this->entityManager->getRepository(Campaign::class)->findBy([
-                'status' => 2
-            ]);
+
+            $allCurrentCampaign = $this->entityManager->getRepository(Campaign::class)->findAll();
+
+
             /* STOCKER LES NOUVELLES REQUEST DANS $numberNewRequest */
             $numberNewRequest = 3;
             return $this->render('admin/admin_dashboard.html.twig', [
@@ -76,13 +78,5 @@ class DashboardController extends AbstractDashboardController
             yield MenuItem::linkToCrud('Campaign', 'fa fa-file', Campaign::class);
             yield MenuItem::linkToCrud('Users', 'fas fa-users', User::class);
         }
-    }
-
-    public function configureAssets(): Assets
-    {
-        return Assets::new()
-            ->addCssFile('css/admin.css')
-            ->addJsFile('js/admin.js');
-
     }
 }
