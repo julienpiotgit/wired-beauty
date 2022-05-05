@@ -5,9 +5,7 @@ namespace App\Controller;
 use App\Entity\Campaign;
 use App\Entity\Question;
 use App\Entity\QuestionAnswer;
-use App\Entity\User;
 use DateTime;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/homee", name="app_homee")
+     * @Route("/home", name="app_home")
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function index(EntityManagerInterface $em): Response
@@ -42,11 +40,6 @@ class HomeController extends AbstractController
         $worksheet = $excelReader->getActiveSheet();
         $lastRow = $worksheet->getHighestRow();
 
-
-
-        echo $lastRow;
-        $row = 1;
-//        for ($column = 'A'; $column != $lastRow; $column++) {
         for ($row =1; $row <= $lastRow; $row++) {
             $question = new Question();
             $cell = $worksheet->getCell('A'.$row)->getFormattedValue();
@@ -54,31 +47,27 @@ class HomeController extends AbstractController
 //            echo "<br>";
             $question->setCampaign($campaign);
             $question->setName($cell);
-//            $em->persist($question);
-        }
-//        $em->flush();
-
-        $row = 1;
-        $lastColumn = $worksheet->getHighestColumn();
-        $lastColumn++;
-//        for ($column = 'B'; $column != $lastColumn; $column++) {
-        for ($row =1; $row <= $lastRow; $row++) {
-            $reponse = new QuestionAnswer();
-            for ($column = 'B'; $column != $lastColumn; $column++) {
-                $cell = $worksheet->getCell($column . $row)->getFormattedValue();
-                echo $cell;
-                echo "<br>";
-            }
-            $reponse->setName($cell);
-//            $reponse->setQuestion($question);
             $em->persist($question);
-            $em->flush();
+
+            $lastColumn = $worksheet->getHighestColumn();
+            $lastColumn++;
+            for ($column = 'B'; $column != $lastColumn; $column++) {
+                $reponse = new QuestionAnswer();
+                $cell = $worksheet->getCell($column . $row)->getFormattedValue();
+//                echo $cell;
+//                echo "<br>";
+                if($cell != "") {
+                    $reponse->setName($cell);
+                    $reponse->setQuestion($question);
+                    $em->persist($reponse);
+                }
+            }
         }
+        $em->flush();
 
 
-
-        return $this->render('homee/index.html.twig', [
-            'controller_name' => 'HomeeController',
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'HomeController',
         ]);
     }
 }

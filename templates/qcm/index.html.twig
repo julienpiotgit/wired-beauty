@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Campaign index{% endblock %}
+
+{% block body %}
+    <h1>Campaign index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Date_start</th>
+                <th>Date_end</th>
+                <th>File</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for campaign in campaigns %}
+            <tr>
+                <td>{{ campaign.id }}</td>
+                <td>{{ campaign.name }}</td>
+                <td>{{ campaign.description }}</td>
+                <td>{{ campaign.dateStart ? campaign.dateStart|date('Y-m-d') : '' }}</td>
+                <td>{{ campaign.dateEnd ? campaign.dateEnd|date('Y-m-d') : '' }}</td>
+                <td>{{ campaign.file }}</td>
+                <td>
+                    <a href="{{ path('app_qcm_show', {'id': campaign.id}) }}">show</a>
+                    <a href="{{ path('app_qcm_edit', {'id': campaign.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_qcm_new') }}">Create new</a>
+{% endblock %}

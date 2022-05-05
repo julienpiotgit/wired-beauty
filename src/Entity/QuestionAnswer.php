@@ -46,7 +46,7 @@ class QuestionAnswer
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="questionAnswers")
+     * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="questionAnswers", cascade={"persist"})
      * @Groups({"question_answer_read", "question_answer_details_read"})
      */
     private $question;

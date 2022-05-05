@@ -69,8 +69,10 @@ class DashboardController extends AbstractDashboardController
     {
         if ($this->isGranted('ROLE_ADMIN')) {
             yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-            yield MenuItem::linkToCrud('Session', 'fa fa-list', Session::class);
-            yield MenuItem::linkToCrud('Campaign', 'fa fa-file', Campaign::class);
+            yield MenuItem::subMenu('Campaigns', 'fa fa-list')->setSubItems([
+                MenuItem::linkToCrud('Campaign', 'fa fa-list', Campaign::class),
+                MenuItem::linkToCrud('Session', 'fa fa-list', Session::class)
+            ]);
             yield MenuItem::linkToCrud('Users', 'fas fa-users', User::class);
         } elseif ($this->isGranted('ROLE_USER')) {
             yield MenuItem::linkToCrud('Campaign', 'fa fa-file', Campaign::class);
