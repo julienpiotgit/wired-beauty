@@ -12,9 +12,13 @@ class CampaignFixtures extends Fixture implements DependentFixtureInterface
 {
 
     const CAMPAIGN1 = "campaign1";
+    const CAMPAIGN2 = "campaign2";
+    const CAMPAIGN3 = "campaign3";
     public function load(ObjectManager $manager): void
     {
-        $campaign = new Campaign();
+        $campaign_soon = new Campaign();
+        $campaign_ongoing = new Campaign();
+        $campaign_finish = new Campaign();
 
         /**
          * @param DateTime $date
@@ -22,15 +26,37 @@ class CampaignFixtures extends Fixture implements DependentFixtureInterface
         $date_start = new DateTime('11-03-2022');
         $date_end = new DateTime('18-03-2022');
 
-        $campaign->setName("campagne 1")
+        //campaign soon
+        $campaign_soon->setName("campagne 1")
             ->setDescription("description campagne 1")
             ->setFile("nom fichier question")
             ->setDateStart($date_start)
             ->setDateEnd($date_end)
             ->setStatus($this->getReference(StatusFixtures::STATUS_SOON));
-        $manager->persist($campaign);
+        $manager->persist($campaign_soon);
+        $this->addReference(self::CAMPAIGN1, $campaign_soon);
 
-        $this->addReference(self::CAMPAIGN1, $campaign);
+
+        //campaign ongoing
+        $campaign_ongoing->setName("campagne 2")
+            ->setDescription("description campagne 2")
+            ->setFile("nom fichier question")
+            ->setDateStart($date_start)
+            ->setDateEnd($date_end)
+            ->setStatus($this->getReference(StatusFixtures::STATUS_ONGOING));
+        $manager->persist($campaign_ongoing);
+        $this->addReference(self::CAMPAIGN2, $campaign_ongoing);
+
+
+        //campaign finish
+        $campaign_finish->setName("campagne 3")
+            ->setDescription("description campagne 3")
+            ->setFile("nom fichier question")
+            ->setDateStart($date_start)
+            ->setDateEnd($date_end)
+            ->setStatus($this->getReference(StatusFixtures::STATUS_FINISH));
+        $manager->persist($campaign_finish);
+        $this->addReference(self::CAMPAIGN3, $campaign_finish);
 
         $manager->flush();
     }
