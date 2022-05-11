@@ -1,0 +1,93 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block main %}
+{% include 'tester/detail_campaign.html.twig' %}
+    <div class="container" style="align-items: center; display: flex; justify-content: center">
+        <button id="show_allmycampaign">List all my campaigns</button>
+        <button id="show_my_campaign_soon">My campaigns soon</button>
+        <button id="show_my_campaign_finish">My campaigns finish</button>
+    </div>
+
+    <div id="allmycampaigns" style="position: absolute; width: 100%; display: flex">
+        {% for mycampaign in mycampaigns %}
+            {% if mycampaign.status.name == "accepted" %}
+            <div class="card" style="width: 30%">
+                <div class="container">
+                    <p>{{ mycampaign.session.campaign.name }}</p>
+                    <p>{{ mycampaign.session.campaign.description }}</p>
+                    <button>Detail campaign</button>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div id="mycampaignSoon" style="position: absolute; width: 100%; display: flex">
+        {% for mycampaign in mycampaigns %}
+            {% if mycampaign.session.campaign.status.name == "soon" and mycampaign.status.name == "accepted" %}
+            <div class="card" style="width: 30%">
+                <div class="container">
+                    <p>{{ mycampaign.session.campaign.name }}</p>
+                    <p>{{ mycampaign.session.campaign.description }}</p>
+                    <button>Detail campaign</button>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div id="mycampaignFinish" style="position: absolute; width: 100%; display: flex">
+        {% for mycampaign in mycampaigns %}
+            {% if mycampaign.session.campaign.status.name == "finish" and mycampaign.status.name == "accepted" %}
+            <div class="card" style="width: 30%">
+                <div class="container">
+                    <p>{{ mycampaign.session.campaign.name }}</p>
+                    <p>{{ mycampaign.session.campaign.description }}</p>
+                    <button>Detail campaign</button>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    {% block javascripts %}
+        <script type="text/javascript">
+            //button
+            let show_allmycampaign = document.getElementById("show_allmycampaign");
+            let show_my_campaign_soon = document.getElementById("show_my_campaign_soon");
+            let show_my_campaign_finish = document.getElementById("show_my_campaign_finish");
+
+            //div
+            let allmycampaigns = document.getElementById("allmycampaigns");
+            let mycampaignSoon = document.getElementById("mycampaignSoon");
+            let mycampaignFinish = document.getElementById("mycampaignFinish");
+
+            allmycampaigns.style.visibility = "visible";
+
+
+            show_allmycampaign.addEventListener("click", function() {
+                allmycampaigns.style.visibility = "visible";
+                mycampaignSoon.style.visibility = "hidden";
+                mycampaignFinish.style.visibility = "hidden";
+            });
+
+            show_my_campaign_soon.addEventListener("click", function() {
+                mycampaignSoon.style.visibility = "visible";
+                allmycampaigns.style.visibility = "hidden";
+                mycampaignFinish.style.visibility = "hidden";
+            });
+
+            show_my_campaign_finish.addEventListener("click", function() {
+                mycampaignFinish.style.visibility = "visible";
+                allmycampaigns.style.visibility = "hidden";
+                mycampaignSoon.style.visibility = "hidden";
+            });
+
+        </script>
+
+    {% endblock %}
+{% endblock %}
+
+
+
+

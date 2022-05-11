@@ -93,7 +93,7 @@ class DashboardController extends AbstractDashboardController
         } elseif ($this->isGranted('ROLE_TESTER')) {
             yield MenuItem::subMenu('Campaign', 'fa fa-list')->setSubItems([
                 MenuItem::linkToRoute('List campaign', 'fa fa-file', 'list_campaign'),
-                MenuItem::linkToCrud('My campaign', 'fa fa-file', Campaign::class)
+                MenuItem::linkToRoute('My campaign', 'fa fa-file', 'my_campaign')
             ]);
         }
     }

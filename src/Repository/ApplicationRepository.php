@@ -73,4 +73,14 @@ class ApplicationRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findCampaigns($user)
+    {
+        return $this->createQueryBuilder('a')
+            ->addSelect('session')
+            ->innerJoin('a.session', 'session')
+            ->andWhere('a.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 }
