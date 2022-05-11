@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Application;
 use App\Entity\Campaign;
+use App\Entity\Session;
 use App\Entity\Status;
+use App\Repository\ApplicationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +24,7 @@ class TesterController extends AbstractController
     /**
      * @Route("/list_campaign", name="list_campaign")
      */
-    public function test(): Response
+    public function list_campaign(): Response
     {
         $allCampaigns = $this->entityManager->getRepository(Campaign::class)->findAll();
         $statusSoon = $this->entityManager->getRepository(Status::class)->findOneBy(["name" => "soon"]);
@@ -39,6 +42,21 @@ class TesterController extends AbstractController
             'allCampaigns' => $allCampaigns,
             'allCampaignSoon' => $allCampaignSoon,
             'allCampaignFinish' => $allCampaignFinish
+        ]);
+    }
+
+    /**
+     * @Route("/my_campaign", name="my_campaign")
+     */
+    public function my_campaign(ApplicationRepository $repository): Response
+    {
+
+        $currentUser = $this->getUser();
+
+        $mycampaigns = $repository->findCampaigns($currentUser);
+
+        return $this->render('tester/my_campaign.html.twig', [
+            "mycampaigns" => $mycampaigns
         ]);
     }
 }
