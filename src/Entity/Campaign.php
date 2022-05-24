@@ -88,9 +88,14 @@ class Campaign
     private $questions;
 
     /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="campaign")
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="campaign",cascade={"persist"})
      */
     private $products;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $number_tester;
 
     public function __construct()
     {
@@ -262,6 +267,18 @@ class Campaign
                 $product->setCampaign(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNumberTester(): ?int
+    {
+        return $this->number_tester;
+    }
+
+    public function setNumberTester(int $number_tester): self
+    {
+        $this->number_tester = $number_tester;
 
         return $this;
     }
