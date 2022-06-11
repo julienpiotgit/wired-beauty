@@ -7,6 +7,7 @@ use App\Form\PointType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 
 class PageSectionCrudController extends AbstractCrudController
 {
@@ -23,6 +24,7 @@ class PageSectionCrudController extends AbstractCrudController
             'title',
             'description',
             'button',
+            ImageField::new('image')->setBasePath('uploads/')->setUploadDir('public/uploads'),
             CollectionField::new('points')
                 ->setEntryIsComplex(true)
                 ->setEntryType(PointType::class)

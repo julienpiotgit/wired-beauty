@@ -25,18 +25,18 @@
                             </div>
                         </div>
                         <div class="col-lg-5" data-aos="zoom-in">
-                            <img src="{{ asset('build/core-img/parfum.jpg') }}" class="img-fluid">
+                            <img src="/uploads/{{ section.image }}" class="img-fluid">
                         </div>
                         <div class="col-lg-7 mt-3">
                             <p data-aos="zoom-in">
                                 {{ section.description }}
-{#                                <strong class="green">WIRED BEAUTY</strong> is a new datadriven market#}
-{#                                research company dedicated to cosmetic laboratories.#}
-{#                                <br><br>#}
-{#                                We help our clients evaluate and develop skincare formulae by comparing cosmetics <br><a#}
-{#                                        href=""#}
-{#                                        class="link-dynamic pink">on#}
-{#                                    statistically viable samples</a> of men & women (1000 people):#}
+                                {# <strong class="green">WIRED BEAUTY</strong> is a new datadriven market #}
+                                {# research company dedicated to cosmetic laboratories. #}
+                                {# <br><br> #}
+                                {# We help our clients evaluate and develop skincare formulae by comparing cosmetics <br><a #}
+                                {# href="" #}
+                                {# class="link-dynamic pink">on #}
+                                {# statistically viable samples</a> of men & women (1000 people): #}
                             </p>
                             <ul class="list-wired mt-lg-0 mt-5">
                                 {% for point in section.points %}
@@ -60,7 +60,7 @@
                 <div class="container">
                     <div class="head-section">
                         <h2>{{ section.title }}</h2>
-                        {#<h2>WE RELY ON<br> DATA & TECHNOLOGY</h2>#}
+                        {# <h2>WE RELY ON<br> DATA & TECHNOLOGY</h2> #}
                     </div>
                     <div class="list-data">
                         {% for point in section.points %}
