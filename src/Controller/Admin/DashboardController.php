@@ -3,6 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Campaign;
+use App\Entity\HomePageBuilder;
+use App\Entity\PageBuilder;
+use App\Entity\PageSection;
 use App\Entity\Session;
 use App\Entity\Status;
 use App\Entity\User;
@@ -90,6 +93,10 @@ class DashboardController extends AbstractDashboardController
                 MenuItem::linkToCrud('Session', 'fa fa-list', Session::class)
             ]);
             yield MenuItem::linkToCrud('Users', 'fas fa-users', User::class);
+            yield MenuItem::subMenu('Configuration site', 'fa fa-cog')->setSubItems([
+                MenuItem::linkToCrud('Pages', 'fa fa-globe', PageBuilder::class),
+                MenuItem::linkToCrud('Sections', 'fa fa-list-alt', PageSection::class),
+            ]);
         } elseif ($this->isGranted('ROLE_TESTER')) {
             yield MenuItem::subMenu('Campaign', 'fa fa-list')->setSubItems([
                 MenuItem::linkToRoute('List campaign', 'fa fa-file', 'list_campaign'),
@@ -98,7 +105,7 @@ class DashboardController extends AbstractDashboardController
         }
     }
 
-            public function configureAssets(): Assets
+    public function configureAssets(): Assets
     {
         return Assets::new()
             ->addCssFile('css/admin.css')
