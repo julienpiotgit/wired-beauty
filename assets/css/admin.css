@@ -1,0 +1,42 @@
+:root {
+    --sidebar-menu-active-item-bg: #a9c1a6;
+    --sidebar-bg: #BFD0BD;
+    --sidebar-menu-active-item-color: #BE8D90;
+    --table-thead-color: #BE8D90;
+    --text-color-dark: #a9c1a6;
+    --user-avatar-icon-bg: #a9c1a6;
+    --user-avatar-icon-color: #687b65;
+    --color-primary: #BE8D90;
+}
+
+#header-logo {
+    text-align: center;
+}
+
+#header-logo img {
+    width: 125px;
+    height: auto;
+}
+
+.content-header-title .title {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.page-item.active .page-link {
+    background-color: #BE8D90;
+}
+
+
+/***** DASHBOARD *****/
+
+.dashboard .item {
+    background-color: #f7f7f7;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 15px;
+    padding: 10px 20px;
+}
+
+.dashboard .item h3 {
+    text-transform: uppercase;
+}

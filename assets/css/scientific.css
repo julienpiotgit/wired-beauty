@@ -1,0 +1,57 @@
+.scientific-presentation {
+    background-image: url(../img/background/shiny-overlay-main-color.svg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.scientific-presentation .container {
+    display: flex;
+    align-items: center;
+}
+
+.scientific-presentation .content {
+    width: 45%;
+}
+
+.scientific-presentation .content .head-section h2:after {
+    background-color: #fff;
+    left: 0;
+    right: unset;
+}
+
+.scientific-presentation .brand {
+    width: 55%;
+    padding: 0 80px;
+}
+
+.scientific-presentation .brand h2 {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 30px;
+    color: #fff;
+    margin-bottom: 60px;
+}
+
+.scientific-presentation .brand .list img {
+    width: 31%;
+    margin: 0 1%;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 991px) {
+    .scientific-presentation .container {
+        flex-wrap: wrap;
+    }
+
+    .scientific-presentation .content, .scientific-presentation .brand{
+        width: 100%;
+    }
+
+    .scientific-presentation .content {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        margin-bottom: 40px;
+    }
+}

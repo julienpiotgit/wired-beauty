@@ -1,0 +1,1 @@
+import 'https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/js/splide.min.js';

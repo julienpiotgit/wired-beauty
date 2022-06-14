@@ -1,0 +1,77 @@
+{#{% extends '@EasyAdmin/page/content.html.twig' %}#}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous">
+{% endblock %}
+
+{% block main %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>List campaign</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <body>
+
+    <div class="container">
+     <div id="questions" data-questions="{{ questions }}">
+         {% for question in questionsArray %}
+             {% dump(question) %}
+             <canvas id="labels{{ loop.index }}" width="400" height="100"></canvas>
+         {% endfor %}
+     </div>
+    </div>
+
+</body>
+</html>
+    {% block javascripts %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.min.js"></script>
+        <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+        <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        <script>
+            $("#exportButton").click(function(){
+                html2canvas(document.querySelector("#chartsContainer")).then(canvas => {
+                    var dataURL = canvas.toDataURL();
+                    var pdf = new jsPDF();
+                    pdf.addImage(dataURL, 'JPEG', 20, 20, 180, 160); //addImage(image, format, x-coordinate, y-coordinate, width, height)
+                    pdf.save("Export_stats.pdf");
+                });
+            });
+
+            let questions = document.querySelector("#questions").dataset["questions"];
+            questions = JSON.parse(questions);
+
+            questions.forEach(function (question, key) {
+                    let labels = document.querySelector("#labels"+(key+1))
+                    let labelsGraph = new Chart(labels, {
+                        type: "bar",
+                        data: {
+                            // labels: ["q1", "q2","q3"],
+                             labels: {{ answername|raw }},
+                            datasets: [{
+                                label: question.name,
+                                // data: [10, 2, 30],
+                                 data: {{ answer|raw }},
+                                {# backgroundColor: {{ categColor|raw }} #}
+                                backgroundColor: ["#6a5acd7a", "#f1cbc8"]
+                            }]
+                        }
+                    })
+            })
+
+
+
+        </script>
+
+    {% endblock %}
+{% endblock %}
+
+
+
+
