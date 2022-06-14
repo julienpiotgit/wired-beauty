@@ -62,6 +62,11 @@ class Session
         $this->applications = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->getCampaign()->getName();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,8 +124,5 @@ class Session
         }
 
         return $this;
-    }
-    public function __toString(){
-        return $this->getName();
     }
 }
