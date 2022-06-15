@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Application;
 use App\Entity\Campaign;
 use App\Entity\PageBuilder;
 use App\Entity\PageSection;
@@ -93,6 +94,7 @@ class DashboardController extends AbstractDashboardController
             yield MenuItem::subMenu('Page Builder', 'fa fa-cog')->setSubItems([
                 MenuItem::linkToCrud('Pages', 'fa fa-globe', PageBuilder::class),
                 MenuItem::linkToCrud('Sections', 'fa fa-list-alt', PageSection::class),
+                yield MenuItem::linkToCrud('Application', 'fas fa-users', Application::class),
             ]);
         } elseif ($this->isGranted('ROLE_TESTER')) {
             yield MenuItem::subMenu('Campaign', 'fa fa-list')->setSubItems([
