@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Application;
 use App\Entity\Campaign;
 use App\Entity\Session;
 use App\Entity\Status;
@@ -88,6 +89,7 @@ class DashboardController extends AbstractDashboardController
             yield MenuItem::linkToCrud('Session', 'fa fa-list', Session::class);
             yield MenuItem::linkToCrud('Campaign', 'fa fa-file', Campaign::class);
             yield MenuItem::linkToCrud('Users', 'fas fa-users', User::class);
+            yield MenuItem::linkToCrud('Application', 'fas fa-users', Application::class);
         } elseif ($this->isGranted('ROLE_TESTER')) {
             yield MenuItem::subMenu('Campaign', 'fa fa-list')->setSubItems([
                 MenuItem::linkToRoute('List campaign', 'fa fa-file', 'list_campaign'),
