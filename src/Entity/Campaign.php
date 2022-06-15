@@ -70,6 +70,11 @@ class Campaign
     private $file;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $number_tester;
+
+    /**
      * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="campaigns")
      * @Groups({"campaign_read", "campaign_details_read", "user_details_read"})
      */
@@ -160,6 +165,18 @@ class Campaign
     public function setFile(string $file): self
     {
         $this->file = $file;
+
+        return $this;
+    }
+
+    public function getNumberTester(): ?int
+    {
+        return $this->number_tester;
+    }
+
+    public function setNumberTester(int $number_tester): self
+    {
+        $this->number_tester = $number_tester;
 
         return $this;
     }

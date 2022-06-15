@@ -3,9 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Campaign;
-use App\Entity\HomePageBuilder;
-use App\Entity\PageBuilder;
-use App\Entity\PageSection;
 use App\Entity\Session;
 use App\Entity\Status;
 use App\Entity\User;
@@ -88,24 +85,24 @@ class DashboardController extends AbstractDashboardController
     {
         if ($this->isGranted('ROLE_ADMIN')) {
             yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-            yield MenuItem::subMenu('Campaigns', 'fa fa-list')->setSubItems([
-                MenuItem::linkToCrud('Campaign', 'fa fa-list', Campaign::class),
-                MenuItem::linkToCrud('Session', 'fa fa-list', Session::class)
-            ]);
+            yield MenuItem::linkToCrud('Session', 'fa fa-list', Session::class);
+            yield MenuItem::linkToCrud('Campaign', 'fa fa-file', Campaign::class);
             yield MenuItem::linkToCrud('Users', 'fas fa-users', User::class);
-            yield MenuItem::subMenu('Configuration site', 'fa fa-cog')->setSubItems([
-                MenuItem::linkToCrud('Pages', 'fa fa-globe', PageBuilder::class),
-                MenuItem::linkToCrud('Sections', 'fa fa-list-alt', PageSection::class),
-            ]);
+            yield MenuItem::linkToRoute('Stats', 'fas fa-users', 'stats');
         } elseif ($this->isGranted('ROLE_TESTER')) {
             yield MenuItem::subMenu('Campaign', 'fa fa-list')->setSubItems([
                 MenuItem::linkToRoute('List campaign', 'fa fa-file', 'list_campaign'),
-                MenuItem::linkToCrud('My campaign', 'fa fa-file', Campaign::class)
+                MenuItem::linkToRoute('My campaign', 'fa fa-file', 'my_campaign')
+            ]);
+        }elseif ($this->isGranted('ROLE_CUSTOMER')) {
+            yield MenuItem::subMenu('Campaign', 'fa fa-list')->setSubItems([
+                MenuItem::linkToRoute('List campaign customer', 'fa fa-file', 'list_campaign_customer'),
+                MenuItem::linkToRoute('My campaign customer', 'fa fa-file', 'my_campaign_customer')
             ]);
         }
     }
 
-    public function configureAssets(): Assets
+            public function configureAssets(): Assets
     {
         return Assets::new()
             ->addCssFile('css/admin.css')

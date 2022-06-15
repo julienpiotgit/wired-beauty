@@ -46,6 +46,12 @@ class Status
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"status_read", "status_details_read", "user_details_read", "campaign_read", "campaign_details_read"})
+     */
+    private $type;
+
+    /**
      * @ORM\OneToMany(targetEntity=Campaign::class, mappedBy="status")
      * @Groups({"status_read", "status_details_read"})
      */
@@ -76,6 +82,18 @@ class Status
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function settype(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

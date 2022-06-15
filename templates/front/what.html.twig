@@ -8,90 +8,120 @@
         <div class="overlay">
             <div class="container">
                 <div class="col-lg-12">
-                    <h1 class="text-center">{{ pageData.name }}</h1>
+                    <h1 class="text-center">WHAT WE DO</h1>
                 </div>
             </div>
         </div>
     </section>
 
-    {% for section in pageData.sections %}
-        {% if section.location == 'section 1' %}
-            <section class="padding-section bg-second-color">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="head-section left-position" data-aos="fade-right">
-                                <h2 class="main-color">{{ section.title }}</h2>
+    <section class="padding-section bg-second-color">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="head-section left-position" data-aos="fade-right">
+                        <h2 class="main-color">WE RESEARCH SKINCARE
+                        </h2>
+                    </div>
+                </div>
+                <div class="col-lg-5" data-aos="zoom-in">
+                    <img src="{{ asset('build/core-img/parfum.jpg') }}" class="img-fluid">
+                </div>
+                <div class="col-lg-7 mt-3">
+                    <p data-aos="zoom-in"><strong class="green">WIRED BEAUTY</strong> is a new datadriven market
+                        research company dedicated to cosmetic laboratories.
+                        <br><br>
+                        We help our clients evaluate and develop skincare formulae by comparing cosmetics <br><a href=""
+                                                                                                                 class="link-dynamic pink">on
+                            statistically viable samples</a> of men & women (1000 people):</p>
+                    <ul class="list-wired mt-lg-0 mt-5">
+                        <li><img src="{{ asset('build/icon/arrow-1-main-color.png') }}">
+                            <div class="inner-item" data-aos="fade-right">
+                                The antioxydative and
+                                moisterizing effect of formulae (in vivo)
                             </div>
-                        </div>
-                        <div class="col-lg-5" data-aos="zoom-in">
-                            <img src="/uploads/{{ section.image }}" class="img-fluid">
-                        </div>
-                        <div class="col-lg-7 mt-3">
-                            <p data-aos="zoom-in">
-                                {{ section.description }}
-                                {# <strong class="green">WIRED BEAUTY</strong> is a new datadriven market #}
-                                {# research company dedicated to cosmetic laboratories. #}
-                                {# <br><br> #}
-                                {# We help our clients evaluate and develop skincare formulae by comparing cosmetics <br><a #}
-                                {# href="" #}
-                                {# class="link-dynamic pink">on #}
-                                {# statistically viable samples</a> of men & women (1000 people): #}
-                            </p>
-                            <ul class="list-wired mt-lg-0 mt-5">
-                                {% for point in section.points %}
-                                    <li><img src="{{ asset('build/icon/arrow-1-main-color.png') }}">
-                                        <div class="inner-item" data-aos="fade-right">
-                                            {{ point.text }}
-                                        </div>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        {% endif %}
-    {% endfor %}
-
-    {% for section in pageData.sections %}
-        {% if section.location == 'section 2' %}
-            <section class="padding-section data">
-                <div class="container">
-                    <div class="head-section">
-                        <h2>{{ section.title }}</h2>
-                        {# <h2>WE RELY ON<br> DATA & TECHNOLOGY</h2> #}
-                    </div>
-                    <div class="list-data">
-                        {% for point in section.points %}
-                            <div class="item" data-aos="fade-right">
-                                <div class="number">{{ loop.index }}</div>
-                                <p>{{ point.text }} </p>
+                        </li>
+                        <li><img src="{{ asset('build/icon/arrow-1-main-color.png') }}">
+                            <div class="inner-item" data-aos="fade-right">The
+                                antioxydative and
+                                moisterizing effect of ingredients (in vitro) (cf Reach)
                             </div>
-                        {% endfor %}
-                    </div>
+                        </li>
+                        <li><img src="{{ asset('build/icon/arrow-1-main-color.png') }}">
+                            <div class="inner-item" data-aos="fade-right">Consumer
+                                feedback after product
+                                use
+                            </div>
+                        </li>
+                        <li><img src="{{ asset('build/icon/arrow-1-main-color.png') }}">
+                            <div class="inner-item" data-aos="fade-right">Environmental
+                                conditions (UV
+                                pollution) surronding the consumer’s lifestyle
+                            </div>
+                        </li>
+                        <li><img src="{{ asset('build/icon/arrow-1-main-color.png') }}">
+                            <div class="inner-item" data-aos="fade-right">Skincare
+                                performance after 1 day
+                                – 8 days – 15 days - X days.
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-            </section>
-        {% endif %}
-    {% endfor %}
+            </div>
+        </div>
+    </section>
 
-    {% for section in pageData.sections %}
-        {% if section.location == 'section 3' %}
-            <section class="tester-banner">
-                <div class="padding-section overlay">
-                    <div class="head-section center-position" data-aos="fade-bottom">
-                        <h2>{{ section.title }}</h2>
-                    </div>
-                    <div class="col-lg-8 mx-auto text-center" data-aos="zoom-in">
-                        <p class="text-center text-white">
-                            {{ section.description }}
-                        </p>
-                        <a class="main-link mt-3" href="">
-                            {{ section.button }}
-                        </a>
-                    </div>
+    <section class="padding-section data">
+        <div class="container">
+            <div class="head-section">
+                <h2>WE RELY ON<br> DATA & TECHNOLOGY</h2>
+            </div>
+            <div class="list-data">
+                <div class="item" data-aos="fade-right">
+                    <div class="number">1</div>
+                    <p>Proprietary nomadic lab device & patented skin patches to decipher skin reactions and ingredient
+                        presence </p>
                 </div>
-            </section>
-        {% endif %}
-    {% endfor %}
+                <div class="item" data-aos="fade-right">
+                    <div class="number">2</div>
+                    <p>Easy multi-lingual smartphone app and customer feedback</p>
+                </div>
+                <div class="item" data-aos="fade-right">
+                    <div class="number">3</div>
+                    <p>Geolocalisation and exposome data (UV - pollution - temperature)</p>
+                </div>
+                <div class="item" data-aos="fade-right">
+                    <div class="number">4</div>
+                    <p>Repeatability of protocols in real life conditions (ie bathrooms)</p>
+                </div>
+                <div class="item" data-aos="fade-right">
+                    <div class="number">5</div>
+                    <p>Large cohorts it needed</p>
+                </div>
+                <div class="item" data-aos="fade-right">
+                    <div class="number">6</div>
+                    <p>Saas and European data center</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tester-banner">
+        <div class="padding-section overlay">
+            <div class="head-section center-position" data-aos="fade-bottom">
+                <h2>BECOME A TESTER</h2>
+            </div>
+            <div class="col-lg-8 mx-auto text-center" data-aos="zoom-in">
+                <p class="text-center text-white">Suspendisse potenti. Donec non consectetur tellus, eget lacinia arcu.
+                    Sed vitae
+                    sem a leo faucibus
+                    dictum. Praesent ultricies lacinia nulla eget rhoncus. Integer auctor mauris nec risus varius
+                    tempus.
+                    Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                <a class="main-link mt-3" href="">
+                    Read More
+                </a>
+
+            </div>
+        </div>
+    </section>
 {% endblock %}
