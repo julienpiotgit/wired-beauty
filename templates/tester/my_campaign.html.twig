@@ -27,7 +27,7 @@
                 <div class="container">
                     <input type="hidden" value="{{ mycampaign.id }}" id="campaignID">
                     <p>{{ mycampaign.session.campaign.name }}</p>
-                    <p>{{ mycampaign.session.campaign.description }}</p>
+                    <p>{{ mycampaign.session.campaign.datestart |date("m/d/Y") }} - {{ mycampaign.session.campaign.dateend |date("m/d/Y") }}</p>
                     <button type="button" data-toggle="modal" data-target="#detailsCampaign{{ mycampaign.id }}">Detail campaign</button>
                 </div>
             </div>

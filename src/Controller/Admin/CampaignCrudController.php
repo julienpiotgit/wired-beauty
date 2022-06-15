@@ -38,9 +38,11 @@ class CampaignCrudController extends AbstractCrudController
         if (CRUD::PAGE_INDEX === $pageName){
             return [$name,$description, $dateStart, $dateEnd, $file, $session, $status];
         }elseif (CRUD::PAGE_EDIT === $pageName){
-            return [$name,$description, $dateStart, $dateEnd, $file_edit, $session];
+            return [$name,$description, $dateStart, $dateEnd, $session];
         }elseif (CRUD::PAGE_NEW === $pageName){
             return [$name,$description, $dateStart, $dateEnd, $file_edit, $session];
+        }elseif (CRUD::PAGE_DETAIL === $pageName){
+            return [$name,$description, $dateStart, $dateEnd, $file, $session];
         }
         return [$name,$description, $dateStart, $dateEnd, $file_edit, $session];
     }

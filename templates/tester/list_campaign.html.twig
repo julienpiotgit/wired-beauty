@@ -2,22 +2,44 @@
 
 {% block main %}
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
     <div class="container" style="align-items: center; display: flex; justify-content: center">
         <button id="show_allcampaign">List all campaigns</button>
         <button id="show_campaign_soon">Campaign soon</button>
         <button id="show_campaign_finish">Campaigns finish</button>
     </div>
-
     <div id="allcampaign" style="position: absolute; width: 100%; display: flex">
         {% for campaign in allCampaigns %}
             <div class="card" style="width: 30%">
                 <div class="container">
+                    <input type="hidden" value="{{ campaign.id }}" id="campaign_id">
                     <h4><b>{{ campaign.name }}</b></h4>
-                    <p>{{campaign.description}}</p>
-                    <p>{{campaign.datestart |date("m/d/Y")}}</p>
-                    <p>{{campaign.dateend |date("m/d/Y")}}</p>
-                    <p>status :{{ campaign.status.name }}</p>
-                    <button>Détails campaigns</button>
+                    <p>Status :{{ campaign.status.name }}</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#listCampaignModal{{ campaign.id }}">Details campaigns</button>
+                </div>
+                <div class="modal fade" id="listCampaignModal{{ campaign.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">{{ campaign.name }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Détails de la campagne : {{campaign.description}}</p>
+                                <p>Début : {{campaign.datestart |date("m/d/Y")}}</p>
+                                <p>Fin : {{campaign.dateend |date("m/d/Y")}}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                {% if campaign.status.name == "soon" %}
+                                    <button name="inscription" id="inscription" type="button" onclick="addApplication({{ campaign.id }})" class="btn btn-primary">S'inscrire</button>
+                                {% else %}
+                                    <button name="inscription" id="inscription" type="button" onclick="addApplication({{ campaign.id }})" class="btn btn-primary" disabled>S'inscrire</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endfor %}
@@ -28,11 +50,31 @@
             <div class="card" style="width: 30%">
                 <div class="container">
                     <h4><b>{{ campaignSoon.name }}</b></h4>
-                    <p>{{campaignSoon.description}}</p>
-                    <p>{{campaignSoon.datestart |date("m/d/Y")}}</p>
-                    <p>{{campaignSoon.dateend |date("m/d/Y")}}</p>
                     <p>status :{{ campaignSoon.status.name }}</p>
-                    <button>Voir la liste des sessions</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#listCampaignModal2{{ campaignSoon.id }}">Details campaigns</button>
+                </div>
+                <div class="modal fade" id="listCampaignModal2{{ campaignSoon.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">{{ campaignSoon.name }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Détails de la campagne : {{campaignSoon.description}}</p>
+                                <p>Début : {{campaignSoon.datestart |date("m/d/Y")}}</p>
+                                <p>Fin : {{campaignSoon.dateend |date("m/d/Y")}}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                {% if campaignSoon.status.name == "soon" %}
+                                    <button name="inscription" id="inscription" type="button" onclick="addApplication({{ campaignSoon.id }})" class="btn btn-primary">S'inscrire</button>
+                                {% else %}
+                                    <button name="inscription" id="inscription" type="button" onclick="addApplication({{ campaignSoon.id }})" class="btn btn-primary" disabled>S'inscrire</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endfor %}
@@ -43,11 +85,31 @@
             <div class="card" style="width: 30%">
                 <div class="container">
                     <h4><b>{{ campaignFinish.name }}</b></h4>
-                    <p>{{campaignFinish.description}}</p>
-                    <p>{{campaignFinish.datestart |date("m/d/Y")}}</p>
-                    <p>{{campaignFinish.dateend |date("m/d/Y")}}</p>
                     <p>status :{{ campaignFinish.status.name }}</p>
-                    <button>Voir la liste des sessions</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#listCampaignModal3{{ campaignFinish.id }}">Details campaigns</button>
+                </div>
+                <div class="modal fade" id="listCampaignModal3{{ campaignFinish.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">{{ campaignFinish.name }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Détails de la campagne : {{campaignFinish.description}}</p>
+                                <p>Début : {{campaignFinish.datestart |date("m/d/Y")}}</p>
+                                <p>Fin : {{campaignFinish.dateend |date("m/d/Y")}}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                {% if campaignFinish.status.name == "soon" %}
+                                    <button name="inscription" id="inscription" type="button" onclick="addApplication({{ campaignFinish.id }})" class="btn btn-primary">S'inscrire</button>
+                                {% else %}
+                                    <button name="inscription" id="inscription" type="button" onclick="addApplication({{ campaignFinish.id }})" class="btn btn-primary" disabled>S'inscrire</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endfor %}
@@ -87,11 +149,28 @@
                 campaign_soon.style.visibility = "hidden";
             });
 
+            let idCampaign = document.getElementById("campaign_id").value;
+
+            function addApplication(idCampaign) {
+                $.ajax({
+                    type:"POST",
+                    url:"{{ path('add_application') }}",
+                    data:{
+                        campaign: idCampaign
+                    },
+                    success:function() {
+                        console.log(idCampaign);
+                        window.location.reload();
+                    }
+
+                });
+            }
+
+
         </script>
 
     {% endblock %}
 {% endblock %}
-
 
 
 

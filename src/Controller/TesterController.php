@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\AnswerUser;
+use App\Entity\Application;
 use App\Entity\Campaign;
+use App\Entity\Session;
 use App\Entity\Status;
 use App\Repository\ApplicationRepository;
 use App\Repository\ProductRepository;
@@ -103,6 +105,42 @@ class TesterController extends AbstractController
             $entityManager->persist($answerUser);
             $entityManager->flush();
         }
+
+        return $this->redirectToRoute("admin");
+    }
+    /**
+     * @Route("/add_application", name="add_application")
+     */
+    public function add_application(UserRepository $userRepository, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $currentUser = $this->getUser();
+        $user = $userRepository->find($currentUser);
+
+        // Is it an Ajax Request ?
+        if (!$request->isXmlHttpRequest())
+            return new JsonResponse(array('status' => 'Error'), 400);
+
+        // Request has request data ?
+        if (!isset($request->request))
+            return new JsonResponse(array('status' => 'Error'), 400);
+
+        $campaignId = $request->request->get("campaign");
+
+        $statusPending = $this->entityManager->getRepository(Status::class)->findOneBy(["name" => "pending"]);
+
+        $session = $this->entityManager->getRepository(Session::class)->findBy(["campaign" => $campaignId]);
+
+        $sessioncount = $this->entityManager->getRepository(Session::class)->count(["campaign" => $campaignId]);
+
+        $sessionRandom = random_int(1, $sessioncount);
+
+        $application = new Application();
+        $application->setUser($user);
+        $application->setStatus($statusPending);
+        $application->setSession($session[$sessionRandom-1]);
+
+        $entityManager->persist($application);
+        $entityManager->flush();
 
         return $this->redirectToRoute("admin");
     }
