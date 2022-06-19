@@ -46,6 +46,7 @@
 
     .scientific-presentation .content, .scientific-presentation .brand{
         width: 100%;
+        padding: 0 20px;
     }
 
     .scientific-presentation .content {
@@ -53,5 +54,13 @@
         align-items: center;
         flex-direction: column;
         margin-bottom: 40px;
+    }
+
+    .scientific-presentation .brand .list {
+        justify-content: center;
+    }
+
+    .scientific-presentation .brand .list img {
+        width: 48%;
     }
 }
