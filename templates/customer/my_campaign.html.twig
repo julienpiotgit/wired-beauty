@@ -24,15 +24,9 @@
     </div>
 
     <div id="allmycampaigns" style="position: absolute; width: 100%; display: flex">
-        {#        {% dump(sql) %}#}
-{#        {% dump statusnom %}#}
-{#        {% for detail in details %}#}
-{#            {% dump(detail) %}#}
-{#        {% endfor %}#}
         {% for mycampaign in mycampaigns %}
-            {% dump mycampaign.session.campaign.status.name %}
-            {% dump details %}
-{#            {% if mycampaign.status.name == "finish" %}#}
+{#            {% dump mycampaign.session.campaign.status.name %}#}
+{#            {% dump details %}#}
             {% if mycampaign.session.campaign.status.name == "finish" %}
                 <div class="card" style="width: 30%">
                     <div class="container">
@@ -40,7 +34,7 @@
                         <p>{{ mycampaign.session.campaign.name }}</p>
                         <p>{{ mycampaign.session.campaign.description }}</p>
 {#                        <button type="button" data-toggle="modal" data-target="#detailsCampaign{{ mycampaign.id }}">Detail campaign ICI</button>#}
-                        <a href="{{ path("campaign_details", {id:mycampaign.session.campaign.id}) }}">Cliquer ici</a>
+                        <a href="{{ path("campaign_details", {id:mycampaign.session.campaign.id}) }}" target="_blank">Cliquer ici</a>
                     </div>
                 </div>
 
@@ -124,14 +118,9 @@
     </div>
     <br/><br/>
 
-{#    select question.name as question_nom, campaign.name as campagne_nom, question_answer.name as reponse_tester#}
-{#    from question, question_answer, answer_user, campaign#}
-{#    where question.campaign_id=campaign.id#}
-{#    and question_answer.question_id=question.id#}
-{#    and answer_user.question_answer_id=question_answer.id;#}
     <div class="container">
         <br/><br/>
-        <button style="margin-top: 2%" id="exportButton" type="button">Export as PDF</button>
+        <button style="margin-top: 2%" id="exportButton" type="button">Exporter en PDF</button>
         <br/><br/><br/><br/>
         <div id="chartsContainer">
             <h2 style="text-align:center;">Nombres total de campagnes : {{ mycampaignscount }}</h2>
