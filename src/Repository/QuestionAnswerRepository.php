@@ -73,4 +73,16 @@ class QuestionAnswerRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getQuestionsByCampaign(int $campaign_id)
+    {
+        return $this->createQueryBuilder('qa')
+            ->addSelect('qa, q, a')
+            ->innerJoin('qa.question', 'q')
+            ->innerJoin('qa.answerUsers', 'a')
+            ->innerJoin('q.campaign', 'c')
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $campaign_id)
+            ->getQuery()
+            ->getResult();
+    }
 }

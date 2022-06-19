@@ -97,6 +97,7 @@ class Campaign
      */
     private $products;
 
+
 //    /**
 //     * @ORM\Column(type="integer")
 //     */
