@@ -20,6 +20,7 @@
     <body>
     <div class="container" style="align-items: center; display: flex; justify-content: center">
         <button id="show_allmycampaign">List all my campaigns</button>
+        <button id="show_my_campaign_Soon">My campaigns Soon</button>
         <button id="show_my_campaign_OnGoing">My campaigns OnGoing</button>
         <button id="show_my_campaign_finish">My campaigns finish</button>
     </div>
@@ -53,7 +54,7 @@
                                 <p>{{ details.name }}</p>
                                 <p>{{ details.type }}</p>
                                 <p>{{ details.gender }}</p>
-{#                                <p>{{ details.age_range }}</p>#}
+                                <p>{{ details.agerange }}</p>
                                 {% if mycampaign.session.campaign.status.name == "finish" %}
                                     <h5 style="text-align: center"><a href="{{ path("campaign_details", {id:mycampaign.session.campaign.id}) }}" target="_blank">Accéder aux statistiques</a></h5>
                                 {% endif %}
@@ -66,6 +67,46 @@
                     </div>
                 </div>
 {#            {% endif %}#}
+        {% endfor %}
+    </div>
+
+    <div id="mycampaignSoon" style="position: absolute; width: 100%; display: flex">
+        {% for mycampaign in mycampaigns %}
+            {% if mycampaign.session.campaign.status.name == "soon" %}
+                <div class="card" style="width: 30%">
+                    <div class="container">
+                        <h4>{{ mycampaign.session.campaign.name }}</h4>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailsCampaign1{{ mycampaign.id }}">Details campaigns</button>
+                    </div>
+                </div>
+                <div class="modal" id="detailsCampaign1{{ mycampaign.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                {% if mycampaign.session.campaign.status.name == "soon" %}
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span style="color: blue">{{ mycampaign.session.campaign.status.name }}</span></h5>
+                                {% elseif mycampaign.session.campaign.status.name == "ongoing" %}
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span style="color: green">{{ mycampaign.session.campaign.status.name }}</span></h5>
+                                {% else %}
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span style="color: red">{{ mycampaign.session.campaign.status.name }}</span></h5>
+                                {% endif %}
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>{{ mycampaign.session.campaign.description }}</p>
+                                <p>{{ details.name }}</p>
+                                <p>{{ details.type }}</p>
+                                <p>{{ details.gender }}</p>
+                                <p>{{ details.agerange }}</p>#}
+                            </div>
+                            <div class="modal-footer">
+                                <p>{{mycampaign.session.campaign.datestart |date("m/d/Y")}} - {{mycampaign.session.campaign.dateend |date("m/d/Y")}}  </p>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
 
@@ -96,7 +137,7 @@
                                 <p>{{ details.name }}</p>
                                 <p>{{ details.type }}</p>
                                 <p>{{ details.gender }}</p>
-                                {#                                <p>{{ details.age_range }}</p>#}
+                                <p>{{ details.agerange }}</p>#}
                             </div>
                             <div class="modal-footer">
                                 <p>{{mycampaign.session.campaign.datestart |date("m/d/Y")}} - {{mycampaign.session.campaign.dateend |date("m/d/Y")}}  </p>
@@ -137,8 +178,7 @@
                                 <p>{{ details.name }}</p>
                                 <p>{{ details.type }}</p>
                                 <p>{{ details.gender }}</p>
-                                {#                                <p>{{ details.age_range }}</p>#}
-
+                                <p>{{ details.agerange }}</p>
                                 <h5 style="text-align: center"><a href="{{ path("campaign_details", {id:mycampaign.session.campaign.id}) }}" target="_blank">Accéder aux statistiques</a></h5>
                             </div>
                             <div class="modal-footer">
@@ -161,15 +201,18 @@
 
             //button
             let show_allmycampaign = document.getElementById("show_allmycampaign");
+            let show_my_campaign_Soon = document.getElementById("show_my_campaign_Soon");
             let show_my_campaign_OnGoing = document.getElementById("show_my_campaign_OnGoing");
             let show_my_campaign_finish = document.getElementById("show_my_campaign_finish");
 
             //div
             let allmycampaigns = document.getElementById("allmycampaigns");
+            let mycampaignSoon = document.getElementById("mycampaignSoon");
             let mycampaignOnGoing = document.getElementById("mycampaignOnGoing");
             let mycampaignFinish = document.getElementById("mycampaignFinish");
 
             allmycampaigns.style.visibility = "visible";
+            mycampaignSoon.style.visibility = "hidden";
             mycampaignOnGoing.style.visibility = "hidden";
             mycampaignFinish.style.visibility = "hidden";
 
@@ -178,30 +221,34 @@
                 allmycampaigns.style.visibility = "visible";
                 mycampaignOnGoing.style.visibility = "hidden";
                 mycampaignFinish.style.visibility = "hidden";
+                mycampaignSoon.style.visibility = "hidden";
+            });
+
+            show_my_campaign_Soon.addEventListener("click", function() {
+                allmycampaigns.style.visibility = "hidden";
+                mycampaignOnGoing.style.visibility = "hidden";
+                mycampaignFinish.style.visibility = "hidden";
+                mycampaignSoon.style.visibility = "visible";
             });
 
             show_my_campaign_OnGoing.addEventListener("click", function() {
                 mycampaignOnGoing.style.visibility = "visible";
                 allmycampaigns.style.visibility = "hidden";
                 mycampaignFinish.style.visibility = "hidden";
+                mycampaignSoon.style.visibility = "hidden";
             });
 
             show_my_campaign_finish.addEventListener("click", function() {
                 mycampaignFinish.style.visibility = "visible";
                 allmycampaigns.style.visibility = "hidden";
                 mycampaignOnGoing.style.visibility = "hidden";
+                mycampaignSoon.style.visibility = "hidden";
             });
 
 
             let id_campaign = document.getElementById('campaignID').value;
             let detail_campaign = document.getElementById("detail_campaign_" + id_campaign);
 
-            let answers = []
-            function val(question_id) {
-                let choice = document.getElementById("qcm" + question_id).value;
-                answers.push(choice);
-                console.log(answers);
-            }
 
         </script>
 
