@@ -104,6 +104,51 @@ class CustomerController extends AbstractController
     }
 
     /**
+     * @Route("/all_campaign_customer", name="all_campaign_customer")
+     */
+    public function all_campaign(ApplicationRepository $applicationRepository, ProductRepository $productRepository,QuestionRepository $questionRepository, QuestionAnswerRepository $questionAnswerRepository, StatusRepository $statusRepository): Response
+    {
+        $currentUser = $this->getUser();
+
+        $mycampaigns = $applicationRepository->findCampaigns($currentUser);
+
+//        $mycampaigncount = $productRepository->findCountCampaigns($currentUser);
+//
+        $detailsCampaign = $productRepository->findDetailsCampaign();
+
+        $detailsCampaignStats = [];
+        $detailsCampaignOngoing = $productRepository->findCampaignOngoing();
+        $detailsCampaignFinish = $productRepository->findCampaignFinish();
+        $detailsCampaignSoon = $productRepository->findCampaignSoon();
+        $detailsCampaignStats = [$detailsCampaignSoon[0][1],$detailsCampaignOngoing[0][1],$detailsCampaignFinish[0][1]];
+
+        $statusNom = [];
+        $status = $statusRepository->findAll();
+        foreach ($status as $stat) {
+            if ($stat->getType() == "campaign"){
+                $statusNom[] = $stat->getName();
+            }
+        }
+
+//        $nbPersonsTester = $productRepository->findNumberTesterByCampaignFinish($currentUser);
+//        $nbPersons = $productRepository->findNumberTesterByCampaignFinish2($currentUser);
+//        $nbPersons = [$nbPersons[0][1], $nbPersonsTester[0][1]];
+//
+        $questions = $questionRepository->findCampaignQuestion();
+
+        return $this->render('customer/all_campaign.html.twig', [
+            "statusnom" => json_encode($statusNom),
+            "mycampaigns" => $mycampaigns,
+//            "mycampaignscount" =>  json_encode($mycampaigncount[0][1]),
+            "details" =>  $detailsCampaign,
+//            "details_stats" =>  json_encode($detailsCampaignStats),
+//            "nbpersons" => json_encode($nbPersons),
+            "questions" => $questions,
+        ]);
+    }
+
+
+    /**
      * @Route("/campaign_details/{id}", name="campaign_details")
      */
     public function campaign_details(Request $request, AnswerUserRepository $answerUserRepository): Response
