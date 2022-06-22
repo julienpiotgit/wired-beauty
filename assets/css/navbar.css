@@ -147,13 +147,15 @@
     align-items: center;
     position: absolute;
     bottom: 0;
-    right: 0;
+    right: 50px;
+    z-index: 1;
 }
 
 .navbar .navbar-collapse .translation img {
     width: 60px;
     height: auto;
     padding: 10px;
+    z-index: -1;
 }
 
 .navbar .navbar-collapse .registration {
@@ -171,6 +173,7 @@
     padding: 10px 20px;
     color: #fff;
     background-color: var(--main-color);
+    z-index: 1;
 }
 
 .navbar .navbar-collapse .registration a:last-of-type {

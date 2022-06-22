@@ -7,16 +7,29 @@ use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FrontController extends AbstractController
 {
     /**
      * @Route("/", name="homepage")
      */
-    public function index(): Response
+    public function index(TranslatorInterface $translator): Response
     {
         return $this->render('front/index.html.twig');
     }
+
+    /**
+     * @Route("/fr", name="local_fr")
+     */
+    public function changeLocalFr(Request $request): Response
+    {
+        $request->setLocale("fr");
+
+        return $this->render('front/index.html.twig');
+    }
+
 
     /**
      * @Route("/what-we-do", name="what")
