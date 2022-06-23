@@ -1,1 +1,38 @@
+nav.home: Home
+nav.what: What we do
+nav.about: Who we are
+nav.validation: Scientific Validation
+nav.device: Device & App
+nav.authenticate: You are logged in as
+
 header.title: Wired Beauty in English
+header.button: Become a Tester
+
+button.readMore: Read More
+button.login: Login
+button.registration: Registration
+button.dashboardAccess: My test space
+button.logout: Logout
+
+titleSection.what: What we do
+titleSection.about: Who we are
+titleSection.validation: Scientific Validation
+titleSection.confidence: Marks of confidence
+titleSection.device: Device & App
+titleSection.become: Become a tester
+titleSection.connexion: Please sign in
+titleSection.register: Register
+
+form.password: Password
+form:firstname: Firstname
+form:name: Name
+form:age: Age
+form:height: Height
+form:weight: Weight
+form:cp: Postal code
+form:city: City
+form:terms: Agree Terms
+form:password: Password
+
+footer.product: Our products
+footer.copyright: All Rights Reserved.

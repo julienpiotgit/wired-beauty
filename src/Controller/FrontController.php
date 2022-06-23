@@ -13,26 +13,29 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class FrontController extends AbstractController
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/index/{_locale}", name="homepage")
      */
-    public function index(TranslatorInterface $translator): Response
+    public function index(Request $request): Response
     {
         return $this->render('front/index.html.twig');
     }
 
     /**
-     * @Route("/fr", name="local_fr")
+     * @Route("/changeLocale/{_locale}", name="locale")
      */
-    public function changeLocalFr(Request $request): Response
+    public function locale(Request $request, $_locale): Response
     {
-        $request->setLocale("fr");
 
-        return $this->render('front/index.html.twig');
+        $locale = $request->getLocale();
+
+        $request->setLocale($locale);
+
+        return $this->redirectToRoute('homepage');
     }
 
 
     /**
-     * @Route("/what-we-do", name="what")
+     * @Route("/what-we-do/{_locale}", name="what")
      */
     public function what(): Response
     {

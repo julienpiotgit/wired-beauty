@@ -13,7 +13,7 @@
                         Ut pellentesque nisi sed turpis cursus lacinia. Integer et ipsum
                         sed eros tincidunt lacinia nec at turpis.</p>
                     <a class="main-link mt-3" href="">
-                        Become a tester
+                        {{ 'header.button' | trans }}
                     </a>
                 </div>
             </div>
@@ -23,7 +23,7 @@
     <section class="padding-section bg-second-color position-relative about-presentation">
         <div class="container">
             <div class="head-section right-position" data-aos="zoom-in">
-                <h2 class="main-color">WHAT WE DO</h2>
+                <h2 class="main-color">{{'titleSection.what' | trans}}</h2>
             </div>
             <div class="col-lg-6 position-relative">
                 <img src="{{ asset('build/core-img/parfum.jpg') }}" class="img-fluid" data-aos="fade-right">
@@ -36,7 +36,7 @@
                         luctus in. Mauris eu erat dapibus, malesuada risus et, varius ex.
                     </p>
                     <a class="main-link mt-3" href="{{ path('what') }}">
-                        Read More
+                        {{ 'button.readMore' | trans }}
                     </a>
                 </div>
             </div>
@@ -46,7 +46,7 @@
     <section class="about-banner">
         <div class="padding-section overlay">
             <div class="head-section center-position"  data-aos="fade-bottom">
-                <h2>WHO WE ARE</h2>
+                <h2 class="main-color">{{'titleSection.about' | trans}}</h2>
             </div>
             <div class="col-lg-8 mx-auto text-center"  data-aos="zoom-in">
                 <p class="text-center text-white">Suspendisse potenti. Donec non consectetur tellus, eget lacinia arcu.
@@ -56,7 +56,7 @@
                     tempus.
                     Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
                 <a class="main-link mt-3" href="">
-                    Read More
+                    {{ 'button.readMore' | trans }}
                 </a>
 
             </div>
@@ -67,7 +67,7 @@
         <div class="container">
             <div class="content">
                 <div class="head-section left-position">
-                    <h2 data-aos="fade-right">Scientific Validation</h2>
+                    <h2 data-aos="fade-right">{{'titleSection.validation' | trans}}</h2>
                 </div>
                 <p class="text-justify text-white"  data-aos="zoom-in">
                     Suspendisse potenti. Donec non consectetur tellus, eget lacinia arcu. Sed vitae sem a leo faucibus
@@ -79,11 +79,11 @@
                     venenatis orci vitae justo cursus ultrices. Pellentesque vel auctor purus, in iaculis velit.
                 </p>
                 <a class="main-link green mt-3"  data-aos="zoom-in" href="">
-                    Read More
+                    {{ 'button.readMore' | trans }}
                 </a>
             </div>
             <div class="brand">
-                <h2 data-aos="zoom-in">MARKS OF CONFIDENCE</h2>
+                <h2 data-aos="zoom-in">{{ 'titleSection.confidence' | trans }}</h2>
                 <div class="list">
                     <img src="{{ asset('build/brand/nestle-logo.png') }}" class="img-fluid" data-aos="fade-bottom">
                     <img src="{{ asset('build/brand/nestle-logo.png') }}" class="img-fluid" data-aos="fade-bottom">
@@ -107,7 +107,7 @@
                 </div>
                 <div class="col-lg-6" data-aos="zoom-in">
                     <div class="head-section text-lg-end" data-aos="fade-left">
-                        <h2>DEVICE & APP</h2>
+                        <h2>{{ 'titleSection.device' | trans }}</h2>
                     </div>
                     <p class="text-justify text-white" data-aos="fade-left">
                         Suspendisse potenti. Donec non consectetur tellus, eget lacinia arcu. Sed vitae sem a leo
@@ -122,7 +122,7 @@
                     </p>
                     <div class="text-end">
                         <a class="main-link ms-auto green" href="">
-                            Read More
+                            {{ 'button.readMore' | trans }}
                         </a>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
     <section class="tester-banner">
         <div class="padding-section overlay">
             <div class="head-section center-position" data-aos="fade-bottom">
-                <h2>BECOME A TESTER</h2>
+                <h2>{{ 'titleSection.become' | trans }}</h2>
             </div>
             <div class="col-lg-8 mx-auto text-center" data-aos="zoom-in">
                 <p class="text-center text-white">Suspendisse potenti. Donec non consectetur tellus, eget lacinia arcu.
@@ -143,7 +143,7 @@
                     tempus.
                     Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
                 <a class="main-link mt-3" href="">
-                    Read More
+                    {{ 'button.readMore' | trans }}
                 </a>
 
             </div>
