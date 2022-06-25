@@ -112,8 +112,6 @@ class CustomerController extends AbstractController
 
         $mycampaigns = $applicationRepository->findCampaigns($currentUser);
 
-//        $mycampaigncount = $productRepository->findCountCampaigns($currentUser);
-//
         $detailsCampaign = $productRepository->findDetailsCampaign();
 
         $detailsCampaignStats = [];
@@ -130,19 +128,12 @@ class CustomerController extends AbstractController
             }
         }
 
-//        $nbPersonsTester = $productRepository->findNumberTesterByCampaignFinish($currentUser);
-//        $nbPersons = $productRepository->findNumberTesterByCampaignFinish2($currentUser);
-//        $nbPersons = [$nbPersons[0][1], $nbPersonsTester[0][1]];
-//
         $questions = $questionRepository->findCampaignQuestion();
 
         return $this->render('customer/all_campaign.html.twig', [
             "statusnom" => json_encode($statusNom),
             "mycampaigns" => $mycampaigns,
-//            "mycampaignscount" =>  json_encode($mycampaigncount[0][1]),
             "details" =>  $detailsCampaign,
-//            "details_stats" =>  json_encode($detailsCampaignStats),
-//            "nbpersons" => json_encode($nbPersons),
             "questions" => $questions,
         ]);
     }
