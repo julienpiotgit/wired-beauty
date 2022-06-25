@@ -78,9 +78,8 @@ class ProductRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->addSelect('campaign')
             ->innerJoin('p.campaign', 'campaign')
-            ->setMaxResults(1)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 
     public function findCampaignOngoing()

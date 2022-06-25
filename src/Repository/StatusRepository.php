@@ -73,4 +73,16 @@ class StatusRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    public function findOneByStatusSoon()
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.name = :name')
+            ->setParameter('name', 'soon')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 }

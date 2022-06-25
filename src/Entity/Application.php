@@ -55,6 +55,11 @@ class Application
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $qcm_is_answered;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +97,18 @@ class Application
     public function setStatus(?Status $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getQcmIsAnswered(): ?bool
+    {
+        return $this->qcm_is_answered;
+    }
+
+    public function setQcmIsAnswered(bool $qcm_is_answered): self
+    {
+        $this->qcm_is_answered = $qcm_is_answered;
 
         return $this;
     }

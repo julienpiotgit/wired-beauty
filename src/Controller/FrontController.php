@@ -13,7 +13,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class FrontController extends AbstractController
 {
     /**
-     * @Route("/index/{_locale}", name="homepage")
+     * @Route("/", name="homepage")
      */
     public function index(Request $request): Response
     {

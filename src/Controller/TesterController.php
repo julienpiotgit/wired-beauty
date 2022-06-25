@@ -5,12 +5,17 @@ namespace App\Controller;
 use App\Entity\AnswerUser;
 use App\Entity\Application;
 use App\Entity\Campaign;
+use App\Entity\Product;
 use App\Entity\Session;
 use App\Entity\Status;
+use App\Repository\AnswerUserRepository;
 use App\Repository\ApplicationRepository;
+use App\Repository\CampaignRepository;
 use App\Repository\ProductRepository;
 use App\Repository\QuestionAnswerRepository;
 use App\Repository\QuestionRepository;
+use App\Repository\SessionRepository;
+use App\Repository\StatusRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,38 +34,57 @@ class TesterController extends AbstractController
     }
 
     /**
-     * @Route("/list_campaign", name="list_campaign")
+     * @Route("/list_campaign_tester", name="list_campaign_tester")
      */
-    public function list_campaign(): Response
+    public function list_campaign(ProductRepository $productRepository, ApplicationRepository $applicationRepository): Response
     {
-        $allCampaigns = $this->entityManager->getRepository(Campaign::class)->findAll();
         $statusSoon = $this->entityManager->getRepository(Status::class)->findOneBy(["name" => "soon"]);
+        $statusOngoing = $this->entityManager->getRepository(Status::class)->findOneBy(["name" => "ongoing"]);
         $statusFinish = $this->entityManager->getRepository(Status::class)->findOneBy(["name" => "finish"]);
 
+        $allCampaigns = $this->entityManager->getRepository(Campaign::class)->findAll();
         $allCampaignSoon = $this->entityManager->getRepository(Campaign::class)->findBy([
             'status' => $statusSoon
         ]);
-
+        $allCampaignOngoing = $this->entityManager->getRepository(Campaign::class)->findBy([
+            'status' => $statusOngoing
+        ]);
         $allCampaignFinish = $this->entityManager->getRepository(Campaign::class)->findBy([
             'status' => $statusFinish
         ]);
+        $currentUser = $this->getUser();
+        $application = $applicationRepository->findCampaigns($currentUser);
+        $detailsCampaign = $productRepository->findDetailsCampaign();
 
         return $this->render('tester/list_campaign.html.twig', [
             'allCampaigns' => $allCampaigns,
             'allCampaignSoon' => $allCampaignSoon,
-            'allCampaignFinish' => $allCampaignFinish
+            'allCampaignOngoing' => $allCampaignOngoing,
+            'allCampaignFinish' => $allCampaignFinish,
+            'details' => $detailsCampaign,
+            'applications' => $application
         ]);
     }
 
     /**
      * @Route("/my_campaign", name="my_campaign")
      */
-    public function my_campaign(ApplicationRepository $applicationRepository, ProductRepository $productRepository,QuestionRepository $questionRepository, QuestionAnswerRepository $questionAnswerRepository): Response
+    public function my_campaign(AnswerUserRepository $answerUserRepository, ApplicationRepository $applicationRepository, ProductRepository $productRepository,QuestionRepository $questionRepository, QuestionAnswerRepository $questionAnswerRepository): Response
     {
 
         $currentUser = $this->getUser();
+        $statusSoon = $this->entityManager->getRepository(Status::class)->findOneBy(["name" => "soon"]);
+        $statusOngoing = $this->entityManager->getRepository(Status::class)->findOneBy(["name" => "ongoing"]);
+        $statusFinish = $this->entityManager->getRepository(Status::class)->findOneBy(["name" => "finish"]);
 
-        $mycampaigns = $applicationRepository->findCampaigns($currentUser);
+        $allMyCampaigns = $applicationRepository->findCampaignsByAcceptedApplication($currentUser);
+
+
+        $mycampaignsSoon = $applicationRepository->findCampaignsByStatusAndAcceptedApplication($currentUser, $statusSoon);
+        $mycampaignsOngoing = $applicationRepository->findCampaignsByStatusAndAcceptedApplication($currentUser, $statusOngoing);
+        $mycampaignsFinish = $applicationRepository->findCampaignsByStatusAndAcceptedApplication($currentUser, $statusFinish);
+
+
 
         $detailsCampaign = $productRepository->findDetailsCampaign();
 
@@ -68,18 +92,24 @@ class TesterController extends AbstractController
 
         $answer = $questionAnswerRepository->findAll();
 
+        $myanswer = $answerUserRepository->getAnswerByUser($currentUser);
+
         return $this->render('tester/my_campaign.html.twig', [
-            "mycampaigns" => $mycampaigns,
+            "mycampaigns" => $allMyCampaigns,
+            "mycampaignsSoon" => $mycampaignsSoon,
+            "mycampaignsOngoing" => $mycampaignsOngoing,
+            "mycampaignsFinish" => $mycampaignsFinish,
             "details" => $detailsCampaign,
             "questions" => $question,
-            "answers" => $answer
+            "answers" => $answer,
+            "myanswers" => $myanswer
         ]);
     }
 
     /**
      * @Route("/add_qcm", name="add_qcm")
      */
-    public function add_qcm(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager, QuestionAnswerRepository $questionAnswerRepository): Response
+    public function add_qcm(Request $request,CampaignRepository $campaignRepository, ApplicationRepository $applicationRepository, UserRepository $userRepository, EntityManagerInterface $entityManager, QuestionAnswerRepository $questionAnswerRepository): Response
     {
         $currentUser = $this->getUser();
         $user = $userRepository->find($currentUser);
@@ -94,6 +124,10 @@ class TesterController extends AbstractController
 
         $answers = $request->request->get('answers');
         $number_answers = $request->request->get('number_answers');
+        $campaignId = $request->request->get('campaign');
+        $campaign = $campaignRepository->findOneBy(['id' => $campaignId]);
+
+        $application = $applicationRepository->findApplicationByUserAndCampaignAndStatusAccepted($user,$campaign);
 
         for($i =0; $i < $number_answers; $i++){
             $answerUser = new AnswerUser();
@@ -105,13 +139,14 @@ class TesterController extends AbstractController
             $entityManager->persist($answerUser);
             $entityManager->flush();
         }
-
+        $application->setQcmIsAnswered(true);
+        $entityManager->flush();
         return $this->redirectToRoute("admin");
     }
     /**
      * @Route("/add_application", name="add_application")
      */
-    public function add_application(UserRepository $userRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function add_application(SessionRepository $sessionRepository, StatusRepository $statusRepository, UserRepository $userRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         $currentUser = $this->getUser();
         $user = $userRepository->find($currentUser);
@@ -126,11 +161,11 @@ class TesterController extends AbstractController
 
         $campaignId = $request->request->get("campaign");
 
-        $statusPending = $this->entityManager->getRepository(Status::class)->findOneBy(["name" => "pending"]);
+        $statusPending = $statusRepository->findOneBy(["name" => "pending"]);
 
-        $session = $this->entityManager->getRepository(Session::class)->findBy(["campaign" => $campaignId]);
+        $session = $sessionRepository->findBy(["campaign" => $campaignId]);
 
-        $sessioncount = $this->entityManager->getRepository(Session::class)->count(["campaign" => $campaignId]);
+        $sessioncount = $sessionRepository->count(["campaign" => $campaignId]);
 
         $sessionRandom = random_int(1, $sessioncount);
 

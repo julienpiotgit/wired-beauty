@@ -98,11 +98,6 @@ class Campaign
     private $products;
 
 
-//    /**
-//     * @ORM\Column(type="integer")
-//     */
-//    private $number_tester;
-
     public function __construct()
     {
         $this->sessions = new ArrayCollection();
@@ -289,15 +284,11 @@ class Campaign
         return $this;
     }
 
-//    public function getNumberTester(): ?int
-//    {
-//        return $this->number_tester;
-//    }
-//
-//    public function setNumberTester(int $number_tester): self
-//    {
-//        $this->number_tester = $number_tester;
-//
-//        return $this;
-//    }
+    public function addStatus(Status $status): self
+    {
+        $this->status = $status;
+        $status->setCampaign($this);
+
+        return $this;
+    }
 }

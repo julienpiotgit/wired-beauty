@@ -36,7 +36,7 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @Route("/list_campaign", name="list_campaign_customer")
+     * @Route("/list_campaign_customer", name="list_campaign_customer")
      */
     public function list_campaign(): Response
     {

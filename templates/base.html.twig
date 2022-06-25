@@ -70,7 +70,7 @@
                 <div class="registration">
                     {% if app.user %}
                         <div class="p-3">
-                            <i class="fa fa-user"></i> {{ 'nav.authenticate' | trans }} {{ app.user.username }}.<a class="main-link pink ms-3" style="display: inline" href="{{ path('app_logout') }}">Logout</a>
+                            <i class="fa fa-user"></i> {{ 'nav.authenticate' | trans }} {{ app.user.username }}.<a class="main-link pink ms-3" style="display: inline" href="{{ path('app_logout') }}">{{ 'button.logout' | trans }}</a>
                         </div>
                         {% else %}
                     <a href="{{ path('app_login') }}">{{ 'button.login' | trans }}</a>
