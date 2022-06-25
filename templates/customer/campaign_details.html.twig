@@ -16,19 +16,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-    <body>
+<body>
 
     <div class="container">
-     <div id="questions" data-questions="{{ questions }}">
-         {% for question in questionsArray %}
-             {% dump(question) %}
-             <canvas id="labels{{ loop.index }}" width="400" height="100"></canvas>
-         {% endfor %}
-     </div>
+        <button style="margin-top: 2%" id="exportButton" type="button">Exporter en PDF</button>
+        <br/><br/>
+        <div id="chartsContainer">
+            <div id="questions" data-questions="{{ question }}">
+             {% for question in questionsArray %}
+                 <canvas id="labels{{ loop.index }}" width="400" height="100"></canvas>
+             {% endfor %}
+            </div>
+        </div>
     </div>
 
 </body>
-</html>
     {% block javascripts %}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.min.js"></script>
@@ -39,28 +41,38 @@
                 html2canvas(document.querySelector("#chartsContainer")).then(canvas => {
                     var dataURL = canvas.toDataURL();
                     var pdf = new jsPDF();
-                    pdf.addImage(dataURL, 'JPEG', 20, 20, 180, 160); //addImage(image, format, x-coordinate, y-coordinate, width, height)
-                    pdf.save("Export_stats.pdf");
+                    pdf.addImage(dataURL, 'JPEG', 20, 20, 180, 280); //addImage(image, format, x-coordinate, y-coordinate, width, height)
+                    pdf.save("Export_stats_questions-reponses.pdf");
                 });
             });
 
             let questions = document.querySelector("#questions").dataset["questions"];
             questions = JSON.parse(questions);
 
+            questions = Object.entries(questions).map(([key, value]) => ({key,value}));
+
             questions.forEach(function (question, key) {
+                console.log(Object.values(question["value"]["occurence"]))
                     let labels = document.querySelector("#labels"+(key+1))
                     let labelsGraph = new Chart(labels, {
                         type: "bar",
                         data: {
-                            // labels: ["q1", "q2","q3"],
-                             labels: {{ answername|raw }},
+                             labels: question["value"]["liste_reponse"],
                             datasets: [{
-                                label: question.name,
-                                // data: [10, 2, 30],
-                                 data: {{ answer|raw }},
-                                {# backgroundColor: {{ categColor|raw }} #}
-                                backgroundColor: ["#6a5acd7a", "#f1cbc8"]
+                                label: question["key"],
+                                data: Object.values(question["value"]["occurence"]),
+                                backgroundColor: ["#6a5acd7a", "#f1cbc8", "#d2be6e","#FFA07A", "#70c770", "#FA7A7AFF"],
                             }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true,
+                                        stepSize: 1
+                                    }
+                                }]
+                            }
                         }
                     })
             })

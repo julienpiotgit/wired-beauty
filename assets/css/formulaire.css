@@ -60,3 +60,9 @@
     margin-bottom: 8px;
     color: var(--main-color);
 }
+
+@media (max-width: 991px) {
+    .section-formulaire h1 {
+        font-size: 8vw;
+    }
+}

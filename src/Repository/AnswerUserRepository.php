@@ -97,4 +97,17 @@ class AnswerUserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getQuestionsByCampaign(int $campaign_id)
+    {
+        return $this->createQueryBuilder('a')
+            ->select('qa.name as questionAnswerName, q.name as questionName')
+            ->innerJoin('a.question_answer', 'qa')
+            ->innerJoin('qa.question', 'q')
+            ->innerJoin('q.campaign', 'c')
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $campaign_id)
+            ->getQuery()
+            ->getResult();
+    }
 }

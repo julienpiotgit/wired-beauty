@@ -97,6 +97,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $answerUsers;
 
     /**
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="user")
+     */
+    private $products;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
@@ -414,4 +419,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
 }

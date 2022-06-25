@@ -378,6 +378,10 @@ label.required::after {
         text-align: center;
     }
 
+    .head-section h2 {
+        font-size: 40px;
+    }
+
     .head-section h2:after {
         display: none !important;
     }
