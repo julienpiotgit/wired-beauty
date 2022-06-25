@@ -51,10 +51,14 @@
                             </div>
                             <div class="modal-body">
                                 <p>{{ mycampaign.session.campaign.description }}</p>
-                                <p>{{ details.name }}</p>
-                                <p>{{ details.type }}</p>
-                                <p>{{ details.gender }}</p>
-                                <p>{{ details.agerange }}</p>
+                                {% for detail in details %}
+                                    {% if detail.campaign.id == mycampaign.session.campaign.id %}
+                                        <p>{{ detail.name }}</p>
+                                        <p>{{ detail.type }}</p>
+                                        <p>{{ detail.gender }}</p>
+                                        <p>{{ detail.agerange }}</p>
+                                    {% endif %}
+                                 {% endfor %}
                                 {% if mycampaign.session.campaign.status.name == "finish" %}
                                     <h5 style="text-align: center"><a href="{{ path("campaign_details", {id:mycampaign.session.campaign.id}) }}" target="_blank">Accéder aux statistiques</a></h5>
                                 {% endif %}
@@ -94,10 +98,14 @@
                             </div>
                             <div class="modal-body">
                                 <p>{{ mycampaign.session.campaign.description }}</p>
-                                <p>{{ details.name }}</p>
-                                <p>{{ details.type }}</p>
-                                <p>{{ details.gender }}</p>
-                                <p>{{ details.agerange }}</p>#}
+                                {% for detail in details %}
+                                    {% if detail.campaign.id == mycampaign.session.campaign.id %}
+                                        <p>{{ detail.name }}</p>
+                                        <p>{{ detail.type }}</p>
+                                        <p>{{ detail.gender }}</p>
+                                        <p>{{ detail.agerange }}</p>
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                             <div class="modal-footer">
                                 <p>{{mycampaign.session.campaign.datestart |date("m/d/Y")}} - {{mycampaign.session.campaign.dateend |date("m/d/Y")}}  </p>
@@ -134,10 +142,14 @@
                             </div>
                             <div class="modal-body">
                                 <p>{{ mycampaign.session.campaign.description }}</p>
-                                <p>{{ details.name }}</p>
-                                <p>{{ details.type }}</p>
-                                <p>{{ details.gender }}</p>
-                                <p>{{ details.agerange }}</p>#}
+                                {% for detail in details %}
+                                    {% if detail.campaign.id == mycampaign.session.campaign.id %}
+                                        <p>{{ detail.name }}</p>
+                                        <p>{{ detail.type }}</p>
+                                        <p>{{ detail.gender }}</p>
+                                        <p>{{ detail.agerange }}</p>
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                             <div class="modal-footer">
                                 <p>{{mycampaign.session.campaign.datestart |date("m/d/Y")}} - {{mycampaign.session.campaign.dateend |date("m/d/Y")}}  </p>
@@ -175,10 +187,14 @@
                             </div>
                             <div class="modal-body">
                                 <p>{{ mycampaign.session.campaign.description }}</p>
-                                <p>{{ details.name }}</p>
-                                <p>{{ details.type }}</p>
-                                <p>{{ details.gender }}</p>
-                                <p>{{ details.agerange }}</p>
+                                {% for detail in details %}
+                                    {% if detail.campaign.id == mycampaign.session.campaign.id %}
+                                        <p>{{ detail.name }}</p>
+                                        <p>{{ detail.type }}</p>
+                                        <p>{{ detail.gender }}</p>
+                                        <p>{{ detail.agerange }}</p>
+                                    {% endif %}
+                                {% endfor %}
                                 <h5 style="text-align: center"><a href="{{ path("campaign_details", {id:mycampaign.session.campaign.id}) }}" target="_blank">Accéder aux statistiques</a></h5>
                             </div>
                             <div class="modal-footer">
