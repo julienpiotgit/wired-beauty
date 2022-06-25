@@ -3,190 +3,230 @@
 {% block main %}
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
-    <div class="container" style="align-items: center; display: flex; justify-content: center">
-        <button id="show_allmycampaign">List all my campaigns</button>
-        <button id="show_my_campaign_soon">My campaigns soon</button>
-        <button id="show_my_campaign_ongoing">My campaigns ongoing</button>
-        <button id="show_my_campaign_finish">My campaigns finish</button>
-    </div>
-
-    <!-- PARTIE LIST ALL MY CAMPAIGN -->
-    <div id="allmycampaigns" style="position: absolute; width: 100%; display: flex">
-        {% for mycampaign in mycampaigns %}
-            <!-- CARD ALL MY CAMPAIGN -->
-            <div class="card" style="width: 30%">
-                <div class="container">
-                    <h4><b>{{ mycampaign.session.campaign.name }}</b></h4>
-                    <p>stard-end date : {{ mycampaign.session.campaign.datestart |date("m/d/Y") }} - {{ mycampaign.session.campaign.dateend |date("m/d/Y") }}</p>
-                    <p>registered tester : {{ mycampaign.session.campaign.numberTester }}</p>
-                    <p>Status : {{ mycampaign.session.campaign.status.name }}</p>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailsListMyCampaign{{ mycampaign.session.campaign.id }}">Details campaign</button>
-                </div>
-                <!-- MODAL ALL MY CAMPAIGN DETAILS -->
-                <div class="modal fade" id="detailsListMyCampaign{{ mycampaign.session.campaign.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                {% if mycampaign.session.campaign.status.name == "soon" %}
-                                    <h5 class="modal-title" id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span style="color: blue">{{ mycampaign.session.campaign.status.name }}</span></h5>
-                                {% elseif mycampaign.session.campaign.status.name == "ongoing" %}
-                                    <h5 class="modal-title" id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span style="color: green">{{ mycampaign.session.campaign.status.name }}</span></h5>
-                                {% elseif mycampaign.session.campaign.status.name == "finish" %}
-                                    <h5 class="modal-title" id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span style="color: red">{{ mycampaign.session.campaign.status.name }}</span></h5>
-                                {% endif %}
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>description : {{ mycampaign.session.campaign.description }}</p>
-                                {% for detail in details %}
-                                {% if detail.campaign.id == mycampaign.session.campaign.id %}
-                                    <p>name product :{{ detail.name }}</p>
-                                    <p>type:{{ detail.type }}</p>
-                                    <p>gender:{{ detail.type }}</p>
-                                    <p>age range:{{ detail.type }}</p>
-                                {% endif %}
-                                {% endfor %}
-                            </div>
-                            <div class="modal-footer">
-                                <p>{{mycampaign.session.campaign.datestart |date("m/d/Y")}}-{{mycampaign.session.campaign.dateend |date("m/d/Y")}}</p>
-                                {% if mycampaign.qcmisanswered == 0 and mycampaign.session.campaign.status.name == "ongoing" %}
-                                <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#qcm-campaign{{ mycampaign.session.campaign.id }}">QCM</button>
-                                {% elseif mycampaign.qcmisanswered == 1 and (mycampaign.session.campaign.status.name == "ongoing" or mycampaign.session.campaign.status.name == "finish") %}
-                                    <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#qcm-my-answers-campaign{{ mycampaign.session.campaign.id }}" >See my answers</button>
-                                {% endif %}
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- MODAL ALL MY CAMPAIGN QCM -->
-                <div id="qcm-campaign{{ mycampaign.session.campaign.id }}" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">QCM of the campaign : {{ mycampaign.session.campaign.name }}</h5>
-                                <i class="fas fa-arrow-left" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#detailsListMyCampaign{{ mycampaign.session.campaign.id }}"></i>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body" id="qcmALLCAMPAIGN">
-                                {% for question in questions %}
-                                    {% if question.campaign.id == mycampaign.session.campaign.id %}
-                                        <fieldset id="fieldset{{ mycampaign.session.campaign.id }}">
-                                            <input type="hidden"/>
-                                        <legend>{{ question.name }}</legend>
-                                        {% for answer in answers %}
-                                            {% if answer.question.id == question.id %}
-                                            <div>
-                                                <input type="radio" name="{{ question.id }}" id="{{ answer.id }}" value="{{ answer.id }}" required/>
-                                                <label for="{{ answer.id }}">{{ answer.name }}</label>
-                                            </div>
-                                            {% endif %}
-                                        {% endfor %}
-                                        </fieldset>
-                                    {% endif %}
-                                {% endfor %}
-                                <br>
-                                <input type="button" value="Submit" onclick="validateQCM({{ mycampaign.session.campaign.id }})" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- MODAL ALL MY CAMPAIGN ANSWER QCM -->
-                <div id="qcm-my-answers-campaign{{ mycampaign.session.campaign.id }}" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">QCM of the campaign : {{ mycampaign.session.campaign.name }}</h5>
-                                <i class="fas fa-arrow-left" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#detailsListMyCampaign{{ mycampaign.session.campaign.id }}"></i>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                {% for question in questions %}
-                                    {% if question.campaign.id == mycampaign.session.campaign.id %}
-                                        <fieldset id="fieldset{{ mycampaign.session.campaign.id }}">
-                                            <legend>{{ question.name }}</legend>
-                                            {% for myanswer in myanswers %}
-                                                {% if myanswer.questionanswer.question.id == question.id %}
-                                                    <div>
-                                                        <label>{{ myanswer.questionanswer.name }}</label>
-                                                    </div>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </fieldset>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <section class="campaign">
+        <div class="container">
+            <div class="nav">
+                <button class="item selected" onclick="campaignSelect(this)" id="allCampaign">List all campaigns
+                </button>
+                <button class="item" onclick="campaignSelect(this)" id="soon">Campaign soon</button>
+                <button class="item" onclick="campaignSelect(this)" id="finish">Campaigns finish</button>
+                <button class="item" onclick="campaignSelect(this)" id="ongoing">Campaigns ongoing</button>
             </div>
-        {% endfor %}
-    </div>
 
-    <!-- PARTIE LIST ALL MY CAMPAIGN SOON-->
-    <div id="mycampaignSoon" style="position: absolute; width: 100%; display: flex">
-        {% for mycampaignSoon in mycampaignsSoon %}
-            <!-- CARD ALL MY CAMPAIGN SOON -->
-            <div class="card" style="width: 30%">
-                <div class="container">
-                    <h4><b>{{ mycampaignSoon.session.campaign.name }}</b></h4>
-                    <p>stard-end date : {{ mycampaignSoon.session.campaign.datestart |date("m/d/Y") }} - {{ mycampaignSoon.session.campaign.dateend |date("m/d/Y") }}</p>
-                    <p>registered tester : {{ mycampaignSoon.session.campaign.numberTester }}</p>
-                    <p>Status : {{ mycampaignSoon.session.campaign.status.name }}</p>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailsListMyCampaignSoon{{ mycampaignSoon.session.campaign.id }}">Details campaign</button>
-                </div>
-                <!-- MODAL ALL MY CAMPAIGN SOON DETAILS -->
-                <div class="modal fade" id="detailsListMyCampaignSoon{{ mycampaignSoon.session.campaign.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">{{ mycampaignSoon.session.campaign.name }} - <span style="color: blue">{{ mycampaignSoon.session.campaign.status.name }}</span></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>description : {{ mycampaignSoon.session.campaign.description }}</p>
-                                {% for detail in details %}
-                                    {% if detail.campaign.id == mycampaignSoon.session.campaign.id %}
-                                        <p>name product :{{ detail.name }}</p>
-                                        <p>type:{{ detail.type }}</p>
-                                        <p>gender:{{ detail.type }}</p>
-                                        <p>age range:{{ detail.type }}</p>
+            <!-- PARTIE LIST ALL MY CAMPAIGN -->
+            <div class="block active" id="allCampaign">
+                {% for mycampaign in mycampaigns %}
+                    <!-- CARD ALL MY CAMPAIGN -->
+                    <div class="card">
+                        <h4><b>{{ mycampaign.session.campaign.name }}</b></h4>
+                        <p>stard-end date : {{ mycampaign.session.campaign.datestart |date("m/d/Y") }}
+                            - {{ mycampaign.session.campaign.dateend |date("m/d/Y") }}</p>
+                        <p>registered tester : {{ mycampaign.session.campaign.numberTester }}</p>
+                        <p>Status : {{ mycampaign.session.campaign.status.name }}</p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#detailsListMyCampaign{{ mycampaign.session.campaign.id }}">Details
+                            campaign
+                        </button>
+                    </div>
+                    <!-- MODAL ALL MY CAMPAIGN DETAILS -->
+                    <div class="modal fade" id="detailsListMyCampaign{{ mycampaign.session.campaign.id }}"
+                         tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        id="exampleModalLabel">{{ mycampaign.session.campaign.name }}
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>description : {{ mycampaign.session.campaign.description }}</p>
+                                    {% for detail in details %}
+                                        {% if detail.campaign.id == mycampaign.session.campaign.id %}
+                                            <p>name product :{{ detail.name }}</p>
+                                            <p>type:{{ detail.type }}</p>
+                                            <p>gender:{{ detail.type }}</p>
+                                            <p>age range:{{ detail.type }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="modal-footer">
+                                    <p>{{ mycampaign.session.campaign.datestart |date("m/d/Y") }}
+                                        -{{ mycampaign.session.campaign.dateend |date("m/d/Y") }}</p>
+                                    {% if mycampaign.qcmisanswered == 0 and mycampaign.session.campaign.status.name == "ongoing" %}
+                                        <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal"
+                                                data-bs-target="#qcm-campaign{{ mycampaign.session.campaign.id }}">
+                                            QCM
+                                        </button>
+                                    {% elseif mycampaign.qcmisanswered == 1 and (mycampaign.session.campaign.status.name == "ongoing" or mycampaign.session.campaign.status.name == "finish") %}
+                                        <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal"
+                                                data-bs-target="#qcm-my-answers-campaign{{ mycampaign.session.campaign.id }}">
+                                            See my answers
+                                        </button>
                                     {% endif %}
-                                {% endfor %}
-                            </div>
-                            <div class="modal-footer">
-                                <p>{{mycampaignSoon.session.campaign.datestart |date("m/d/Y")}}-{{mycampaignSoon.session.campaign.dateend |date("m/d/Y")}}</p>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <!-- MODAL ALL MY CAMPAIGN QCM -->
+                    <div id="qcm-campaign{{ mycampaign.session.campaign.id }}" class="modal fade" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">QCM of the campaign
+                                        : {{ mycampaign.session.campaign.name }}</h5>
+                                    <i class="fas fa-arrow-left" data-bs-dismiss="modal" data-bs-toggle="modal"
+                                       data-bs-target="#detailsListMyCampaign{{ mycampaign.session.campaign.id }}"></i>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" id="qcmALLCAMPAIGN">
+                                    {% for question in questions %}
+                                        {% if question.campaign.id == mycampaign.session.campaign.id %}
+                                            <fieldset id="fieldset{{ mycampaign.session.campaign.id }}">
+                                                <input type="hidden"/>
+                                                <legend>{{ question.name }}</legend>
+                                                {% for answer in answers %}
+                                                    {% if answer.question.id == question.id %}
+                                                        <div>
+                                                            <input type="radio" name="{{ question.id }}"
+                                                                   id="{{ answer.id }}" value="{{ answer.id }}"
+                                                                   required/>
+                                                            <label for="{{ answer.id }}">{{ answer.name }}</label>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </fieldset>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <br>
+                                    <input type="button" value="Submit"
+                                           onclick="validateQCM({{ mycampaign.session.campaign.id }})"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MODAL ALL MY CAMPAIGN ANSWER QCM -->
+                    <div id="qcm-my-answers-campaign{{ mycampaign.session.campaign.id }}" class="modal fade"
+                         tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">QCM of the campaign
+                                        : {{ mycampaign.session.campaign.name }}</h5>
+                                    <i class="fas fa-arrow-left" data-bs-dismiss="modal" data-bs-toggle="modal"
+                                       data-bs-target="#detailsListMyCampaign{{ mycampaign.session.campaign.id }}"></i>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {% for question in questions %}
+                                        {% if question.campaign.id == mycampaign.session.campaign.id %}
+                                            <fieldset id="fieldset{{ mycampaign.session.campaign.id }}">
+                                                <legend>{{ question.name }}</legend>
+                                                {% for myanswer in myanswers %}
+                                                    {% if myanswer.questionanswer.question.id == question.id %}
+                                                        <div>
+                                                            <label>{{ myanswer.questionanswer.name }}</label>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </fieldset>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-    </div>
 
-    <!-- PARTIE LIST ALL MY CAMPAIGN ONGOING -->
-    <div id="mycampaignOngoing" style="position: absolute; width: 100%; display: flex">
-        {% for mycampaignOngoing in mycampaignsOngoing %}
-            <!-- CARD ALL MY CAMPAIGN ONGOING -->
-            <div class="card" style="width: 30%">
-                <div class="container">
+            <!-- PARTIE LIST ALL MY CAMPAIGN SOON-->
+            <div id="soon" class="block">
+                {% for mycampaignSoon in mycampaignsSoon %}
+                    <!-- CARD ALL MY CAMPAIGN SOON -->
+                    <div class="card">
+                        <h4><b>{{ mycampaignSoon.session.campaign.name }}</b></h4>
+                        <p>stard-end date : {{ mycampaignSoon.session.campaign.datestart |date("m/d/Y") }}
+                            - {{ mycampaignSoon.session.campaign.dateend |date("m/d/Y") }}</p>
+                        <p>registered tester : {{ mycampaignSoon.session.campaign.numberTester }}</p>
+                        <p>Status : {{ mycampaignSoon.session.campaign.status.name }}</p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#detailsListMyCampaignSoon{{ mycampaignSoon.session.campaign.id }}">
+                            Details campaign
+                        </button>
+                    </div>
+                    <!-- MODAL ALL MY CAMPAIGN SOON DETAILS -->
+                    <div class="modal fade" id="detailsListMyCampaignSoon{{ mycampaignSoon.session.campaign.id }}"
+                         tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        id="exampleModalLabel">{{ mycampaignSoon.session.campaign.name }} - <span
+                                                style="color: blue">{{ mycampaignSoon.session.campaign.status.name }}</span>
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>description : {{ mycampaignSoon.session.campaign.description }}</p>
+                                    {% for detail in details %}
+                                        {% if detail.campaign.id == mycampaignSoon.session.campaign.id %}
+                                            <p>name product :{{ detail.name }}</p>
+                                            <p>type:{{ detail.type }}</p>
+                                            <p>gender:{{ detail.type }}</p>
+                                            <p>age range:{{ detail.type }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="modal-footer">
+                                    <p>{{ mycampaignSoon.session.campaign.datestart |date("m/d/Y") }}
+                                        -{{ mycampaignSoon.session.campaign.dateend |date("m/d/Y") }}</p>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- PARTIE LIST ALL MY CAMPAIGN ONGOING -->
+            <div id="mycampaignOngoing" class="block">
+                {% for mycampaignOngoing in mycampaignsOngoing %}
+                <!-- CARD ALL MY CAMPAIGN ONGOING -->
+                <div class="card">
                     <h4><b>{{ mycampaignOngoing.session.campaign.name }}</b></h4>
-                    <p>stard-end date : {{ mycampaignOngoing.session.campaign.datestart |date("m/d/Y") }} - {{ mycampaignOngoing.session.campaign.dateend |date("m/d/Y") }}</p>
+                    <p>stard-end date : {{ mycampaignOngoing.session.campaign.datestart |date("m/d/Y") }}
+                        - {{ mycampaignOngoing.session.campaign.dateend |date("m/d/Y") }}</p>
                     <p>registered tester : {{ mycampaignOngoing.session.campaign.numberTester }}</p>
                     <p>Status : {{ mycampaignOngoing.session.campaign.status.name }}</p>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailsListMyCampaignOngoing{{ mycampaignOngoing.session.campaign.id }}">Details campaign</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#detailsListMyCampaignOngoing{{ mycampaignOngoing.session.campaign.id }}">
+                        Details campaign
+                    </button>
                 </div>
                 <!-- MODAL ALL MY CAMPAIGN ONGOING DETAILS -->
-                <div class="modal fade" id="detailsListMyCampaignOngoing{{ mycampaignOngoing.session.campaign.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade"
+                     id="detailsListMyCampaignOngoing{{ mycampaignOngoing.session.campaign.id }}" tabindex="-1"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">{{ mycampaignOngoing.session.campaign.name }} - <span style="color: green">{{ mycampaignOngoing.session.campaign.status.name }}</span></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h5 class="modal-title"
+                                    id="exampleModalLabel">{{ mycampaignOngoing.session.campaign.name }} - <span
+                                            style="color: green">{{ mycampaignOngoing.session.campaign.status.name }}</span>
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <p>description : {{ mycampaignOngoing.session.campaign.description }}</p>
@@ -200,25 +240,37 @@
                                 {% endfor %}
                             </div>
                             <div class="modal-footer">
-                                <p>{{mycampaignOngoing.session.campaign.datestart |date("m/d/Y")}}-{{mycampaignOngoing.session.campaign.dateend |date("m/d/Y")}}</p>
+                                <p>{{ mycampaignOngoing.session.campaign.datestart |date("m/d/Y") }}
+                                    -{{ mycampaignOngoing.session.campaign.dateend |date("m/d/Y") }}</p>
                                 {% if mycampaignOngoing.qcmisanswered == 0 and mycampaignOngoing.session.campaign.status.name == "ongoing" %}
-                                    <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#qcm-campaign-ongoing{{ mycampaignOngoing.session.campaign.id }}">QCM</button>
+                                    <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal"
+                                            data-bs-target="#qcm-campaign-ongoing{{ mycampaignOngoing.session.campaign.id }}">
+                                        QCM
+                                    </button>
                                 {% elseif mycampaignOngoing.qcmisanswered == 1 and (mycampaignOngoing.session.campaign.status.name == "ongoing" or mycampaignOngoing.session.campaign.status.name == "finish") %}
-                                    <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#qcm-my-answers-campaign-ongoing{{ mycampaignOngoing.session.campaign.id }}" >See my answers</button>
+                                    <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal"
+                                            data-bs-target="#qcm-my-answers-campaign-ongoing{{ mycampaignOngoing.session.campaign.id }}">
+                                        See my answers
+                                    </button>
                                 {% endif %}
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- MODAL ALL MY CAMPAIGN ONGOING QCM -->
-                <div id="qcm-campaign-ongoing{{ mycampaignOngoing.session.campaign.id }}" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div id="qcm-campaign-ongoing{{ mycampaignOngoing.session.campaign.id }}" class="modal fade"
+                     tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">QCM of the campaign : {{ mycampaignOngoing.session.campaign.name }}</h5>
-                                <i class="fas fa-arrow-left" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#detailsListMyCampaignOngoing{{ mycampaignOngoing.session.campaign.id }}"></i>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h5 class="modal-title" id="exampleModalLabel">QCM of the campaign
+                                    : {{ mycampaignOngoing.session.campaign.name }}</h5>
+                                <i class="fas fa-arrow-left" data-bs-dismiss="modal" data-bs-toggle="modal"
+                                   data-bs-target="#detailsListMyCampaignOngoing{{ mycampaignOngoing.session.campaign.id }}"></i>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
                             <div class="modal-body" id="qcmALLCAMPAIGNONGOING">
                                 {% for question in questions %}
@@ -229,7 +281,9 @@
                                             {% for answer in answers %}
                                                 {% if answer.question.id == question.id %}
                                                     <div>
-                                                        <input type="radio" name="{{ question.id }}" id="{{ answer.id }}" value="{{ answer.id }}" required/>
+                                                        <input type="radio" name="{{ question.id }}"
+                                                               id="{{ answer.id }}" value="{{ answer.id }}"
+                                                               required/>
                                                         <label for="{{ answer.id }}">{{ answer.name }}</label>
                                                     </div>
                                                 {% endif %}
@@ -238,19 +292,24 @@
                                     {% endif %}
                                 {% endfor %}
                                 <br>
-                                <input type="button" value="Submit" onclick="validateQCM({{ mycampaignOngoing.session.campaign.id }})" />
+                                <input type="button" value="Submit"
+                                       onclick="validateQCM({{ mycampaignOngoing.session.campaign.id }})"/>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- MODAL ALL MY CAMPAIGN ONGOING ANSWER QCM -->
-                <div id="qcm-my-answers-campaign-ongoing{{ mycampaignOngoing.session.campaign.id }}" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div id="qcm-my-answers-campaign-ongoing{{ mycampaignOngoing.session.campaign.id }}"
+                     class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">QCM of the campaign : {{ mycampaignOngoing.session.campaign.name }}</h5>
-                                <i class="fas fa-arrow-left" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#detailsListMyCampaignOngoing{{ mycampaignOngoing.session.campaign.id }}"></i>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h5 class="modal-title" id="exampleModalLabel">QCM of the campaign
+                                    : {{ mycampaignOngoing.session.campaign.name }}</h5>
+                                <i class="fas fa-arrow-left" data-bs-dismiss="modal" data-bs-toggle="modal"
+                                   data-bs-target="#detailsListMyCampaignOngoing{{ mycampaignOngoing.session.campaign.id }}"></i>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 {% for question in questions %}
@@ -272,28 +331,35 @@
                     </div>
                 </div>
             </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
 
-    <!-- PARTIE LIST ALL MY CAMPAIGN FINISH-->
-    <div id="mycampaignFinish" style="position: absolute; width: 100%; display: flex">
-        {% for mycampaignFinish in mycampaignsFinish %}
-            <!-- CARD ALL MY CAMPAIGN FINISH -->
-            <div class="card" style="width: 30%">
-                <div class="container">
+            <!-- PARTIE LIST ALL MY CAMPAIGN FINISH-->
+            <div id="mycampaignFinish" class="block">
+                {% for mycampaignFinish in mycampaignsFinish %}
+                <!-- CARD ALL MY CAMPAIGN FINISH -->
+                <div class="card">
                     <h4><b>{{ mycampaignFinish.session.campaign.name }}</b></h4>
-                    <p>stard-end date : {{ mycampaignFinish.session.campaign.datestart |date("m/d/Y") }} - {{ mycampaignFinish.session.campaign.dateend |date("m/d/Y") }}</p>
+                    <p>stard-end date : {{ mycampaignFinish.session.campaign.datestart |date("m/d/Y") }}
+                        - {{ mycampaignFinish.session.campaign.dateend |date("m/d/Y") }}</p>
                     <p>registered tester : {{ mycampaignFinish.session.campaign.numberTester }}</p>
                     <p>Status : {{ mycampaignFinish.session.campaign.status.name }}</p>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailsListMyCampaignFinish{{ mycampaignFinish.session.campaign.id }}">Details campaign</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#detailsListMyCampaignFinish{{ mycampaignFinish.session.campaign.id }}">
+                        Details campaign
+                    </button>
+                    <!-- MODAL ALL MY CAMPAIGN FINISH DETAILS -->
                 </div>
-                <!-- MODAL ALL MY CAMPAIGN FINISH DETAILS -->
-                <div class="modal fade" id="detailsListMyCampaignFinish{{ mycampaignFinish.session.campaign.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="detailsListMyCampaignFinish{{ mycampaignFinish.session.campaign.id }}"
+                     tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">{{ mycampaignFinish.session.campaign.name }} - <span style="color: red">{{ mycampaignFinish.session.campaign.status.name }}</span></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h5 class="modal-title"
+                                    id="exampleModalLabel">{{ mycampaignFinish.session.campaign.name }} - <span
+                                            style="color: red">{{ mycampaignFinish.session.campaign.status.name }}</span>
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <p>description : {{ mycampaignFinish.session.campaign.description }}</p>
@@ -307,9 +373,13 @@
                                 {% endfor %}
                             </div>
                             <div class="modal-footer">
-                                <p>{{mycampaignFinish.session.campaign.datestart |date("m/d/Y")}}-{{mycampaignFinish.session.campaign.dateend |date("m/d/Y")}}</p>
+                                <p>{{ mycampaignFinish.session.campaign.datestart |date("m/d/Y") }}
+                                    -{{ mycampaignFinish.session.campaign.dateend |date("m/d/Y") }}</p>
                                 {% if mycampaignFinish.qcmisanswered == 1 and mycampaignFinish.session.campaign.status.name == "finish" %}
-                                    <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#qcm-my-answers-campaign-finish{{ mycampaignFinish.session.campaign.id }}" >See my answers</button>
+                                    <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal"
+                                            data-bs-target="#qcm-my-answers-campaign-finish{{ mycampaignFinish.session.campaign.id }}">
+                                        See my answers
+                                    </button>
                                 {% endif %}
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
@@ -317,13 +387,17 @@
                     </div>
                 </div>
                 <!-- MODAL ALL MY CAMPAIGN FINISH ANSWER QCM -->
-                <div id="qcm-my-answers-campaign-finish{{ mycampaignFinish.session.campaign.id }}" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div id="qcm-my-answers-campaign-finish{{ mycampaignFinish.session.campaign.id }}" class="modal fade"
+                     tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">QCM of the campaign : {{ mycampaignFinish.session.campaign.name }}</h5>
-                                <i class="fas fa-arrow-left" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#detailsListMyCampaignFinish{{ mycampaignFinish.session.campaign.id }}"></i>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h5 class="modal-title" id="exampleModalLabel">QCM of the campaign
+                                    : {{ mycampaignFinish.session.campaign.name }}</h5>
+                                <i class="fas fa-arrow-left" data-bs-dismiss="modal" data-bs-toggle="modal"
+                                   data-bs-target="#detailsListMyCampaignFinish{{ mycampaignFinish.session.campaign.id }}"></i>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 {% for question in questions %}
@@ -345,91 +419,68 @@
                     </div>
                 </div>
             </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+    </section>
+
 
     {% block javascripts %}
         <script type="text/javascript">
 
+            function campaignSelect(elem) {
+                var item = document.getElementsByClassName('item');
+                console.log(item)
+                for (i = 0; i < item.length; i++) {
+                    item[i].classList.remove('selected')
+                }
+                elem.classList.add('selected');
 
-            //button
-            let show_allmycampaign = document.getElementById("show_allmycampaign");
-            let show_my_campaign_soon = document.getElementById("show_my_campaign_soon");
-            let show_my_campaign_ongoing = document.getElementById("show_my_campaign_ongoing");
-            let show_my_campaign_finish = document.getElementById("show_my_campaign_finish");
-
-            //div
-            let allmycampaigns = document.getElementById("allmycampaigns");
-            let mycampaignSoon = document.getElementById("mycampaignSoon");
-            let mycampaignOngoing = document.getElementById("mycampaignOngoing");
-            let mycampaignFinish = document.getElementById("mycampaignFinish");
-
-            allmycampaigns.style.visibility = "visible";
-            mycampaignSoon.style.visibility = "hidden";
-            mycampaignOngoing.style.visibility = "hidden"
-            mycampaignFinish.style.visibility = "hidden";
-
-
-            show_allmycampaign.addEventListener("click", function() {
-                allmycampaigns.style.visibility = "visible";
-                mycampaignSoon.style.visibility = "hidden";
-                mycampaignOngoing.style.visibility = "hidden";
-                mycampaignFinish.style.visibility = "hidden";
-            });
-
-            show_my_campaign_soon.addEventListener("click", function() {
-                mycampaignSoon.style.visibility = "visible";
-                allmycampaigns.style.visibility = "hidden";
-                mycampaignOngoing.style.visibility = "hidden";
-                mycampaignFinish.style.visibility = "hidden";
-            });
-
-            show_my_campaign_ongoing.addEventListener("click", function() {
-                mycampaignOngoing.style.visibility = "visible";
-                allmycampaigns.style.visibility = "hidden";
-                mycampaignSoon.style.visibility = "hidden";
-                mycampaignFinish.style.visibility = "hidden";
-            });
-
-            show_my_campaign_finish.addEventListener("click", function() {
-                mycampaignFinish.style.visibility = "visible";
-                allmycampaigns.style.visibility = "hidden";
-                mycampaignSoon.style.visibility = "hidden";
-                mycampaignOngoing.style.visibility = "hidden";
-            });
+                var block = document.getElementsByClassName('block');
+                for (i = 0; i < block.length; i++) {
+                    block[i].classList.remove('active');
+                    if (elem.id == block[i].id) {
+                        block[i].classList.add('active')
+                    }
+                }
+            }
 
 
-            function validateQCM(campaignId){
+            function validateQCM(campaignId) {
                 let answers = [];
                 let numberAllCampaign = $(`#qcmALLCAMPAIGN #fieldset${campaignId} input[type = hidden]`).length;
                 let numberAllCampaignOngoing = $(`#qcmALLCAMPAIGNONGOING #fieldset${campaignId} input[type = hidden]`).length;
-                $(`#fieldset${campaignId} input[type = radio]:checked`).each(function(key,value) {
-                        answers.push($(this).val());
+                $(`#fieldset${campaignId} input[type = radio]:checked`).each(function (key, value) {
+                    answers.push($(this).val());
                 });
 
                 console.log(answers.length);
                 console.log(numberAllCampaign);
                 console.log(numberAllCampaignOngoing);
-                if(answers.length === numberAllCampaign || answers.length === numberAllCampaignOngoing){
+                if (answers.length === numberAllCampaign || answers.length === numberAllCampaignOngoing) {
                     $.ajax({
-                        type:"POST",
-                        url:"{{ path('add_qcm') }}",
-                        data:{
+                        type: "POST",
+                        url: "{{ path('add_qcm') }}",
+                        data: {
                             answers: answers,
                             number_answers: answers.length,
                             campaign: campaignId
                         },
-                        success:function() {
+                        success: function () {
                             window.location.reload();
-                            toastr.success('QCM send !', 'Success', {positionClass: "toast-top-center", escapeHtml:true});
-                        },error:function(){
+                            toastr.success('QCM send !', 'Success', {
+                                positionClass: "toast-top-center",
+                                escapeHtml: true
+                            });
+                        }, error: function () {
                             answers.splice(0, answers.length);
-                            toastr.error('QCM not complete !', 'Error', {positionClass: "toast-top-center", escapeHtml:true});
+                            toastr.error('QCM not complete !', 'Error', {
+                                positionClass: "toast-top-center",
+                                escapeHtml: true
+                            });
                         }
                     });
-                }else{
+                } else {
                     answers.splice(0, answers.length);
-                    toastr.error('QCM not complete !', 'Error', {positionClass: "toast-top-center", escapeHtml:true});
+                    toastr.error('QCM not complete !', 'Error', {positionClass: "toast-top-center", escapeHtml: true});
                 }
             }
         </script>

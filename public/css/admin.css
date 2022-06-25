@@ -79,6 +79,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
     position: absolute;
     top: 150px;
     left: 0;
@@ -97,6 +98,7 @@
     opacity: 0;
     transform: translateY(-50px);
     z-index: -1;
+    margin-bottom: 60px;
 }
 
 .campaign .block.active .card {
@@ -174,3 +176,57 @@
     transform: scale(1.1);
 }
 
+.campaign .btn-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.campaign .modal-content {
+    border: 1px solid var(--main-color-hover);
+}
+
+.campaign .modal-header {
+    background-color: var(--second-color);
+    border-bottom: 1px solid var(--main-color-hover);
+    display: block;
+    text-align: center;
+}
+
+.campaign .modal-header p {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.campaign .modal-header h5 {
+    color: var(--main-color);
+    font-size: 35px;
+    text-align: center;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.campaign .modal-body {
+    background-color: rgba(190, 141, 144, 0.3);
+}
+
+.campaign .modal h4 {
+    color: var(--main-color-hover);
+    text-transform: uppercase;
+    width: 100%;
+    font-size: 24px;
+    padding-bottom: 10px;
+}
+
+.campaign .modal p {
+    font-size: 18px;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--second-color);
+}
+
+.campaign .modal-footer {
+    background-color: var(--second-color);
+    border-top: 1px solid var(--main-color-hover);
+}

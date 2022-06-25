@@ -8,7 +8,8 @@
     <section class="campaign">
         <div class="container">
             <div class="nav">
-                <button class="item selected" onclick="campaignSelect(this)" id="allCampaign">List all campaigns</button>
+                <button class="item selected" onclick="campaignSelect(this)" id="allCampaign">List all campaigns
+                </button>
                 <button class="item" onclick="campaignSelect(this)" id="soon">Campaign soon</button>
                 <button class="item" onclick="campaignSelect(this)" id="finish">Campaigns finish</button>
                 <button class="item" onclick="campaignSelect(this)" id="ongoing">Campaigns ongoing</button>
@@ -30,22 +31,27 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">{{ campaign.name }}</h5>
+                                    <p>{{ campaign.datestart |date("m/d/Y") }}-{{ campaign.dateend |date("m/d/Y") }}</p>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p> description :{{ campaign.description }}</p>
+                                    <h4>Description</h4>
+                                    <p>{{ campaign.description }}</p>
                                     {% for detail in details %}
                                         {% if detail.campaign.id == campaign.id %}
-                                            <p>name product :{{ detail.name }}</p>
-                                            <p>type :{{ detail.type }}</p>
-                                            <p>gender :{{ detail.gender }}</p>
-                                            <p>age range :{{ detail.agerange }}</p>
+                                            <h4>Name product</h4>
+                                            <p>{{ detail.name }}</p>
+                                            <h4>Type</h4>
+                                            <p>{{ detail.type }}</p>
+                                            <h4>Gender</h4>
+                                            <p>{{ detail.gender }}</p>
+                                            <h4>Age Range</h4>
+                                            <p>{{ detail.agerange }}</p>
                                         {% endif %}
                                     {% endfor %}
                                 </div>
                                 <div class="modal-footer">
-                                    <p>{{ campaign.datestart |date("m/d/Y") }}-{{ campaign.dateend |date("m/d/Y") }}</p>
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                                     </button>
                                     {% for application in applications|filter(application => application.session.campaign.id == campaign.id and campaign.status.name == 'soon') %}
@@ -83,22 +89,27 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">{{ campaignSoon.name }}</h5>
+                                    <p>{{ campaignSoon.datestart |date("m/d/Y") }}-{{ campaignSoon.dateend |date("m/d/Y") }}</p>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p> description :{{ campaignSoon.description }}</p>
+                                    <h4>Description</h4>
+                                    <p>{{ campaignSoon.description }}</p>
                                     {% for detail in details %}
                                         {% if detail.campaign.id == campaignSoon.id %}
-                                            <p>name product :{{ detail.name }}</p>
-                                            <p>type :{{ detail.type }}</p>
-                                            <p>gender :{{ detail.gender }}</p>
-                                            <p>age range :{{ detail.agerange }}</p>
+                                            <h4>Name product</h4>
+                                            <p>{{ detail.name }}</p>
+                                            <h4>Type</h4>
+                                            <p>{{ detail.type }}</p>
+                                            <h4>Gender</h4>
+                                            <p>{{ detail.gender }}</p>
+                                            <h4>Age Range</h4>
+                                            <p>{{ detail.agerange }}</p>
                                         {% endif %}
                                     {% endfor %}
                                 </div>
                                 <div class="modal-footer">
-                                    <p>{{ campaignSoon.datestart |date("m/d/Y") }}-{{ campaignSoon.dateend |date("m/d/Y") }}</p>
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                                     </button>
                                     {% for application in applications|filter(application => application.session.campaign.id == campaignSoon.id and campaignSoon.status.name == 'soon') %}
@@ -109,7 +120,8 @@
                                     {% else %}
                                         {% if campaignSoon.status.name == "soon" %}
                                             <button name="inscription" id="inscription" type="button"
-                                                    onclick="addApplication({{ campaignSoon.id }})" class="btn btn-primary">
+                                                    onclick="addApplication({{ campaignSoon.id }})"
+                                                    class="btn btn-primary">
                                                 Register
                                             </button>
                                         {% endif %}
@@ -136,22 +148,27 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">{{ campaignFinish.name }}</h5>
+                                    <p>{{ campaignFinish.datestart |date("m/d/Y") }}-{{ campaignFinish.dateend |date("m/d/Y") }}</p>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p> description :{{ campaignFinish.description }}</p>
+                                    <h4>Description</h4>
+                                    <p>{{ campaignFinish.description }}</p>
                                     {% for detail in details %}
                                         {% if detail.campaign.id == campaignFinish.id %}
-                                            <p>name product :{{ detail.name }}</p>
-                                            <p>type :{{ detail.type }}</p>
-                                            <p>gender :{{ detail.gender }}</p>
-                                            <p>age range :{{ detail.agerange }}</p>
+                                            <h4>Name product</h4>
+                                            <p>{{ detail.name }}</p>
+                                            <h4>Type</h4>
+                                            <p>{{ detail.type }}</p>
+                                            <h4>Gender</h4>
+                                            <p>{{ detail.gender }}</p>
+                                            <h4>Age Range</h4>
+                                            <p>{{ detail.agerange }}</p>
                                         {% endif %}
                                     {% endfor %}
                                 </div>
                                 <div class="modal-footer">
-                                    <p>{{ campaignFinish.datestart |date("m/d/Y") }}-{{ campaignFinish.dateend |date("m/d/Y") }}</p>
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                                     </button>
                                     {% for application in applications|filter(application => application.session.campaign.id == campaignFinish.id and campaignFinish.status.name == 'soon') %}
@@ -162,7 +179,8 @@
                                     {% else %}
                                         {% if campaignFinish.status.name == "soon" %}
                                             <button name="inscription" id="inscription" type="button"
-                                                    onclick="addApplication({{ campaignFinish.id }})" class="btn btn-primary">
+                                                    onclick="addApplication({{ campaignFinish.id }})"
+                                                    class="btn btn-primary">
                                                 Register
                                             </button>
                                         {% endif %}
@@ -189,28 +207,43 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">{{ campaignOngoing.name }}</h5>
+                                    <p>{{ campaignOngoing.datestart |date("m/d/Y") }}-{{ campaignOngoing.dateend |date("m/d/Y") }}</p>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Détails de la campagne : {{ campaignOngoing.description }}</p>
-                                    <p>Début : {{ campaignOngoing.datestart |date("m/d/Y") }}</p>
-                                    <p>Fin : {{ campaignOngoing.dateend |date("m/d/Y") }}</p>
+                                    <h4>Description</h4>
+                                    <p>{{ campaignOngoing.description }}</p>
+                                    {% for detail in details %}
+                                        {% if detail.campaign.id == campaignOngoing.id %}
+                                            <h4>Name product</h4>
+                                            <p>{{ detail.name }}</p>
+                                            <h4>Type</h4>
+                                            <p>{{ detail.type }}</p>
+                                            <h4>Gender</h4>
+                                            <p>{{ detail.gender }}</p>
+                                            <h4>Age Range</h4>
+                                            <p>{{ detail.agerange }}</p>
+                                        {% endif %}
+                                    {% endfor %}
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                                     </button>
-                                    {% if campaignOngoing.status.name == "soon" %}
+                                    {% for application in applications|filter(application => application.session.campaign.id == campaignOngoing.id and campaignOngoing.status.name == 'soon') %}
                                         <button name="inscription" id="inscription" type="button"
-                                                onclick="addApplication({{ campaignOngoing.id }})"
-                                                class="btn btn-primary">S'inscrire
+                                                onclick="addApplication({{ campaignOngoing.id }})" class="btn btn-danger"
+                                                disabled>Already register
                                         </button>
                                     {% else %}
-                                        <button name="inscription" id="inscription" type="button"
-                                                onclick="addApplication({{ campaignOngoing.id }})"
-                                                class="btn btn-primary" disabled>S'inscrire
-                                        </button>
-                                    {% endif %}
+                                        {% if campaignOngoing.status.name == "soon" %}
+                                            <button name="inscription" id="inscription" type="button"
+                                                    onclick="addApplication({{ campaignOngoing.id }})"
+                                                    class="btn btn-primary">
+                                                Register
+                                            </button>
+                                        {% endif %}
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
