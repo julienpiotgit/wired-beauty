@@ -8,6 +8,7 @@ use App\Repository\CampaignRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
@@ -27,6 +28,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *          "delete"
  *      })
  * @ApiFilter(SearchFilter::class, properties={"name" :"exact", "date_start" :"exact", "date_end" :"exact"}))
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass=CampaignRepository::class)
  */
 class Campaign
@@ -97,10 +99,6 @@ class Campaign
      */
     private $products;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $number_tester;
 
     public function __construct()
     {
@@ -288,14 +286,10 @@ class Campaign
         return $this;
     }
 
-    public function getNumberTester(): ?int
+    public function addStatus(Status $status): self
     {
-        return $this->number_tester;
-    }
-
-    public function setNumberTester(int $number_tester): self
-    {
-        $this->number_tester = $number_tester;
+        $this->status = $status;
+        $status->setCampaign($this);
 
         return $this;
     }

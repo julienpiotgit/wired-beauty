@@ -85,4 +85,16 @@ class AnswerUserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getAnswerByUser($user)
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin('a.question_answer', 'qa')
+            ->innerJoin('qa.question', 'q')
+            ->innerJoin('q.campaign', 'c')
+            ->andWhere('a.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 }
