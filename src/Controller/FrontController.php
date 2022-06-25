@@ -20,6 +20,7 @@ class FrontController extends AbstractController
         return $this->render('front/index.html.twig');
     }
 
+
     /**
      * @Route("/changeLocale/{_locale}", name="locale")
      */

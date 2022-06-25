@@ -1,120 +1,153 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
+
 {% block main %}
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
-    <div class="container" style="align-items: center; display: flex; justify-content: center">
-        <button id="show_allcampaign">List all campaigns</button>
-        <button id="show_campaign_soon">Campaign soon</button>
-        <button id="show_campaign_finish">Campaigns finish</button>
-    </div>
+    <section class="campaign">
+        <div class="container">
+            <div class="nav">
+                <button id="show_allcampaign">List all campaigns</button>
+                <button id="show_campaign_soon">Campaign soon</button>
+                <button id="show_campaign_finish">Campaigns finish</button>
+            </div>
 
-    <div id="allcampaign" style="position: absolute; width: 100%; display: flex">
-        {% for campaign in allCampaigns %}
-            <div class="card" style="width: 30%">
-                <div class="container">
-                    <input type="hidden" value="{{ campaign.id }}" id="campaign_id">
-                    <h4><b>{{ campaign.name }}</b></h4>
-                    <p>Status :{{ campaign.status.name }}</p>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#listCampaignModal{{ campaign.id }}">Details campaigns</button>
-                </div>
-                <div class="modal fade" id="listCampaignModal{{ campaign.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">{{ campaign.name }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Détails de la campagne : {{campaign.description}}</p>
-                                <p>Début : {{campaign.datestart |date("m/d/Y")}}</p>
-                                <p>Fin : {{campaign.dateend |date("m/d/Y")}}</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                {% if campaign.status.name == "soon" %}
-                                    <button name="inscription" id="inscription" type="button" onclick="addApplication({{ campaign.id }})" class="btn btn-primary">S'inscrire</button>
-                                {% else %}
-                                    <button name="inscription" id="inscription" type="button" onclick="addApplication({{ campaign.id }})" class="btn btn-primary" disabled>S'inscrire</button>
-                                {% endif %}
+            <div class="block" id="allcampaign">
+                {% for campaign in allCampaigns %}
+                    <div class="card">
+                        <input type="hidden" value="{{ campaign.id }}" id="campaign_id">
+                        <p class="status {{ campaign.status.name }}">{{ campaign.status.name }}</p>
+                        <h4><b>{{ campaign.name }}</b></h4>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#listCampaignModal{{ campaign.id }}">Details campaigns
+                        </button>
+                    </div>
+                    <div class="modal fade" id="listCampaignModal{{ campaign.id }}" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ campaign.name }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Détails de la campagne : {{ campaign.description }}</p>
+                                    <p>Début : {{ campaign.datestart |date("m/d/Y") }}</p>
+                                    <p>Fin : {{ campaign.dateend |date("m/d/Y") }}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                    {% if campaign.status.name == "soon" %}
+                                        <button name="inscription" id="inscription" type="button"
+                                                onclick="addApplication({{ campaign.id }})" class="btn btn-primary">
+                                            S'inscrire
+                                        </button>
+                                    {% else %}
+                                        <button name="inscription" id="inscription" type="button"
+                                                onclick="addApplication({{ campaign.id }})" class="btn btn-primary"
+                                                disabled>S'inscrire
+                                        </button>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-    </div>
 
-    <div id="campaign_soon" style="position: absolute;width: 100%; display: flex">
-        {% for campaignSoon in allCampaignSoon %}
-            <div class="card" style="width: 30%">
-                <div class="container">
-                    <h4><b>{{ campaignSoon.name }}</b></h4>
-                    <p>status :{{ campaignSoon.status.name }}</p>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#listCampaignModal2{{ campaignSoon.id }}">Details campaigns</button>
-                </div>
-                <div class="modal fade" id="listCampaignModal2{{ campaignSoon.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">{{ campaignSoon.name }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Détails de la campagne : {{campaignSoon.description}}</p>
-                                <p>Début : {{campaignSoon.datestart |date("m/d/Y")}}</p>
-                                <p>Fin : {{campaignSoon.dateend |date("m/d/Y")}}</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                {% if campaignSoon.status.name == "soon" %}
-                                    <button name="inscription" id="inscription" type="button" onclick="addApplication({{ campaignSoon.id }})" class="btn btn-primary">S'inscrire</button>
-                                {% else %}
-                                    <button name="inscription" id="inscription" type="button" onclick="addApplication({{ campaignSoon.id }})" class="btn btn-primary" disabled>S'inscrire</button>
-                                {% endif %}
+            <div id="campaign_soon" class="block">
+                {% for campaignSoon in allCampaignSoon %}
+                    <div class="card">
+                        <p class="status {{ campaignSoon.status.name }}">{{ campaignSoon.status.name }}</p>
+                        <h4><b>{{ campaignSoon.name }}</b></h4>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#listCampaignModal2{{ campaignSoon.id }}">Details campaigns
+                        </button>
+                    </div>
+                    <div class="modal fade" id="listCampaignModal2{{ campaignSoon.id }}" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ campaignSoon.name }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Détails de la campagne : {{ campaignSoon.description }}</p>
+                                    <p>Début : {{ campaignSoon.datestart |date("m/d/Y") }}</p>
+                                    <p>Fin : {{ campaignSoon.dateend |date("m/d/Y") }}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                    {% if campaignSoon.status.name == "soon" %}
+                                        <button name="inscription" id="inscription" type="button"
+                                                onclick="addApplication({{ campaignSoon.id }})" class="btn btn-primary">
+                                            S'inscrire
+                                        </button>
+                                    {% else %}
+                                        <button name="inscription" id="inscription" type="button"
+                                                onclick="addApplication({{ campaignSoon.id }})" class="btn btn-primary"
+                                                disabled>S'inscrire
+                                        </button>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-    </div>
 
-    <div id="campaign_finish" style="position: absolute;width: 100%; display: flex">
-        {% for campaignFinish in allCampaignFinish %}
-            <div class="card" style="width: 30%">
-                <div class="container">
-                    <h4><b>{{ campaignFinish.name }}</b></h4>
-                    <p>status :{{ campaignFinish.status.name }}</p>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#listCampaignModal3{{ campaignFinish.id }}">Details campaigns</button>
-                </div>
-                <div class="modal fade" id="listCampaignModal3{{ campaignFinish.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">{{ campaignFinish.name }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Détails de la campagne : {{campaignFinish.description}}</p>
-                                <p>Début : {{campaignFinish.datestart |date("m/d/Y")}}</p>
-                                <p>Fin : {{campaignFinish.dateend |date("m/d/Y")}}</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                {% if campaignFinish.status.name == "soon" %}
-                                    <button name="inscription" id="inscription" type="button" onclick="addApplication({{ campaignFinish.id }})" class="btn btn-primary">S'inscrire</button>
-                                {% else %}
-                                    <button name="inscription" id="inscription" type="button" onclick="addApplication({{ campaignFinish.id }})" class="btn btn-primary" disabled>S'inscrire</button>
-                                {% endif %}
+            <div id="campaign_finish" class="block">
+                {% for campaignFinish in allCampaignFinish %}
+                    <div class="card">
+                        <p class="status {{ campaignFinish.status.name }}">{{ campaignFinish.status.name }}</p>
+                        <h4><b>{{ campaignFinish.name }}</b></h4>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#listCampaignModal3{{ campaignFinish.id }}">Details campaigns
+                        </button>
+                    </div>
+                    <div class="modal fade" id="listCampaignModal3{{ campaignFinish.id }}" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ campaignFinish.name }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Détails de la campagne : {{ campaignFinish.description }}</p>
+                                    <p>Début : {{ campaignFinish.datestart |date("m/d/Y") }}</p>
+                                    <p>Fin : {{ campaignFinish.dateend |date("m/d/Y") }}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                    {% if campaignFinish.status.name == "soon" %}
+                                        <button name="inscription" id="inscription" type="button"
+                                                onclick="addApplication({{ campaignFinish.id }})"
+                                                class="btn btn-primary">S'inscrire
+                                        </button>
+                                    {% else %}
+                                        <button name="inscription" id="inscription" type="button"
+                                                onclick="addApplication({{ campaignFinish.id }})"
+                                                class="btn btn-primary" disabled>S'inscrire
+                                        </button>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-    </div>
+        </div>
+    </section>
+
 
     {% block javascripts %}
         <script type="text/javascript">
@@ -132,19 +165,19 @@
             campaign_soon.style.visibility = "hidden";
             campaign_finish.style.visibility = "hidden";
 
-            show_allcampaign.addEventListener("click", function() {
+            show_allcampaign.addEventListener("click", function () {
                 allcampaign.style.visibility = "visible";
                 campaign_soon.style.visibility = "hidden";
                 campaign_finish.style.visibility = "hidden";
             });
 
-            show_campaign_soon.addEventListener("click", function() {
+            show_campaign_soon.addEventListener("click", function () {
                 campaign_soon.style.visibility = "visible";
                 allcampaign.style.visibility = "hidden";
                 campaign_finish.style.visibility = "hidden";
             });
 
-            show_campaign_finish.addEventListener("click", function() {
+            show_campaign_finish.addEventListener("click", function () {
                 campaign_finish.style.visibility = "visible";
                 allcampaign.style.visibility = "hidden";
                 campaign_soon.style.visibility = "hidden";
@@ -154,12 +187,12 @@
 
             function addApplication(idCampaign) {
                 $.ajax({
-                    type:"POST",
-                    url:"{{ path('add_application') }}",
-                    data:{
+                    type: "POST",
+                    url: "{{ path('add_application') }}",
+                    data: {
                         campaign: idCampaign
                     },
-                    success:function() {
+                    success: function () {
                         console.log(idCampaign);
                         window.location.reload();
                     }
