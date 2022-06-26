@@ -31,7 +31,7 @@ class FrontController extends AbstractController
 
         $request->setLocale($locale);
 
-        return $this->redirectToRoute('homepage');
+        return $this->render('front/index.html.twig');
     }
 
 

@@ -21,11 +21,11 @@
                 {% for mycampaign in mycampaigns %}
                     <!-- CARD ALL MY CAMPAIGN -->
                     <div class="card">
+                        <p class="status {{ mycampaign.session.campaign.status.name}}">{{ mycampaign.session.campaign.status.name }}</p>
                         <h4><b>{{ mycampaign.session.campaign.name }}</b></h4>
-                        <p>stard-end date : {{ mycampaign.session.campaign.datestart |date("m/d/Y") }}
+                        <p class="text-center text-uppercase font-weight-bold">{{ mycampaign.session.campaign.datestart |date("m/d/Y") }}
                             - {{ mycampaign.session.campaign.dateend |date("m/d/Y") }}</p>
                         <p>registered tester : {{ mycampaign.session.campaign.numberTester }}</p>
-                        <p>Status : {{ mycampaign.session.campaign.status.name }}</p>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#detailsListMyCampaign{{ mycampaign.session.campaign.id }}">Details
                             campaign
@@ -44,27 +44,30 @@
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>description : {{ mycampaign.session.campaign.description }}</p>
+                                    <h4>Description</h4>
+                                    <p>{{ mycampaign.session.campaign.description }}</p>
                                     {% for detail in details %}
                                         {% if detail.campaign.id == mycampaign.session.campaign.id %}
-                                            <p>name product :{{ detail.name }}</p>
-                                            <p>type:{{ detail.type }}</p>
-                                            <p>gender:{{ detail.type }}</p>
-                                            <p>age range:{{ detail.type }}</p>
+                                            <h4>Name product</h4>
+                                            <p>{{ detail.name }}</p>
+                                            <h4>Type</h4>
+                                            <p>{{ detail.type }}</p>
+                                            <h4>Gender</h4>
+                                            <p>{{ detail.gender }}</p>
+                                            <h4>Age Range</h4>
+                                            <p>{{ detail.agerange }}</p>
                                         {% endif %}
                                     {% endfor %}
                                 </div>
                                 <div class="modal-footer">
-                                    <p>{{ mycampaign.session.campaign.datestart |date("m/d/Y") }}
-                                        -{{ mycampaign.session.campaign.dateend |date("m/d/Y") }}</p>
                                     {% if mycampaign.qcmisanswered == 0 and mycampaign.session.campaign.status.name == "ongoing" %}
                                         <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal"
-                                                data-bs-target="#qcm-campaign{{ mycampaign.session.campaign.id }}">
+                                                class="btn btn-success" data-bs-target="#qcm-campaign{{ mycampaign.session.campaign.id }}">
                                             QCM
                                         </button>
                                     {% elseif mycampaign.qcmisanswered == 1 and (mycampaign.session.campaign.status.name == "ongoing" or mycampaign.session.campaign.status.name == "finish") %}
                                         <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal"
-                                                data-bs-target="#qcm-my-answers-campaign{{ mycampaign.session.campaign.id }}">
+                                                class="btn btn-success" data-bs-target="#qcm-my-answers-campaign{{ mycampaign.session.campaign.id }}">
                                             See my answers
                                         </button>
                                     {% endif %}
@@ -153,11 +156,12 @@
                 {% for mycampaignSoon in mycampaignsSoon %}
                     <!-- CARD ALL MY CAMPAIGN SOON -->
                     <div class="card">
-                        <h4><b>{{ mycampaignSoon.session.campaign.name }}</b></h4>
-                        <p>stard-end date : {{ mycampaignSoon.session.campaign.datestart |date("m/d/Y") }}
+                        <h4>Description</h4>
+                        <p class="status {{ mycampaignSoon.session.campaign.status.name}}">{{ mycampaignSoon.session.campaign.status.name }}</p>
+                        <p>{{ mycampaignSoon.session.campaign.description }}</p>
+                        <p class="text-center text-uppercase font-weight-bold">{{ mycampaignSoon.session.campaign.datestart |date("m/d/Y") }}
                             - {{ mycampaignSoon.session.campaign.dateend |date("m/d/Y") }}</p>
                         <p>registered tester : {{ mycampaignSoon.session.campaign.numberTester }}</p>
-                        <p>Status : {{ mycampaignSoon.session.campaign.status.name }}</p>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#detailsListMyCampaignSoon{{ mycampaignSoon.session.campaign.id }}">
                             Details campaign
@@ -180,16 +184,18 @@
                                     <p>description : {{ mycampaignSoon.session.campaign.description }}</p>
                                     {% for detail in details %}
                                         {% if detail.campaign.id == mycampaignSoon.session.campaign.id %}
-                                            <p>name product :{{ detail.name }}</p>
-                                            <p>type:{{ detail.type }}</p>
-                                            <p>gender:{{ detail.type }}</p>
-                                            <p>age range:{{ detail.type }}</p>
+                                            <h4>Name product</h4>
+                                            <p>{{ detail.name }}</p>
+                                            <h4>Type</h4>
+                                            <p>{{ detail.type }}</p>
+                                            <h4>Gender</h4>
+                                            <p>{{ detail.gender }}</p>
+                                            <h4>Age Range</h4>
+                                            <p>{{ detail.agerange }}</p>
                                         {% endif %}
                                     {% endfor %}
                                 </div>
                                 <div class="modal-footer">
-                                    <p>{{ mycampaignSoon.session.campaign.datestart |date("m/d/Y") }}
-                                        -{{ mycampaignSoon.session.campaign.dateend |date("m/d/Y") }}</p>
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                                     </button>
                                 </div>
@@ -200,15 +206,15 @@
             </div>
 
             <!-- PARTIE LIST ALL MY CAMPAIGN ONGOING -->
-            <div id="mycampaignOngoing" class="block">
+            <div id="ongoing" class="block">
                 {% for mycampaignOngoing in mycampaignsOngoing %}
                 <!-- CARD ALL MY CAMPAIGN ONGOING -->
                 <div class="card">
+                    <p class="status {{ mycampaignOngoing.session.campaign.status.name}}">{{ mycampaignOngoing.session.campaign.status.name }}</p>
                     <h4><b>{{ mycampaignOngoing.session.campaign.name }}</b></h4>
-                    <p>stard-end date : {{ mycampaignOngoing.session.campaign.datestart |date("m/d/Y") }}
+                    <p class="text-center text-uppercase font-weight-bold">{{ mycampaignOngoing.session.campaign.datestart |date("m/d/Y") }}
                         - {{ mycampaignOngoing.session.campaign.dateend |date("m/d/Y") }}</p>
                     <p>registered tester : {{ mycampaignOngoing.session.campaign.numberTester }}</p>
-                    <p>Status : {{ mycampaignOngoing.session.campaign.status.name }}</p>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#detailsListMyCampaignOngoing{{ mycampaignOngoing.session.campaign.id }}">
                         Details campaign
@@ -225,31 +231,36 @@
                                     id="exampleModalLabel">{{ mycampaignOngoing.session.campaign.name }} - <span
                                             style="color: green">{{ mycampaignOngoing.session.campaign.status.name }}</span>
                                 </h5>
+                                <p>{{ mycampaignOngoing.session.campaign.datestart |date("m/d/Y") }}
+                                    -{{ mycampaignOngoing.session.campaign.dateend |date("m/d/Y") }}</p>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>description : {{ mycampaignOngoing.session.campaign.description }}</p>
+                                <h4>Description</h4>
+                                <p>{{ mycampaignOngoing.session.campaign.description }}</p>
                                 {% for detail in details %}
                                     {% if detail.campaign.id == mycampaignOngoing.session.campaign.id %}
-                                        <p>name product :{{ detail.name }}</p>
-                                        <p>type:{{ detail.type }}</p>
-                                        <p>gender:{{ detail.type }}</p>
-                                        <p>age range:{{ detail.type }}</p>
+                                        <h4>Name product</h4>
+                                        <p>{{ detail.name }}</p>
+                                        <h4>Type</h4>
+                                        <p>{{ detail.type }}</p>
+                                        <h4>Gender</h4>
+                                        <p>{{ detail.gender }}</p>
+                                        <h4>Age Range</h4>
+                                        <p>{{ detail.agerange }}</p>
                                     {% endif %}
                                 {% endfor %}
                             </div>
                             <div class="modal-footer">
-                                <p>{{ mycampaignOngoing.session.campaign.datestart |date("m/d/Y") }}
-                                    -{{ mycampaignOngoing.session.campaign.dateend |date("m/d/Y") }}</p>
                                 {% if mycampaignOngoing.qcmisanswered == 0 and mycampaignOngoing.session.campaign.status.name == "ongoing" %}
                                     <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal"
-                                            data-bs-target="#qcm-campaign-ongoing{{ mycampaignOngoing.session.campaign.id }}">
+                                            class="btn btn-success" data-bs-target="#qcm-campaign-ongoing{{ mycampaignOngoing.session.campaign.id }}">
                                         QCM
                                     </button>
                                 {% elseif mycampaignOngoing.qcmisanswered == 1 and (mycampaignOngoing.session.campaign.status.name == "ongoing" or mycampaignOngoing.session.campaign.status.name == "finish") %}
                                     <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal"
-                                            data-bs-target="#qcm-my-answers-campaign-ongoing{{ mycampaignOngoing.session.campaign.id }}">
+                                            class="btn btn-success" data-bs-target="#qcm-my-answers-campaign-ongoing{{ mycampaignOngoing.session.campaign.id }}">
                                         See my answers
                                     </button>
                                 {% endif %}
@@ -334,15 +345,15 @@
             {% endfor %}
 
             <!-- PARTIE LIST ALL MY CAMPAIGN FINISH-->
-            <div id="mycampaignFinish" class="block">
+            <div id="finish" class="block">
                 {% for mycampaignFinish in mycampaignsFinish %}
                 <!-- CARD ALL MY CAMPAIGN FINISH -->
                 <div class="card">
+                    <p class="status {{ mycampaignFinish.session.campaign.status.name}}">{{ mycampaignFinish.session.campaign.status.name }}</p>
                     <h4><b>{{ mycampaignFinish.session.campaign.name }}</b></h4>
-                    <p>stard-end date : {{ mycampaignFinish.session.campaign.datestart |date("m/d/Y") }}
+                    <p class="text-center text-uppercase font-weight-bold">{{ mycampaignFinish.session.campaign.datestart |date("m/d/Y") }}
                         - {{ mycampaignFinish.session.campaign.dateend |date("m/d/Y") }}</p>
                     <p>registered tester : {{ mycampaignFinish.session.campaign.numberTester }}</p>
-                    <p>Status : {{ mycampaignFinish.session.campaign.status.name }}</p>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#detailsListMyCampaignFinish{{ mycampaignFinish.session.campaign.id }}">
                         Details campaign
@@ -362,22 +373,25 @@
                                         aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>description : {{ mycampaignFinish.session.campaign.description }}</p>
+                                <h4>Description</h4>
+                                <p>{{ mycampaignFinish.session.campaign.description }}</p>
                                 {% for detail in details %}
                                     {% if detail.campaign.id == mycampaignFinish.session.campaign.id %}
-                                        <p>name product :{{ detail.name }}</p>
-                                        <p>type:{{ detail.type }}</p>
-                                        <p>gender:{{ detail.type }}</p>
-                                        <p>age range:{{ detail.type }}</p>
+                                        <h4>Name product</h4>
+                                        <p>{{ detail.name }}</p>
+                                        <h4>Type</h4>
+                                        <p>{{ detail.type }}</p>
+                                        <h4>Gender</h4>
+                                        <p>{{ detail.gender }}</p>
+                                        <h4>Age Range</h4>
+                                        <p>{{ detail.agerange }}</p>
                                     {% endif %}
                                 {% endfor %}
                             </div>
                             <div class="modal-footer">
-                                <p>{{ mycampaignFinish.session.campaign.datestart |date("m/d/Y") }}
-                                    -{{ mycampaignFinish.session.campaign.dateend |date("m/d/Y") }}</p>
                                 {% if mycampaignFinish.qcmisanswered == 1 and mycampaignFinish.session.campaign.status.name == "finish" %}
                                     <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal"
-                                            data-bs-target="#qcm-my-answers-campaign-finish{{ mycampaignFinish.session.campaign.id }}">
+                                            class="btn btn-success" data-bs-target="#qcm-my-answers-campaign-finish{{ mycampaignFinish.session.campaign.id }}">
                                         See my answers
                                     </button>
                                 {% endif %}

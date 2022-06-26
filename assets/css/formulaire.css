@@ -29,7 +29,7 @@
 
 .section-formulaire h1 {
     text-align: center;
-    color: var(--main-color);
+    color: #000 !important;
     font-size: 3vw;
 }
 
