@@ -70,8 +70,9 @@
                 data: {
                     labels: {{ statusnom|raw }},
                     datasets: [{
-                        label: "Nombre d'annonces",
+                        label: "Nombre de campaigns",
                         data: {{ details_stats|raw }},
+                        backgroundColor: ["#f1cbc8"]
                     }]
                 },
                 options: {
@@ -97,22 +98,6 @@
                         data: {{ nbpersons|raw }},
                         {#backgroundColor: {{ categColor|raw }}#}
                         backgroundColor: ["#6a5acd7a", "#f1cbc8", "#bfd0bd"]
-                    }]
-                }
-            })
-
-            let labels = document.querySelector("#labels")
-            let labelsGraph = new Chart(labels, {
-                type: "bar",
-                data: {
-                    labels: ["Nombre total", "Nombre validée"],
-                    {#labels: {{ statusnom|raw }},#}
-                    datasets: [{
-                        label: "Questions",
-                        data: [1,2],
-                        {#data: {{ nbpersons|raw }},#}
-                        {#backgroundColor: {{ categColor|raw }}#}
-                        backgroundColor: ["#6a5acd7a", "#f1cbc8"]
                     }]
                 }
             })
