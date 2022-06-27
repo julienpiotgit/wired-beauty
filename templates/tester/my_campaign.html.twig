@@ -25,7 +25,6 @@
                         <h4><b>{{ mycampaign.session.campaign.name }}</b></h4>
                         <p class="text-center text-uppercase font-weight-bold">{{ mycampaign.session.campaign.datestart |date("m/d/Y") }}
                             - {{ mycampaign.session.campaign.dateend |date("m/d/Y") }}</p>
-                        <p>registered tester : {{ mycampaign.session.campaign.numberTester }}</p>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#detailsListMyCampaign{{ mycampaign.session.campaign.id }}">Details
                             campaign
@@ -46,6 +45,8 @@
                                 <div class="modal-body">
                                     <h4>Description</h4>
                                     <p>{{ mycampaign.session.campaign.description }}</p>
+                                    <h4>Number of register</h4>
+                                    <p> {{ mycampaign.session.campaign.numberTester }}</p>
                                     {% for detail in details %}
                                         {% if detail.campaign.id == mycampaign.session.campaign.id %}
                                             <h4>Name product</h4>
@@ -156,12 +157,10 @@
                 {% for mycampaignSoon in mycampaignsSoon %}
                     <!-- CARD ALL MY CAMPAIGN SOON -->
                     <div class="card">
-                        <h4>Description</h4>
                         <p class="status {{ mycampaignSoon.session.campaign.status.name}}">{{ mycampaignSoon.session.campaign.status.name }}</p>
-                        <p>{{ mycampaignSoon.session.campaign.description }}</p>
+                        <h4><b>{{ mycampaignSoon.session.campaign.name }}</b></h4>
                         <p class="text-center text-uppercase font-weight-bold">{{ mycampaignSoon.session.campaign.datestart |date("m/d/Y") }}
                             - {{ mycampaignSoon.session.campaign.dateend |date("m/d/Y") }}</p>
-                        <p>registered tester : {{ mycampaignSoon.session.campaign.numberTester }}</p>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#detailsListMyCampaignSoon{{ mycampaignSoon.session.campaign.id }}">
                             Details campaign
@@ -174,14 +173,16 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title"
-                                        id="exampleModalLabel">{{ mycampaignSoon.session.campaign.name }} - <span
-                                                style="color: blue">{{ mycampaignSoon.session.campaign.status.name }}</span>
+                                        id="exampleModalLabel">{{ mycampaignSoon.session.campaign.name }}
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>description : {{ mycampaignSoon.session.campaign.description }}</p>
+                                    <h4>Description</h4>
+                                    <p>{{ mycampaignSoon.session.campaign.description }}</p>
+                                    <h4>Number of register</h4>
+                                    <p> {{ mycampaignSoon.session.campaign.numberTester }}</p>
                                     {% for detail in details %}
                                         {% if detail.campaign.id == mycampaignSoon.session.campaign.id %}
                                             <h4>Name product</h4>
@@ -214,7 +215,6 @@
                     <h4><b>{{ mycampaignOngoing.session.campaign.name }}</b></h4>
                     <p class="text-center text-uppercase font-weight-bold">{{ mycampaignOngoing.session.campaign.datestart |date("m/d/Y") }}
                         - {{ mycampaignOngoing.session.campaign.dateend |date("m/d/Y") }}</p>
-                    <p>registered tester : {{ mycampaignOngoing.session.campaign.numberTester }}</p>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#detailsListMyCampaignOngoing{{ mycampaignOngoing.session.campaign.id }}">
                         Details campaign
@@ -228,8 +228,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title"
-                                    id="exampleModalLabel">{{ mycampaignOngoing.session.campaign.name }} - <span
-                                            style="color: green">{{ mycampaignOngoing.session.campaign.status.name }}</span>
+                                    id="exampleModalLabel">{{ mycampaignOngoing.session.campaign.name }}
                                 </h5>
                                 <p>{{ mycampaignOngoing.session.campaign.datestart |date("m/d/Y") }}
                                     -{{ mycampaignOngoing.session.campaign.dateend |date("m/d/Y") }}</p>
@@ -239,6 +238,8 @@
                             <div class="modal-body">
                                 <h4>Description</h4>
                                 <p>{{ mycampaignOngoing.session.campaign.description }}</p>
+                                <h4>Number of register</h4>
+                                <p>{{ mycampaignOngoing.session.campaign.numberTester }}</p>
                                 {% for detail in details %}
                                     {% if detail.campaign.id == mycampaignOngoing.session.campaign.id %}
                                         <h4>Name product</h4>
@@ -341,8 +342,9 @@
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+
 
             <!-- PARTIE LIST ALL MY CAMPAIGN FINISH-->
             <div id="finish" class="block">
@@ -353,7 +355,6 @@
                     <h4><b>{{ mycampaignFinish.session.campaign.name }}</b></h4>
                     <p class="text-center text-uppercase font-weight-bold">{{ mycampaignFinish.session.campaign.datestart |date("m/d/Y") }}
                         - {{ mycampaignFinish.session.campaign.dateend |date("m/d/Y") }}</p>
-                    <p>registered tester : {{ mycampaignFinish.session.campaign.numberTester }}</p>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#detailsListMyCampaignFinish{{ mycampaignFinish.session.campaign.id }}">
                         Details campaign
@@ -366,8 +367,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title"
-                                    id="exampleModalLabel">{{ mycampaignFinish.session.campaign.name }} - <span
-                                            style="color: red">{{ mycampaignFinish.session.campaign.status.name }}</span>
+                                    id="exampleModalLabel">{{ mycampaignFinish.session.campaign.name }}
                                 </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
@@ -375,6 +375,8 @@
                             <div class="modal-body">
                                 <h4>Description</h4>
                                 <p>{{ mycampaignFinish.session.campaign.description }}</p>
+                                <h4>Number of register</h4>
+                                <p>{{ mycampaignFinish.session.campaign.numberTester }}</p>
                                 {% for detail in details %}
                                     {% if detail.campaign.id == mycampaignFinish.session.campaign.id %}
                                         <h4>Name product</h4>

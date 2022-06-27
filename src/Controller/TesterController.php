@@ -173,6 +173,7 @@ class TesterController extends AbstractController
         $application->setUser($user);
         $application->setStatus($statusPending);
         $application->setSession($session[$sessionRandom-1]);
+        $application->setQcmIsAnswered(false);
 
         $entityManager->persist($application);
         $entityManager->flush();
