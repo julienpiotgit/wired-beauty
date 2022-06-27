@@ -27,18 +27,19 @@
                 </button>
                 <button class="item" onclick="campaignSelect(this)" id="soon">Campaign soon</button>
                 <button class="item" onclick="campaignSelect(this)" id="finish">Campaigns finish</button>
+                <button class="item" onclick="campaignSelect(this)" id="ongoing">Campaigns ongoing</button>
             </div>
-            <div id="allCampaign" class="block">
+
+            <div id="allCampaign" class="block active">
                 {% for mycampaign in mycampaigns %}
                     {# {% if mycampaign.session.campaign.status.name == "finish" %} #}
                     <div class="card">
-                        <div class="container">
-                            <input type="hidden" value="{{ mycampaign.id }}" id="campaignID">
-                            <h4>{{ mycampaign.session.campaign.name }}</h4>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#detailsCampaign{{ mycampaign.id }}">Details campaigns
-                            </button>
-                        </div>
+                        <input type="hidden" value="{{ mycampaign.id }}" id="campaignID">
+                        <p class="status {{ mycampaign.session.campaign.status.name }}">{{ mycampaign.session.campaign.status.name }}</p>
+                        <h4>{{ mycampaign.session.campaign.name }}</h4>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#detailsCampaign{{ mycampaign.id }}">Details campaigns
+                        </button>
                     </div>
 
                     <div class="modal" id="detailsCampaign{{ mycampaign.id }}" tabindex="-1"
@@ -46,32 +47,25 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    {% if mycampaign.session.campaign.status.name == "soon" %}
-                                        <h5 class="modal-title"
-                                            id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span
-                                                    style="color: blue">{{ mycampaign.session.campaign.status.name }}</span>
-                                        </h5>
-                                    {% elseif mycampaign.session.campaign.status.name == "ongoing" %}
-                                        <h5 class="modal-title"
-                                            id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span
-                                                    style="color: green">{{ mycampaign.session.campaign.status.name }}</span>
-                                        </h5>
-                                    {% else %}
-                                        <h5 class="modal-title"
-                                            id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span
-                                                    style="color: red">{{ mycampaign.session.campaign.status.name }}</span>
-                                        </h5>
-                                    {% endif %}
+                                    <h5 class="modal-title"
+                                        id="exampleModalLabel">{{ mycampaign.session.campaign.name }}</h5>
+                                    <p>{{ mycampaign.session.campaign.datestart |date("m/d/Y") }}
+                                        -{{ mycampaign.session.campaign.dateend |date("m/d/Y") }}</p>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>{{ mycampaign.session.campaign.description }}</p>
+                                    <h4>Description</h4>
+                                    <p>{{ mycampaign.session.description }}</p>
                                     {% for detail in details %}
                                         {% if detail.campaign.id == mycampaign.session.campaign.id %}
+                                            <h4>Name product</h4>
                                             <p>{{ detail.name }}</p>
+                                            <h4>Type</h4>
                                             <p>{{ detail.type }}</p>
+                                            <h4>Gender</h4>
                                             <p>{{ detail.gender }}</p>
+                                            <h4>Age Range</h4>
                                             <p>{{ detail.agerange }}</p>
                                         {% endif %}
                                     {% endfor %}
@@ -82,8 +76,6 @@
                                     {% endif %}
                                 </div>
                                 <div class="modal-footer">
-                                    <p>{{ mycampaign.session.campaign.datestart |date("m/d/Y") }}
-                                        - {{ mycampaign.session.campaign.dateend |date("m/d/Y") }}  </p>
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                                     </button>
                                 </div>
@@ -98,51 +90,48 @@
                 {% for mycampaign in mycampaigns %}
                     {% if mycampaign.session.campaign.status.name == "soon" %}
                         <div class="card">
-                            <div class="container">
-                                <h4>{{ mycampaign.session.campaign.name }}</h4>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#detailsCampaign1{{ mycampaign.id }}">Details campaigns
-                                </button>
-                            </div>
+                            <input type="hidden" value="{{ mycampaign.id }}" id="campaignID">
+                            <p class="status {{ mycampaign.session.campaign.status.name }}">{{ mycampaign.session.campaign.status.name }}</p>
+                            <h4>{{ mycampaign.session.campaign.name }}</h4>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#detailsCampaign{{ mycampaign.id }}">Details campaigns
+                            </button>
                         </div>
-                        <div class="modal" id="detailsCampaign1{{ mycampaign.id }}" tabindex="-1"
+
+                        <div class="modal" id="detailsCampaign{{ mycampaign.id }}" tabindex="-1"
                              aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        {% if mycampaign.session.campaign.status.name == "soon" %}
-                                            <h5 class="modal-title"
-                                                id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span
-                                                        style="color: blue">{{ mycampaign.session.campaign.status.name }}</span>
-                                            </h5>
-                                        {% elseif mycampaign.session.campaign.status.name == "ongoing" %}
-                                            <h5 class="modal-title"
-                                                id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span
-                                                        style="color: green">{{ mycampaign.session.campaign.status.name }}</span>
-                                            </h5>
-                                        {% else %}
-                                            <h5 class="modal-title"
-                                                id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span
-                                                        style="color: red">{{ mycampaign.session.campaign.status.name }}</span>
-                                            </h5>
-                                        {% endif %}
+                                        <h5 class="modal-title"
+                                            id="exampleModalLabel">{{ mycampaign.session.campaign.name }}</h5>
+                                        <p>{{ mycampaign.session.campaign.datestart |date("m/d/Y") }}
+                                            -{{ mycampaign.session.campaign.dateend |date("m/d/Y") }}</p>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p>{{ mycampaign.session.campaign.description }}</p>
+                                        <h4>Description</h4>
+                                        <p>{{ mycampaign.session.description }}</p>
                                         {% for detail in details %}
                                             {% if detail.campaign.id == mycampaign.session.campaign.id %}
+                                                <h4>Name product</h4>
                                                 <p>{{ detail.name }}</p>
+                                                <h4>Type</h4>
                                                 <p>{{ detail.type }}</p>
+                                                <h4>Gender</h4>
                                                 <p>{{ detail.gender }}</p>
+                                                <h4>Age Range</h4>
                                                 <p>{{ detail.agerange }}</p>
                                             {% endif %}
                                         {% endfor %}
+                                        {% if mycampaign.session.campaign.status.name == "finish" %}
+                                            <h5 style="text-align: center"><a
+                                                        href="{{ path("campaign_details", {id:mycampaign.session.campaign.id}) }}"
+                                                        target="_blank">Accéder aux statistiques</a></h5>
+                                        {% endif %}
                                     </div>
                                     <div class="modal-footer">
-                                        <p>{{ mycampaign.session.campaign.datestart |date("m/d/Y") }}
-                                            - {{ mycampaign.session.campaign.dateend |date("m/d/Y") }}  </p>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                                         </button>
                                     </div>
@@ -156,52 +145,49 @@
             <div id="ongoing" class="block">
                 {% for mycampaign in mycampaigns %}
                     {% if mycampaign.session.campaign.status.name == "ongoing" and mycampaign.status.name == "accepted" %}
-                        <div class="card" style="width: 30%">
-                            <div class="container">
-                                <h4>{{ mycampaign.session.campaign.name }}</h4>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#detailsCampaign1{{ mycampaign.id }}">Details campaigns
-                                </button>
-                            </div>
+                        <div class="card">
+                            <input type="hidden" value="{{ mycampaign.id }}" id="campaignID">
+                            <p class="status {{ mycampaign.session.campaign.status.name }}">{{ mycampaign.session.campaign.status.name }}</p>
+                            <h4>{{ mycampaign.session.campaign.name }}</h4>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#detailsCampaign{{ mycampaign.id }}">Details campaigns
+                            </button>
                         </div>
-                        <div class="modal" id="detailsCampaign1{{ mycampaign.id }}" tabindex="-1"
+
+                        <div class="modal" id="detailsCampaign{{ mycampaign.id }}" tabindex="-1"
                              aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        {% if mycampaign.session.campaign.status.name == "soon" %}
-                                            <h5 class="modal-title"
-                                                id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span
-                                                        style="color: blue">{{ mycampaign.session.campaign.status.name }}</span>
-                                            </h5>
-                                        {% elseif mycampaign.session.campaign.status.name == "ongoing" %}
-                                            <h5 class="modal-title"
-                                                id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span
-                                                        style="color: green">{{ mycampaign.session.campaign.status.name }}</span>
-                                            </h5>
-                                        {% else %}
-                                            <h5 class="modal-title"
-                                                id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span
-                                                        style="color: red">{{ mycampaign.session.campaign.status.name }}</span>
-                                            </h5>
-                                        {% endif %}
+                                        <h5 class="modal-title"
+                                            id="exampleModalLabel">{{ mycampaign.session.campaign.name }}</h5>
+                                        <p>{{ mycampaign.session.campaign.datestart |date("m/d/Y") }}
+                                            -{{ mycampaign.session.campaign.dateend |date("m/d/Y") }}</p>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p>{{ mycampaign.session.campaign.description }}</p>
+                                        <h4>Description</h4>
+                                        <p>{{ mycampaign.session.description }}</p>
                                         {% for detail in details %}
                                             {% if detail.campaign.id == mycampaign.session.campaign.id %}
+                                                <h4>Name product</h4>
                                                 <p>{{ detail.name }}</p>
+                                                <h4>Type</h4>
                                                 <p>{{ detail.type }}</p>
+                                                <h4>Gender</h4>
                                                 <p>{{ detail.gender }}</p>
+                                                <h4>Age Range</h4>
                                                 <p>{{ detail.agerange }}</p>
                                             {% endif %}
                                         {% endfor %}
+                                        {% if mycampaign.session.campaign.status.name == "finish" %}
+                                            <h5 style="text-align: center"><a
+                                                        href="{{ path("campaign_details", {id:mycampaign.session.campaign.id}) }}"
+                                                        target="_blank">Accéder aux statistiques</a></h5>
+                                        {% endif %}
                                     </div>
                                     <div class="modal-footer">
-                                        <p>{{ mycampaign.session.campaign.datestart |date("m/d/Y") }}
-                                            - {{ mycampaign.session.campaign.dateend |date("m/d/Y") }}  </p>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                                         </button>
                                     </div>
@@ -215,56 +201,49 @@
             <div id="finish" class="block">
                 {% for mycampaign in mycampaigns %}
                     {% if mycampaign.session.campaign.status.name == "finish" and mycampaign.status.name == "accepted" %}
-                        <div class="card" style="width: 30%">
-                            <div class="container">
-                                <h4>{{ mycampaign.session.campaign.name }}</h4>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#detailsCampaign2{{ mycampaign.id }}">Details campaigns
-                                </button>
-                            </div>
+                        <div class="card">
+                            <input type="hidden" value="{{ mycampaign.id }}" id="campaignID">
+                            <p class="status {{ mycampaign.session.campaign.status.name }}">{{ mycampaign.session.campaign.status.name }}</p>
+                            <h4>{{ mycampaign.session.campaign.name }}</h4>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#detailsCampaign{{ mycampaign.id }}">Details campaigns
+                            </button>
                         </div>
 
-                        <div class="modal" id="detailsCampaign2{{ mycampaign.id }}" tabindex="-1"
+                        <div class="modal" id="detailsCampaign{{ mycampaign.id }}" tabindex="-1"
                              aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        {% if mycampaign.session.campaign.status.name == "soon" %}
-                                            <h5 class="modal-title"
-                                                id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span
-                                                        style="color: blue">{{ mycampaign.session.campaign.status.name }}</span>
-                                            </h5>
-                                        {% elseif mycampaign.session.campaign.status.name == "ongoing" %}
-                                            <h5 class="modal-title"
-                                                id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span
-                                                        style="color: green">{{ mycampaign.session.campaign.status.name }}</span>
-                                            </h5>
-                                        {% else %}
-                                            <h5 class="modal-title"
-                                                id="exampleModalLabel">{{ mycampaign.session.campaign.name }} - <span
-                                                        style="color: red">{{ mycampaign.session.campaign.status.name }}</span>
-                                            </h5>
-                                        {% endif %}
+                                        <h5 class="modal-title"
+                                            id="exampleModalLabel">{{ mycampaign.session.campaign.name }}</h5>
+                                        <p>{{ mycampaign.session.campaign.datestart |date("m/d/Y") }}
+                                            -{{ mycampaign.session.campaign.dateend |date("m/d/Y") }}</p>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p>{{ mycampaign.session.campaign.description }}</p>
+                                        <h4>Description</h4>
+                                        <p>{{ mycampaign.session.description }}</p>
                                         {% for detail in details %}
                                             {% if detail.campaign.id == mycampaign.session.campaign.id %}
+                                                <h4>Name product</h4>
                                                 <p>{{ detail.name }}</p>
+                                                <h4>Type</h4>
                                                 <p>{{ detail.type }}</p>
+                                                <h4>Gender</h4>
                                                 <p>{{ detail.gender }}</p>
+                                                <h4>Age Range</h4>
                                                 <p>{{ detail.agerange }}</p>
                                             {% endif %}
                                         {% endfor %}
-                                        <h5 style="text-align: center"><a
-                                                    href="{{ path("campaign_details", {id:mycampaign.session.campaign.id}) }}"
-                                                    target="_blank">Accéder aux statistiques</a></h5>
+                                        {% if mycampaign.session.campaign.status.name == "finish" %}
+                                            <h5 style="text-align: center"><a
+                                                        href="{{ path("campaign_details", {id:mycampaign.session.campaign.id}) }}"
+                                                        target="_blank">Accéder aux statistiques</a></h5>
+                                        {% endif %}
                                     </div>
                                     <div class="modal-footer">
-                                        <p>{{ mycampaign.session.campaign.datestart |date("m/d/Y") }}
-                                            - {{ mycampaign.session.campaign.dateend |date("m/d/Y") }}  </p>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                                         </button>
                                     </div>

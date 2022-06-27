@@ -10,6 +10,7 @@
     --main-color: #BE8D90;
     --main-color-hover: #916c6c;
     --second-color: #BFD0BD;
+    --body-max-width: 100%;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond&display=swap');
