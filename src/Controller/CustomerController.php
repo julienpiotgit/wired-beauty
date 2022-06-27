@@ -20,11 +20,21 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Screen\Capture;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use function MongoDB\BSON\toJSON;
+use function Sodium\add;
 
 class CustomerController extends AbstractController
 {
@@ -197,5 +207,77 @@ class CustomerController extends AbstractController
         }
 
         return $this->redirectToRoute("admin");
+    }
+
+    /**
+     * @Route("/contact_campaign", name="contact_campaign")
+     */
+    public function contact_campaign(Request $request, MailerInterface $mailer, UserRepository $userRepository): Response
+    {
+        $currentUser = $this->getUser();
+        $user = $userRepository->find($currentUser);
+
+        $form = $this->createFormBuilder()
+            ->add('name_campaign', TextType::class)
+            ->add('description_campaign', TextareaType::class)
+            ->add('datestart', DateType::class)
+            ->add('dateend', DateType::class)
+            ->add('file', FileType::class)
+            ->add('sessions', TextareaType::class)
+            ->add('name_product', TextType::class)
+            ->add('type', TextType::class)
+            ->add('gender', TextType::class)
+            ->add('agerange', TextType::class)
+            ->add('send', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+
+        if($form->isSubmitted() && $form->isValid()) {
+
+            $contactFormData = $form->getData();
+            $destination = './emailFile';
+            $contactFormData['file']->move($destination, $contactFormData['file']->getClientOriginalName());
+
+            $message = (new Email())
+                ->from($user->getEmail())
+                ->to('mekieses1234@gmail.com')
+                ->subject('Creation campaign')
+                ->html("
+                    
+                    <h1 style='text-align: center; color:blue'>Request of creation of campaign by {$user->getFirstname()} {$user->getName()} </h1>
+                    <div>
+                    <h2>Infos campaign</h2>
+                    <p>-Name : {$contactFormData['name_campaign']}</p>
+                    <p>-Description : {$contactFormData['description_campaign']}</p>
+                    <p>-Date start / Date end : {$contactFormData['datestart']->format('d/m/Y')} / {$contactFormData['dateend']->format('d/m/Y')}</p>
+                    <p>-Sessions : {$contactFormData['sessions']}</p>
+                   <br>
+                    <h2>Infos product</h2>
+                    <p>-Name : {$contactFormData['name_product']}</p>
+                    <p>-type : {$contactFormData['type']}</p>
+                    <p>-gender : {$contactFormData['gender']}</p>
+                    <p>-age range : {$contactFormData['agerange']}</p>
+                    <br>
+                    <p><span style='color: red'>if need more information, contact</span> {$user->getEmail()}</p>
+                    </div>
+                ")
+                ->attachFromPath('./emailFile/'.$contactFormData['file']->getClientOriginalName());
+            $mailer->send($message);
+
+            $filesystem = new Filesystem();
+            $filesystem->remove('./emailFile/'.$contactFormData['file']->getClientOriginalName());
+
+            $this->addFlash('success', 'Your message has been sent');
+
+            return $this->redirectToRoute('admin');
+        }
+
+
+
+        return $this->render('customer/contact.html.twig', [
+            'form_contact' => $form->createView()
+        ]);
     }
 }

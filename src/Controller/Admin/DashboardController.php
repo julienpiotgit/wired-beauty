@@ -123,7 +123,8 @@ class DashboardController extends AbstractDashboardController
         }elseif ($this->isGranted('ROLE_CUSTOMER')) {
             yield MenuItem::subMenu('Campaign', 'fa fa-list')->setSubItems([
                 MenuItem::linkToRoute('List campaign customer', 'fa fa-file', 'list_campaign_customer'),
-                MenuItem::linkToRoute('My campaign customer', 'fa fa-file', 'my_campaign_customer')
+                MenuItem::linkToRoute('My campaign customer', 'fa fa-file', 'my_campaign_customer'),
+                MenuItem::linkToRoute('Contact', 'fa fa-file', 'contact_campaign')
             ]);
         }
     }
