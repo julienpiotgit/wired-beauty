@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <h4>Description</h4>
-                                    <p>{{ mycampaign.session.description }}</p>
+                                    <p>{{ mycampaign.session.campaign.description }}</p>
                                     {% for detail in details %}
                                         {% if detail.campaign.id == mycampaign.session.campaign.id %}
                                             <h4>Name product</h4>
@@ -112,7 +112,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <h4>Description</h4>
-                                        <p>{{ mycampaign.session.description }}</p>
+                                        <p>{{ mycampaign.session.campaign.description }}</p>
                                         {% for detail in details %}
                                             {% if detail.campaign.id == mycampaign.session.campaign.id %}
                                                 <h4>Name product</h4>
@@ -168,7 +168,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <h4>Description</h4>
-                                        <p>{{ mycampaign.session.description }}</p>
+                                        <p>{{ mycampaign.session.campaign.description }}</p>
                                         {% for detail in details %}
                                             {% if detail.campaign.id == mycampaign.session.campaign.id %}
                                                 <h4>Name product</h4>
@@ -224,7 +224,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <h4>Description</h4>
-                                        <p>{{ mycampaign.session.description }}</p>
+                                        <p>{{ mycampaign.session.campaign.description }}</p>
                                         {% for detail in details %}
                                             {% if detail.campaign.id == mycampaign.session.campaign.id %}
                                                 <h4>Name product</h4>
@@ -253,7 +253,8 @@
                     {% endif %}
                 {% endfor %}
             </div>
-
+        </div>
+    </section>
     </body>
     </html>
     {% block javascripts %}
