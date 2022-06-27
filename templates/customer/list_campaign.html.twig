@@ -2,95 +2,99 @@
 
 {% block main %}
 
-    <div class="container" style="align-items: center; display: flex; justify-content: center">
-        <button id="show_allcampaign">List all campaigns</button>
-        <button id="show_campaign_soon">Campaign soon</button>
-        <button id="show_campaign_finish">Campaigns finish</button>
-    </div>
-
-    <div id="allcampaign" style="position: absolute; width: 100%; display: flex">
-        {% for campaign in allCampaigns %}
-            <div class="card" style="width: 30%">
-                <div class="container">
-                    <h4><b>{{ campaign.name }}</b></h4>
-                    <p>{{campaign.description}}</p>
-                    <p>{{campaign.datestart |date("m/d/Y")}}</p>
-                    <p>{{campaign.dateend |date("m/d/Y")}}</p>
-                    <p>status :{{ campaign.status.name }}</p>
-                    <button>Détails campaigns</button>
-                </div>
+    <section class="campaign">
+        <div class="container">
+            <div class="nav">
+                <button class="item selected" onclick="campaignSelect(this)" id="allCampaign">List all campaigns
+                </button>
+                <button class="item" onclick="campaignSelect(this)" id="soon">Campaign soon</button>
+                <button class="item" onclick="campaignSelect(this)" id="finish">Campaigns finish</button>
             </div>
-        {% endfor %}
-    </div>
-
-    <div id="campaign_soon" style="position: absolute;width: 100%; display: flex">
-        {% for campaignSoon in allCampaignSoon %}
-            <div class="card" style="width: 30%">
-                <div class="container">
-                    <h4><b>{{ campaignSoon.name }}</b></h4>
-                    <p>{{campaignSoon.description}}</p>
-                    <p>{{campaignSoon.datestart |date("m/d/Y")}}</p>
-                    <p>{{campaignSoon.dateend |date("m/d/Y")}}</p>
-                    <p>status :{{ campaignSoon.status.name }}</p>
-                    <button>Voir la liste des sessions</button>
-                </div>
+            <div class="block" id="allCampaign">
+                {% for campaign in allCampaigns %}
+                    <div class="card">
+                        <div class="container">
+                            <h4><b>{{ campaign.name }}</b></h4>
+                            <p>{{ campaign.description }}</p>
+                            <p>{{ campaign.datestart |date("m/d/Y") }}</p>
+                            <p>{{ campaign.dateend |date("m/d/Y") }}</p>
+                            <p>status :{{ campaign.status.name }}</p>
+                            <button>Détails campaigns</button>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-    </div>
 
-    <div id="campaign_finish" style="position: absolute;width: 100%; display: flex">
-        {% for campaignFinish in allCampaignFinish %}
-            <div class="card" style="width: 30%">
-                <div class="container">
-                    <h4><b>{{ campaignFinish.name }}</b></h4>
-                    <p>{{campaignFinish.description}}</p>
-                    <p>{{campaignFinish.datestart |date("m/d/Y")}}</p>
-                    <p>{{campaignFinish.dateend |date("m/d/Y")}}</p>
-                    <p>status :{{ campaignFinish.status.name }}</p>
-                    <button>Voir la liste des sessions</button>
-                </div>
+            <div class="block" id="soon">
+                {% for campaignSoon in allCampaignSoon %}
+                    <div class="card">
+                        <div class="container">
+                            <h4><b>{{ campaignSoon.name }}</b></h4>
+                            <p>{{ campaignSoon.description }}</p>
+                            <p>{{ campaignSoon.datestart |date("m/d/Y") }}</p>
+                            <p>{{ campaignSoon.dateend |date("m/d/Y") }}</p>
+                            <p>status :{{ campaignSoon.status.name }}</p>
+                            <button>Voir la liste des sessions</button>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-    </div>
 
-    {% block javascripts %}
-        <script type="text/javascript">
-            //button
-            let show_allcampaign = document.getElementById("show_allcampaign");
-            let show_campaign_soon = document.getElementById("show_campaign_soon");
-            let show_campaign_finish = document.getElementById("show_campaign_finish");
+            <div id="finish" class="block">
+                {% for campaignFinish in allCampaignFinish %}
+                    <div class="card">
+                        <div class="container">
+                            <h4><b>{{ campaignFinish.name }}</b></h4>
+                            <p>{{ campaignFinish.description }}</p>
+                            <p>{{ campaignFinish.datestart |date("m/d/Y") }}</p>
+                            <p>{{ campaignFinish.dateend |date("m/d/Y") }}</p>
+                            <p>status :{{ campaignFinish.status.name }}</p>
+                            <button>Voir la liste des sessions</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 
-            //div
-            let allcampaign = document.getElementById("allcampaign");
-            let campaign_soon = document.getElementById("campaign_soon");
-            let campaign_finish = document.getElementById("campaign_finish");
+{% endblock %}
+        {% block javascripts %}
+            <script type="text/javascript">
+                //button
+                let show_allcampaign = document.getElementById("show_allcampaign");
+                let show_campaign_soon = document.getElementById("show_campaign_soon");
+                let show_campaign_finish = document.getElementById("show_campaign_finish");
 
-            allcampaign.style.visibility = "visible";
-            campaign_soon.style.visibility = "hidden";
-            campaign_finish.style.visibility = "hidden";
+                //div
+                let allcampaign = document.getElementById("allcampaign");
+                let campaign_soon = document.getElementById("campaign_soon");
+                let campaign_finish = document.getElementById("campaign_finish");
 
-            show_allcampaign.addEventListener("click", function() {
                 allcampaign.style.visibility = "visible";
                 campaign_soon.style.visibility = "hidden";
                 campaign_finish.style.visibility = "hidden";
-            });
 
-            show_campaign_soon.addEventListener("click", function() {
-                campaign_soon.style.visibility = "visible";
-                allcampaign.style.visibility = "hidden";
-                campaign_finish.style.visibility = "hidden";
-            });
+                show_allcampaign.addEventListener("click", function () {
+                    allcampaign.style.visibility = "visible";
+                    campaign_soon.style.visibility = "hidden";
+                    campaign_finish.style.visibility = "hidden";
+                });
 
-            show_campaign_finish.addEventListener("click", function() {
-                campaign_finish.style.visibility = "visible";
-                allcampaign.style.visibility = "hidden";
-                campaign_soon.style.visibility = "hidden";
-            });
+                show_campaign_soon.addEventListener("click", function () {
+                    campaign_soon.style.visibility = "visible";
+                    allcampaign.style.visibility = "hidden";
+                    campaign_finish.style.visibility = "hidden";
+                });
 
-        </script>
+                show_campaign_finish.addEventListener("click", function () {
+                    campaign_finish.style.visibility = "visible";
+                    allcampaign.style.visibility = "hidden";
+                    campaign_soon.style.visibility = "hidden";
+                });
 
-    {% endblock %}
-{% endblock %}
+            </script>
+
+        {% endblock %}
 
 
 

@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
@@ -24,11 +25,11 @@
             </div>
             {% if app.user %}
             <a class="main-link mx-4" href="{{ path('admin') }}" data-aos="fade-left">
-                My test space
+                {{ 'button.dashboardAccess' | trans }}
             </a>
             {% else %}
             <a class="main-link mx-4" href="{{ path('app_login') }}" data-aos="fade-left">
-                Connexion
+                {{ 'button.login' | trans }}
             </a>
             {% endif %}
             <div class="button-toggle" onclick="openNavigation(this)" data-aos="fade-left">
@@ -43,37 +44,37 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{ path('homepage') }}">Home</a>
+                        <a class="nav-link" aria-current="page" href="{{ path('homepage') }}">{{ 'nav.home' | trans}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('what') }}">What we do</a>
+                        <a class="nav-link" href="{{ path('what') }}">{{ 'nav.what' | trans}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Who we are</a>
+                        <a class="nav-link" href="#">{{ 'nav.about' | trans}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Scientific Validation</a>
+                        <a class="nav-link" href="#">{{ 'nav.validation' | trans}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Device & App</a>
+                        <a class="nav-link" href="#">{{ 'nav.device' | trans}}</a>
                     </li>
                 </ul>
                 <div class="translation">
-                    <a href="">
+                    <a href="{{ path('locale', {'_locale': 'en'}) }}">
                         <img src="{{ asset('build/flag/EN.png') }}">
                     </a>
-                    <a href="">
+                    <a href="{{ path('locale', {'_locale': 'fr'}) }}">
                         <img src="{{ asset('build/flag/FR.png') }}">
                     </a>
                 </div>
                 <div class="registration">
                     {% if app.user %}
                         <div class="p-3">
-                            <i class="fa fa-user"></i> You are logged in as {{ app.user.username }}.<a class="main-link pink ms-3" style="display: inline" href="{{ path('app_logout') }}">Logout</a>
+                            <i class="fa fa-user"></i> {{ 'nav.authenticate' | trans }} {{ app.user.username }}.<a class="main-link pink ms-3" style="display: inline" href="{{ path('app_logout') }}">{{ 'button.logout' | trans }}</a>
                         </div>
                         {% else %}
-                    <a href="{{ path('app_login') }}">Login</a>
-                    <a href="{{ path('app_register') }}">Registration</a>
+                    <a href="{{ path('app_login') }}">{{ 'button.login' | trans }}</a>
+                    <a href="{{ path('app_register') }}">{{ 'button.registration' | trans }}</a>
                     {% endif %}
                 </div>
             </div>
@@ -110,7 +111,7 @@
             </div>
             <div class="item" data-aos="fade-right">
                 <div class="inner-item">
-                    <h5>Nos produits</h5>
+                    <h5>{{ 'footer.product' | trans }}</h5>
                     <ul>
                         <li><a href="#" title="">Lorem Ipsum sit del</a></li>
                         <li><a href="#" title="">Lorem Ipsum sit del</a></li>
@@ -122,7 +123,7 @@
             </div>
         </div>
         <div class="copyright">
-            <a>© 2022 VÉVÉ INDUSTRIE. All Rights Reserved.</a>
+            <a>© 2022 VÉVÉ INDUSTRIE. {{ 'footer.copyright' | trans }}</a>
         </div>
     </div>
 </footer>

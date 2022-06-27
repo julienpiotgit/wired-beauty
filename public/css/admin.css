@@ -7,6 +7,10 @@
     --user-avatar-icon-bg: #a9c1a6;
     --user-avatar-icon-color: #687b65;
     --color-primary: #BE8D90;
+    --main-color: #BE8D90;
+    --main-color-hover: #916c6c;
+    --second-color: #BFD0BD;
+    --body-max-width: 100%;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond&display=swap');
@@ -34,11 +38,196 @@
 
 .dashboard .item {
     background-color: #f7f7f7;
-    border: 1px solid rgba(0,0,0,0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 15px;
     padding: 10px 20px;
 }
 
 .dashboard .item h3 {
     text-transform: uppercase;
+}
+
+.campaign .container {
+    position: relative;
+}
+
+.campaign .nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    background-color: rgba(190, 141, 144, 0.4);
+    border: 3px solid var(--second-color);
+}
+
+.campaign .nav button {
+    background-color: var(--main-color);
+    color: #fff;
+    padding: 10px 20px;
+    margin: 0 20px;
+    text-transform: uppercase;
+    border-radius: 10px;
+    -webkit-transition: all 0.3s;
+    border: none;
+}
+
+.campaign .nav button.selected {
+    box-shadow: 4px 4px 0 #6d4f51;
+    transform: scale(1.1);
+}
+
+.campaign .block {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 150px;
+    left: 0;
+    width: 100%;
+    -webkit-transition: all 0.3s;
+}
+
+.campaign .block .card {
+    width: 31%;
+    margin: 0 1%;
+    padding: 40px 20px;
+    position: relative;
+    background-color: rgba(190, 141, 144, 0.4);
+    border: 3px solid var(--second-color);
+    -webkit-transition: all 0.8s;
+    opacity: 0;
+    transform: translateY(-50px);
+    z-index: -1;
+    margin-bottom: 60px;
+}
+
+.campaign .block.active .card {
+    transform: translateY(0);
+    opacity: 1;
+    z-index: 1;
+}
+
+.campaign .block .card h4 {
+    font-size: 35px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.campaign .block .card .status {
+    position: absolute;
+    left: 40px;
+    top: -15px;
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #fff;
+    padding: 5px 10px;
+    text-transform: capitalize;
+    width: 150px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.campaign .block .card .status:before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 0;
+    width: 15px;
+    height: 15px;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.campaign .block .card .status.soon {
+    background-color: orange;
+}
+
+.campaign .block .card .status.soon:before {
+    background-color: rgba(255, 165, 0, 0.50);
+}
+
+.campaign .block .card .status.ongoing {
+    background-color: green;
+}
+
+.campaign .block .card .status.ongoing:before {
+    background-color: rgba(0, 128, 0, 0.5);
+}
+
+.campaign .block .card .status.finish {
+    background-color: red;
+}
+
+.campaign .block .card .status.finish:before {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.campaign .block .card button {
+    width: 60%;
+    text-transform: uppercase;
+    padding: 20px 40px;
+    text-align: center;
+    margin: 0 auto;
+    -webkit-transition: all 0.3s;
+}
+
+.campaign button:hover {
+    transform: scale(1.1);
+}
+
+.campaign .btn-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.campaign .modal-content {
+    border: 1px solid var(--main-color-hover);
+}
+
+.campaign .modal-header {
+    background-color: var(--second-color);
+    border-bottom: 1px solid var(--main-color-hover);
+    display: block;
+    text-align: center;
+}
+
+.campaign .modal-header p {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.campaign .modal-header h5 {
+    color: var(--main-color);
+    font-size: 35px;
+    text-align: center;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.campaign .modal-body {
+    background-color: rgba(190, 141, 144, 0.3);
+}
+
+.campaign .modal h4 {
+    color: var(--main-color-hover);
+    text-transform: uppercase;
+    width: 100%;
+    font-size: 24px;
+    padding-bottom: 10px;
+}
+
+.campaign .modal p {
+    font-size: 18px;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--second-color);
+}
+
+.campaign .modal-footer {
+    background-color: var(--second-color);
+    border-top: 1px solid var(--main-color-hover);
 }

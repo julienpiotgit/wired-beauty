@@ -29,7 +29,7 @@
 
 .section-formulaire h1 {
     text-align: center;
-    color: var(--main-color);
+    color: #000 !important;
     font-size: 3vw;
 }
 
@@ -59,4 +59,10 @@
     text-transform: uppercase;
     margin-bottom: 8px;
     color: var(--main-color);
+}
+
+@media (max-width: 991px) {
+    .section-formulaire h1 {
+        font-size: 8vw;
+    }
 }
