@@ -25,9 +25,6 @@
             <br>
             <canvas id="campaignsbar" width="400" height="100"></canvas>
             <br>
-            <h5 style="text-align:center;">Nombres de personnnes souscrit et validée pour la campagne</h5>
-            <canvas id="nbpersons" width="400" height="100"></canvas>
-            <br>
         </div>
     </div>
 
@@ -83,22 +80,6 @@
                             }
                         }]
                     }
-                }
-            })
-
-            let nbpersons = document.querySelector("#nbpersons")
-            let nbpersonsGraph = new Chart(nbpersons, {
-                type: "pie",
-                data: {
-                    // labels: ["Nombre total", "Nombre validée"],
-                    labels: {{ statusnom|raw }},
-                    datasets: [{
-                        label: "Répartition des catégories",
-                        // data: [1,2],
-                        data: {{ nbpersons|raw }},
-                        {#backgroundColor: {{ categColor|raw }}#}
-                        backgroundColor: ["#6a5acd7a", "#f1cbc8", "#bfd0bd"]
-                    }]
                 }
             })
         </script>

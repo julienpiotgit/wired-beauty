@@ -73,15 +73,9 @@ class CustomerController extends AbstractController
      */
     public function my_campaign(CampaignRepository $campaignRepository, ApplicationRepository $applicationRepository, ProductRepository $productRepository,QuestionRepository $questionRepository, QuestionAnswerRepository $questionAnswerRepository, StatusRepository $statusRepository): Response
     {
-//        $em = $this->entityManager;
-//        $query = "select * from status";
-//        $statement = $em->getConnection()->prepare($query);
-//        $sql = $statement->fetchAll();
-
         $currentUser = $this->getUser();
 
         $mycampaigns = $productRepository->findCampaigns($currentUser);
-//        dd($mycampaigns);
 
         $mycampaigncount = $productRepository->findCountCampaigns($currentUser);
 
@@ -92,12 +86,6 @@ class CustomerController extends AbstractController
         $detailsCampaignFinish = $productRepository->findCampaignFinish($currentUser);
         $detailsCampaignSoon = $productRepository->findCampaignSoon($currentUser);
         $detailsCampaignStats = [$detailsCampaignSoon[0][1],$detailsCampaignOngoing[0][1],$detailsCampaignFinish[0][1]];
-//        $detailsCampaign["ongoing"] = $detailsCampaignOngoing[0][1];
-//        $detailsCampaign["finish"] = $detailsCampaignFinish[0][1];
-//        $detailsCampaign["soon"] = $detailsCampaignSoon[0][1];
-
-        //dd($detailsCampaignStats);
-//        dd($detailsCampaign);
 
         $statusNom = [];
         $status = $statusRepository->findAll();
