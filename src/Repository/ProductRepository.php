@@ -159,4 +159,16 @@ class ProductRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findCampaigns($user)
+    {
+        return $this->createQueryBuilder('p')
+//            ->addSelect('')
+            ->innerJoin('p.campaign', 'c')
+            ->innerJoin('c.status', 's')
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 }

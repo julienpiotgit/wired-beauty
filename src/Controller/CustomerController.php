@@ -110,7 +110,8 @@ class CustomerController extends AbstractController
     {
         $currentUser = $this->getUser();
 
-        $mycampaigns = $applicationRepository->findCampaigns($currentUser);
+//        $mycampaigns = $applicationRepository->findCampaigns($currentUser);
+        $mycampaigns = $productRepository->findCampaigns($currentUser);
 
         $detailsCampaign = $productRepository->findDetailsCampaign();
 
