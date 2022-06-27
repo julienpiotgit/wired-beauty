@@ -82,7 +82,7 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findCampaignOngoing()
+    public function findCampaignOngoing($user)
     {
         return $this->createQueryBuilder('p')
             ->select('count(campaign)')
@@ -90,11 +90,13 @@ class ProductRepository extends ServiceEntityRepository
             ->innerJoin('campaign.status', 'status')
             ->andWhere('status.name = :status')
             ->setParameter('status', "ongoing")
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
             ->getQuery()
             ->getResult();
     }
 
-    public function findCampaignFinish()
+    public function findCampaignFinish($user)
     {
         return $this->createQueryBuilder('p')
             ->select('count(campaign)')
@@ -102,11 +104,13 @@ class ProductRepository extends ServiceEntityRepository
             ->innerJoin('campaign.status', 'status')
             ->andWhere('status.name = :status')
             ->setParameter('status', "finish")
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
             ->getQuery()
             ->getResult();
     }
 
-    public function findCampaignSoon()
+    public function findCampaignSoon($user)
     {
         return $this->createQueryBuilder('p')
             ->select('count(campaign)')
@@ -114,6 +118,8 @@ class ProductRepository extends ServiceEntityRepository
             ->innerJoin('campaign.status', 'status')
             ->andWhere('status.name = :status')
             ->setParameter('status', "soon")
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
             ->getQuery()
             ->getResult();
     }

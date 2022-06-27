@@ -80,7 +80,7 @@ class CustomerController extends AbstractController
 
         $currentUser = $this->getUser();
 
-        $mycampaigns = $applicationRepository->findCampaigns($currentUser);
+        $mycampaigns = $productRepository->findCampaigns($currentUser);
 //        dd($mycampaigns);
 
         $mycampaigncount = $productRepository->findCountCampaigns($currentUser);
@@ -88,14 +88,15 @@ class CustomerController extends AbstractController
         $detailsCampaign = $productRepository->findDetailsCampaign();
 
         $detailsCampaignStats = [];
-        $detailsCampaignOngoing = $productRepository->findCampaignOngoing();
-        $detailsCampaignFinish = $productRepository->findCampaignFinish();
-        $detailsCampaignSoon = $productRepository->findCampaignSoon();
+        $detailsCampaignOngoing = $productRepository->findCampaignOngoing($currentUser);
+        $detailsCampaignFinish = $productRepository->findCampaignFinish($currentUser);
+        $detailsCampaignSoon = $productRepository->findCampaignSoon($currentUser);
         $detailsCampaignStats = [$detailsCampaignSoon[0][1],$detailsCampaignOngoing[0][1],$detailsCampaignFinish[0][1]];
 //        $detailsCampaign["ongoing"] = $detailsCampaignOngoing[0][1];
 //        $detailsCampaign["finish"] = $detailsCampaignFinish[0][1];
 //        $detailsCampaign["soon"] = $detailsCampaignSoon[0][1];
 
+        //dd($detailsCampaignStats);
 //        dd($detailsCampaign);
 
         $statusNom = [];
@@ -134,12 +135,6 @@ class CustomerController extends AbstractController
         $mycampaigns = $productRepository->findCampaigns($currentUser);
 
         $detailsCampaign = $productRepository->findDetailsCampaign();
-
-        $detailsCampaignStats = [];
-        $detailsCampaignOngoing = $productRepository->findCampaignOngoing();
-        $detailsCampaignFinish = $productRepository->findCampaignFinish();
-        $detailsCampaignSoon = $productRepository->findCampaignSoon();
-        $detailsCampaignStats = [$detailsCampaignSoon[0][1],$detailsCampaignOngoing[0][1],$detailsCampaignFinish[0][1]];
 
         $statusNom = [];
         $status = $statusRepository->findAll();
@@ -236,15 +231,23 @@ class CustomerController extends AbstractController
         $form = $this->createFormBuilder()
             ->add('name_campaign', TextType::class)
             ->add('description_campaign', TextareaType::class)
-            ->add('datestart', DateType::class)
-            ->add('dateend', DateType::class)
+            ->add('datestart', DateType::class, [
+                'label' => 'Date Start'
+            ])
+            ->add('dateend', DateType::class, [
+                'label' => 'Date End'
+            ])
             ->add('file', FileType::class)
             ->add('sessions', TextareaType::class)
             ->add('name_product', TextType::class)
             ->add('type', TextType::class)
             ->add('gender', TextType::class)
-            ->add('agerange', TextType::class)
-            ->add('send', SubmitType::class)
+            ->add('agerange', TextType::class, [
+                'label' => 'Age range'
+            ])
+            ->add('send', SubmitType::class, [
+                'label' => 'Send'
+            ])
             ->getForm();
 
         $form->handleRequest($request);

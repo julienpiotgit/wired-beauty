@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\CustomerController;
 use App\Entity\Application;
 use App\Entity\Campaign;
 use App\Entity\PageBuilder;
@@ -54,8 +55,7 @@ class DashboardController extends AbstractDashboardController
 
 
         } elseif ($this->isGranted('ROLE_CUSTOMER')) {
-            $currentUser = $this->getUser();
-            return $this->render('admin/customer_dashboard.html.twig');
+
         } elseif ($this->isGranted('ROLE_TESTER')) {
             $allCampaigns = $this->entityManager->getRepository(Campaign::class)->findAll();
             $statusSoon = $this->entityManager->getRepository(Status::class)->findOneBy(["name" => "soon"]);
@@ -121,11 +121,10 @@ class DashboardController extends AbstractDashboardController
                 MenuItem::linkToRoute('My campaign', 'fa fa-file', 'my_campaign')
             ]);
         }elseif ($this->isGranted('ROLE_CUSTOMER')) {
-            yield MenuItem::subMenu('Campaign', 'fa fa-list')->setSubItems([
-//                MenuItem::linkToRoute('Lists campaigns', 'fa fa-file', 'list_campaign_customer'),
-                MenuItem::linkToRoute('Lists campaigns', 'fa fa-file', 'all_campaign_customer'),
-                MenuItem::linkToRoute('Stats Graphs', 'fa fa-file', 'my_campaign_customer'),
-                MenuItem::linkToRoute('Contact', 'fa fa-file', 'contact_campaign')
+            yield MenuItem::subMenu('Campaign', 'fa fa-list-ol')->setSubItems([
+                MenuItem::linkToRoute('Lists campaigns', 'fa fa-list', 'all_campaign_customer'),
+                MenuItem::linkToRoute('Stats Graphs', 'fa fa-chart-pie', 'my_campaign_customer'),
+                MenuItem::linkToRoute('Contact creation campaign', 'fa fa-address-book', 'contact_campaign')
             ]);
         }
     }
