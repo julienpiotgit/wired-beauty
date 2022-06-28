@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\PageBuilderRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,11 +37,15 @@ class FrontController extends AbstractController
 
 
     /**
-     * @Route("/what-we-do/{_locale}", name="what")
+     * @Route("/what-we-do", name="what")
      */
-    public function what(): Response
+    public function what(PageBuilderRepository $pageBuilderRepository): Response
     {
-        return $this->render('front/what.html.twig');
+        $result = $pageBuilderRepository->getWhatWeDoPage();
+        $data = array_shift($result);
+        return $this->render('front/what.html.twig', [
+            'pageData' => $data
+        ]);
     }
 
     /**

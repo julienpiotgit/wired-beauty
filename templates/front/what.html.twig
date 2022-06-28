@@ -62,6 +62,9 @@
                         <h2>{{ section.title }}</h2>
                         {# <h2>WE RELY ON<br> DATA & TECHNOLOGY</h2> #}
                     </div>
+                    <div class="col-lg-5" data-aos="zoom-in">
+                        <img style="width: 36%" src="/uploads/{{ section.image }}" class="img-fluid">
+                    </div>
                     <div class="list-data">
                         {% for point in section.points %}
                             <div class="item" data-aos="fade-right">
@@ -78,10 +81,14 @@
     {% for section in pageData.sections %}
         {% if section.location == 'section 3' %}
             <section class="tester-banner">
-                <div class="padding-section overlay">
+                <br class="padding-section overlay">
                     <div class="head-section center-position" data-aos="fade-bottom">
                         <h2>{{ section.title }}</h2>
                     </div>
+                    <div class="col-lg-5" data-aos="zoom-in">
+                        <img style="width: 50%; margin-left: 92%" src="/uploads/{{ section.image }}" class="img-fluid">
+                    </div>
+                    </br>
                     <div class="col-lg-8 mx-auto text-center" data-aos="zoom-in">
                         <p class="text-center text-white">
                             {{ section.description }}
@@ -91,6 +98,7 @@
                         </a>
                     </div>
                 </div>
+                </br></br></br>
             </section>
         {% endif %}
     {% endfor %}
