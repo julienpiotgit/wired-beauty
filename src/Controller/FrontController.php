@@ -37,7 +37,7 @@ class FrontController extends AbstractController
 
 
     /**
-     * @Route("/what-we-do/{_locale}", name="what")
+     * @Route("/what-we-do", name="what")
      */
     public function what(PageBuilderRepository $pageBuilderRepository): Response
     {

@@ -14,29 +14,20 @@
         </div>
     </section>
 
-    {% for section in pageData.sections %}
-        {% if section.location == 'section 1' %}
-            <section class="padding-section bg-second-color">
+    <section class="page-builder">
+        {% for section in pageData.sections %}
+            <div class="padding-section section">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-12">
-                            <div class="head-section left-position" data-aos="fade-right">
-                                <h2 class="main-color">{{ section.title }}</h2>
-                            </div>
-                        </div>
                         <div class="col-lg-5" data-aos="zoom-in">
                             <img src="/uploads/{{ section.image }}" class="img-fluid">
                         </div>
                         <div class="col-lg-7 mt-3">
-                            <p data-aos="zoom-in">
+                            <div class="head-section left-position" data-aos="fade-right">
+                                <h2 class="main-color">{{ section.title }}</h2>
+                            </div>
+                            <p data-aos="zoom-in mb-5">
                                 {{ section.description }}
-                                {# <strong class="green">WIRED BEAUTY</strong> is a new datadriven market #}
-                                {# research company dedicated to cosmetic laboratories. #}
-                                {# <br><br> #}
-                                {# We help our clients evaluate and develop skincare formulae by comparing cosmetics <br><a #}
-                                {# href="" #}
-                                {# class="link-dynamic pink">on #}
-                                {# statistically viable samples</a> of men & women (1000 people): #}
                             </p>
                             <ul class="list-wired mt-lg-0 mt-5">
                                 {% for point in section.points %}
@@ -50,56 +41,55 @@
                         </div>
                     </div>
                 </div>
-            </section>
-        {% endif %}
-    {% endfor %}
+            </div>
+        {% endfor %}
+    </section>
 
-    {% for section in pageData.sections %}
-        {% if section.location == 'section 2' %}
-            <section class="padding-section data">
-                <div class="container">
-                    <div class="head-section">
-                        <h2>{{ section.title }}</h2>
-                        {# <h2>WE RELY ON<br> DATA & TECHNOLOGY</h2> #}
-                    </div>
-                    <div class="col-lg-5" data-aos="zoom-in">
-                        <img style="width: 36%" src="/uploads/{{ section.image }}" class="img-fluid">
-                    </div>
-                    <div class="list-data">
-                        {% for point in section.points %}
-                            <div class="item" data-aos="fade-right">
-                                <div class="number">{{ loop.index }}</div>
-                                <p>{{ point.text }} </p>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </section>
-        {% endif %}
-    {% endfor %}
 
-    {% for section in pageData.sections %}
-        {% if section.location == 'section 3' %}
-            <section class="tester-banner">
-                <br class="padding-section overlay">
-                    <div class="head-section center-position" data-aos="fade-bottom">
-                        <h2>{{ section.title }}</h2>
-                    </div>
-                    <div class="col-lg-5" data-aos="zoom-in">
-                        <img style="width: 50%; margin-left: 92%" src="/uploads/{{ section.image }}" class="img-fluid">
-                    </div>
-                    </br>
-                    <div class="col-lg-8 mx-auto text-center" data-aos="zoom-in">
-                        <p class="text-center text-white">
-                            {{ section.description }}
-                        </p>
-                        <a class="main-link mt-3" href="">
-                            {{ section.button }}
-                        </a>
-                    </div>
-                </div>
-                </br></br></br>
-            </section>
-        {% endif %}
-    {% endfor %}
+{#    {% for section in pageData.sections %}#}
+{#        {% if section.location == 'section 2' %}#}
+{#            <section class="padding-section data">#}
+{#                <div class="container">#}
+{#                    <div class="head-section">#}
+{#                        <h2>{{ section.title }}</h2>#}
+{#                        #}{# <h2>WE RELY ON<br> DATA & TECHNOLOGY</h2> #}
+{#                    </div>#}
+{#                    <div class="col-lg-5" data-aos="zoom-in">#}
+{#                        <img style="width: 36%" src="/uploads/{{ section.image }}" class="img-fluid">#}
+{#                    </div>#}
+{#                    <div class="list-data">#}
+{#                        {% for point in section.points %}#}
+{#                            <div class="item" data-aos="fade-right">#}
+{#                                <div class="number">{{ loop.index }}</div>#}
+{#                                <p>{{ point.text }} </p>#}
+{#                            </div>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                </div>#}
+{#            </section>#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
+
+{#    {% for section in pageData.sections %}#}
+{#        {% if section.location == 'section 3' %}#}
+{#            <section class="tester-banner">#}
+{#                <br class="padding-section overlay">#}
+{#                <div class="head-section center-position" data-aos="fade-bottom">#}
+{#                    <h2>{{ section.title }}</h2>#}
+{#                </div>#}
+{#                <div class="col-lg-5" data-aos="zoom-in">#}
+{#                    <img style="width: 50%; margin-left: 92%" src="/uploads/{{ section.image }}" class="img-fluid">#}
+{#                </div>#}
+{#                </br>#}
+{#                <div class="col-lg-8 mx-auto text-center" data-aos="zoom-in">#}
+{#                    <p class="text-center text-white">#}
+{#                        {{ section.description }}#}
+{#                    </p>#}
+{#                    <a class="main-link mt-3" href="">#}
+{#                        {{ section.button }}#}
+{#                    </a>#}
+{#                </div>#}
+{#            </section>#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
 {% endblock %}
