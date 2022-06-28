@@ -30,6 +30,7 @@ form:age: Âge
 form:height: Taille
 form:weight: Poid
 form:cp: Code postal
+form:ap: Adresse Postal
 form:city: Ville
 form:terms: Accepter les conditions
 form:password: Mot de passe

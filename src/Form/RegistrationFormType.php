@@ -39,6 +39,9 @@ class RegistrationFormType extends AbstractType
             ->add('postal_code', TextType::class, [
                 'label' => 'form:cp'
             ])
+            ->add('postal_address', TextType::class, [
+                'label' => 'form:ap'
+            ])
             ->add('city', TextType::class, [
                 'label' => 'form:city'
             ])

@@ -12,6 +12,8 @@ use App\Entity\Status;
 use App\Entity\User;
 use App\Repository\ApplicationRepository;
 use App\Repository\ProductRepository;
+use App\Repository\QuestionRepository;
+use App\Repository\StatusRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -29,12 +31,16 @@ class DashboardController extends AbstractDashboardController
     private EntityManagerInterface $entityManager;
     private ProductRepository $productRepository;
     private ApplicationRepository $applicationRepository;
+    private StatusRepository $statusRepository;
+    private QuestionRepository $questionRepository;
 
-    public function __construct(EntityManagerInterface $entityManager, ProductRepository $productRepository, ApplicationRepository $applicationRepository)
+    public function __construct(EntityManagerInterface $entityManager, ProductRepository $productRepository, ApplicationRepository $applicationRepository, StatusRepository $statusRepository, QuestionRepository $questionRepository)
     {
         $this->entityManager = $entityManager;
         $this->productRepository = $productRepository;
         $this->applicationRepository = $applicationRepository;
+        $this->statusRepository = $statusRepository;
+        $this->questionRepository = $questionRepository;
     }
 
     /**
@@ -42,20 +48,30 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        if ($this->isGranted('ROLE_ADMIN')) {
-            $allCurrentCampaign = $this->entityManager->getRepository(Campaign::class)->findBy([
-                'status' => 8
+        if ($this->isGranted('ROLE_CUSTOMER')) {
+            $currentUser = $this->getUser();
+
+//        $mycampaigns = $applicationRepository->findCampaigns($currentUser);
+            $mycampaigns = $this->productRepository->findCampaigns($currentUser);
+
+            $detailsCampaign = $this->productRepository->findDetailsCampaign();
+
+            $statusNom = [];
+            $status = $this->statusRepository->findAll();
+            foreach ($status as $stat) {
+                if ($stat->getType() == "campaign"){
+                    $statusNom[] = $stat->getName();
+                }
+            }
+
+            $questions = $this->questionRepository->findCampaignQuestion();
+
+            return $this->render('customer/all_campaign.html.twig', [
+                "statusnom" => json_encode($statusNom),
+                "mycampaigns" => $mycampaigns,
+                "details" =>  $detailsCampaign,
+                "questions" => $questions,
             ]);
-            /* STOCKER LES NOUVELLES REQUEST DANS $numberNewRequest */
-            $numberNewRequest = 3;
-            return $this->render('admin/admin_dashboard.html.twig', [
-                'allCurrentCampaign' => $allCurrentCampaign,
-                'numberNewRequest' => $numberNewRequest,
-            ]);
-
-
-        } elseif ($this->isGranted('ROLE_CUSTOMER')) {
-
         } elseif ($this->isGranted('ROLE_TESTER')) {
             $allCampaigns = $this->entityManager->getRepository(Campaign::class)->findAll();
             $statusSoon = $this->entityManager->getRepository(Status::class)->findOneBy(["name" => "soon"]);

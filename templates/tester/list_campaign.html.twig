@@ -31,7 +31,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">{{ campaign.name }}</h5>
-                                    <p>{{ campaign.datestart |date("m/d/Y") }}-{{ campaign.dateend |date("m/d/Y") }}</p>
+                                    <p>{{ campaign.datestart |date("d/m/Y") }}-{{ campaign.dateend |date("d/m/Y") }}</p>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
@@ -89,7 +89,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">{{ campaignSoon.name }}</h5>
-                                    <p>{{ campaignSoon.datestart |date("m/d/Y") }}-{{ campaignSoon.dateend |date("m/d/Y") }}</p>
+                                    <p>{{ campaignSoon.datestart |date("d/m/Y") }}-{{ campaignSoon.dateend |date("d/m/Y") }}</p>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
@@ -148,7 +148,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">{{ campaignFinish.name }}</h5>
-                                    <p>{{ campaignFinish.datestart |date("m/d/Y") }}-{{ campaignFinish.dateend |date("m/d/Y") }}</p>
+                                    <p>{{ campaignFinish.datestart |date("d/m/Y") }}-{{ campaignFinish.dateend |date("d/m/Y") }}</p>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
@@ -207,7 +207,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">{{ campaignOngoing.name }}</h5>
-                                    <p>{{ campaignOngoing.datestart |date("m/d/Y") }}-{{ campaignOngoing.dateend |date("m/d/Y") }}</p>
+                                    <p>{{ campaignOngoing.datestart |date("d/m/Y") }}-{{ campaignOngoing.dateend |date("d/m/Y") }}</p>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>

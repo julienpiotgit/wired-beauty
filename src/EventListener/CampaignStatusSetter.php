@@ -6,21 +6,30 @@ namespace App\EventListener;
 use App\Entity\Question;
 use App\Entity\QuestionAnswer;
 use App\Entity\Status;
+use App\Entity\User;
 use App\Repository\StatusRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use App\Entity\Campaign;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 
 class CampaignStatusSetter
 {
+    /** @var UserPasswordEncoderInterface */
+    private $passwordEncoder;
+
     private $statusRepository;
     private $em;
+    private $client;
 
-    public function __construct(StatusRepository $statusRepository, EntityManagerInterface $em) {
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder,StatusRepository $statusRepository, EntityManagerInterface $em, HttpClientInterface $client) {
         $this->statusRepository = $statusRepository;
         $this->em = $em;
+        $this->passwordEncoder = $passwordEncoder;
+        $this->client = $client;
     }
 
     public function prePersist(LifecycleEventArgs $args) {
@@ -31,7 +40,6 @@ class CampaignStatusSetter
             $status = $this->statusRepository->findOneBy(['name' => 'soon']);
             $entity->addStatus($status);
             $entity->setNumberTester(0);
-
 
             $tmpfname = './uploads/'.$entity->getFile();
 
@@ -63,7 +71,15 @@ class CampaignStatusSetter
             }
         }
 
+        if($entity instanceof User) {
+            $password = $entity->getPassword();
+            $entity->setPassword($this->passwordEncoder->encodePassword($entity, $password));
+            $response = $this->client->request('GET', 'https://api-adresse.data.gouv.fr/search/?q=' . $entity->getPostalAddress());
+            $content = $response->ToArray();
 
+            $entity->setLongitude($content["features"][0]["geometry"]["coordinates"][0]);
+            $entity->setLatitude($content["features"][0]["geometry"]["coordinates"][1]);
+        }
 
 
 

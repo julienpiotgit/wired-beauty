@@ -23,8 +23,8 @@
                     <div class="card">
                         <p class="status {{ mycampaign.session.campaign.status.name}}">{{ mycampaign.session.campaign.status.name }}</p>
                         <h4><b>{{ mycampaign.session.campaign.name }}</b></h4>
-                        <p class="text-center text-uppercase font-weight-bold">{{ mycampaign.session.campaign.datestart |date("m/d/Y") }}
-                            - {{ mycampaign.session.campaign.dateend |date("m/d/Y") }}</p>
+                        <p class="text-center text-uppercase font-weight-bold">{{ mycampaign.session.campaign.datestart |date("d/m/Y") }}
+                            - {{ mycampaign.session.campaign.dateend |date("d/m/Y") }}</p>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#detailsListMyCampaign{{ mycampaign.session.campaign.id }}">Details
                             campaign
@@ -159,8 +159,8 @@
                     <div class="card">
                         <p class="status {{ mycampaignSoon.session.campaign.status.name}}">{{ mycampaignSoon.session.campaign.status.name }}</p>
                         <h4><b>{{ mycampaignSoon.session.campaign.name }}</b></h4>
-                        <p class="text-center text-uppercase font-weight-bold">{{ mycampaignSoon.session.campaign.datestart |date("m/d/Y") }}
-                            - {{ mycampaignSoon.session.campaign.dateend |date("m/d/Y") }}</p>
+                        <p class="text-center text-uppercase font-weight-bold">{{ mycampaignSoon.session.campaign.datestart |date("d/m/Y") }}
+                            - {{ mycampaignSoon.session.campaign.dateend |date("d/m/Y") }}</p>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#detailsListMyCampaignSoon{{ mycampaignSoon.session.campaign.id }}">
                             Details campaign
@@ -213,8 +213,8 @@
                 <div class="card">
                     <p class="status {{ mycampaignOngoing.session.campaign.status.name}}">{{ mycampaignOngoing.session.campaign.status.name }}</p>
                     <h4><b>{{ mycampaignOngoing.session.campaign.name }}</b></h4>
-                    <p class="text-center text-uppercase font-weight-bold">{{ mycampaignOngoing.session.campaign.datestart |date("m/d/Y") }}
-                        - {{ mycampaignOngoing.session.campaign.dateend |date("m/d/Y") }}</p>
+                    <p class="text-center text-uppercase font-weight-bold">{{ mycampaignOngoing.session.campaign.datestart |date("d/m/Y") }}
+                        - {{ mycampaignOngoing.session.campaign.dateend |date("d/m/Y") }}</p>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#detailsListMyCampaignOngoing{{ mycampaignOngoing.session.campaign.id }}">
                         Details campaign
@@ -230,8 +230,8 @@
                                 <h5 class="modal-title"
                                     id="exampleModalLabel">{{ mycampaignOngoing.session.campaign.name }}
                                 </h5>
-                                <p>{{ mycampaignOngoing.session.campaign.datestart |date("m/d/Y") }}
-                                    -{{ mycampaignOngoing.session.campaign.dateend |date("m/d/Y") }}</p>
+                                <p>{{ mycampaignOngoing.session.campaign.datestart |date("d/m/Y") }}
+                                    -{{ mycampaignOngoing.session.campaign.dateend |date("d/m/Y") }}</p>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
@@ -353,8 +353,8 @@
                 <div class="card">
                     <p class="status {{ mycampaignFinish.session.campaign.status.name}}">{{ mycampaignFinish.session.campaign.status.name }}</p>
                     <h4><b>{{ mycampaignFinish.session.campaign.name }}</b></h4>
-                    <p class="text-center text-uppercase font-weight-bold">{{ mycampaignFinish.session.campaign.datestart |date("m/d/Y") }}
-                        - {{ mycampaignFinish.session.campaign.dateend |date("m/d/Y") }}</p>
+                    <p class="text-center text-uppercase font-weight-bold">{{ mycampaignFinish.session.campaign.datestart |date("d/m/Y") }}
+                        - {{ mycampaignFinish.session.campaign.dateend |date("d/m/Y") }}</p>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#detailsListMyCampaignFinish{{ mycampaignFinish.session.campaign.id }}">
                         Details campaign

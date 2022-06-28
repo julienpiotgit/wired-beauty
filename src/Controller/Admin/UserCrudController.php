@@ -38,25 +38,29 @@ class UserCrudController extends AbstractCrudController
             $height = IntegerField::new('height');
             $weight = IntegerField::new('weight');
             $postal_code = IntegerField::new('postal_code');
+            $postal_adress = TextField::new('postal_address');
             $city = TextField::new('city');
-            $longitude = TextField::new('longitude');
-            $latitude = TextField::new('latitude');
+            $password = TextField::new('password');
+            $name_company = TextField::new('name_company');
+            $longitude = IntegerField::new('longitude');
+            $latitude = IntegerField::new('latitude');
+
         if (CRUD::PAGE_INDEX == $pageName) {
             return [$firstname, $name, $email, $roles, $age, $height, $weight, $postal_code, $city];
         }elseif (CRUD::PAGE_EDIT === $pageName){
-            return [$firstname,$name, $email, $age, $postal_code, $city];
+            return [$firstname,$name,$email, $roles, $name_company, $age, $postal_code, $city, $postal_adress];
         }elseif (CRUD::PAGE_NEW === $pageName){
-            return [$firstname,$name, $email, $roles, $age, $postal_code, $city];
+            return [$firstname,$name, $email, $password, $roles, $name_company, $age, $postal_code, $city, $postal_adress];
         }elseif (CRUD::PAGE_DETAIL === $pageName){
-            return [$firstname,$name,$email, $roles, $age, $postal_code, $city];
+            return [$firstname,$name,$email, $roles, $name_company, $age, $postal_code, $city, $postal_adress, $longitude, $latitude];
         }
         return [$firstname, $name, $email, $roles, $age, $postal_code, $city];
     }
 
     public function configureActions(Actions $actions): Actions
     {
-        return $actions->add(CRUD::PAGE_INDEX, ACTION::DETAIL)
-            ->remove(CRUD::PAGE_INDEX, ACTION::NEW);
+        return $actions->add(CRUD::PAGE_INDEX, ACTION::DETAIL);
+
     }
 
     public function configureFilters(Filters $filters): Filters
