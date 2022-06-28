@@ -73,14 +73,92 @@ class ApplicationRepository extends ServiceEntityRepository
         ;
     }
     */
+
     public function findCampaigns($user)
     {
         return $this->createQueryBuilder('a')
             ->addSelect('session')
             ->innerJoin('a.session', 'session')
+            ->innerJoin('session.campaign', 'c')
             ->andWhere('a.user = :user')
             ->setParameter('user', $user)
             ->getQuery()
             ->getResult();
     }
+
+    public function findCampaignsByAcceptedApplication($user)
+    {
+        return $this->createQueryBuilder('a')
+            ->addSelect('session')
+            ->innerJoin('a.session', 'session')
+            ->innerJoin('a.status', 'status')
+            ->innerJoin('session.campaign', 'c')
+            ->andWhere('a.user = :user')
+            ->setParameter('user', $user)
+            ->andWhere('status.name = :name')
+            ->setParameter('name', 'accepted')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findCampaignsByStatusAndAcceptedApplication($user, $status)
+    {
+        return $this->createQueryBuilder('a')
+            ->addSelect('session')
+            ->innerJoin('a.session', 'session')
+            ->innerJoin('a.status', 'status')
+            ->innerJoin('session.campaign', 'c')
+            ->andWhere('c.status = :cstatusname')
+            ->setParameter('cstatusname', $status)
+            ->andWhere('a.user = :user')
+            ->setParameter('user', $user)
+            ->andWhere('status.name = :astatusname')
+            ->setParameter('astatusname', 'accepted')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findApplicationByUserAndCampaignAndStatusAccepted($user, $campaign)
+    {
+        return $this->createQueryBuilder('a')
+            ->addSelect('session')
+            ->innerJoin('a.session', 'session')
+            ->innerJoin('a.status', 'status')
+            ->andWhere('session.campaign = :campaign')
+            ->setParameter('campaign', $campaign)
+            ->andWhere('a.user = :user')
+            ->setParameter('user', $user)
+            ->andWhere('status.name = :astatusname')
+            ->setParameter('astatusname', 'accepted')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findNumberByCampaign($campaignId)
+    {
+//        return $this->createQueryBuilder('a')
+//            ->addSelect('a')
+//            ->innerJoin('a.session', 's')
+//            ->innerJoin('s.campaign', 'c')
+//            ->innerJoin('a.status', 'st')
+////            ->andWhere('a.status_id = :status_id')
+////            ->setParameter('status_id', '11')
+//            ->andWhere('c.id = :id')
+//            ->setParameter('id', $campaignId)
+//            ->getQuery()
+//            ->getResult();
+    }
+
+    public function findNbPerson()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('session')
+            ->innerJoin('a.session', 'session')
+            ->innerJoin('session.campaign', 'campaign')
+//            ->andWhere('status.name = :status')
+//            ->setParameter('status', "soon")
+            ->getQuery()
+            ->getResult();
+    }
+
 }

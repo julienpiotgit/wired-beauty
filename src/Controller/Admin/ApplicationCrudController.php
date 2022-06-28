@@ -66,6 +66,7 @@ class ApplicationCrudController extends AbstractCrudController
 
         return $actions->remove(CRUD::PAGE_INDEX, ACTION::EDIT)
             ->remove(CRUD::PAGE_INDEX, ACTION::DELETE)
+            ->remove(CRUD::PAGE_INDEX, ACTION::NEW)
             ->add(CRUD::PAGE_INDEX, $buttonAccepted)
             ->add(CRUD::PAGE_INDEX, $buttonRefused);
     }

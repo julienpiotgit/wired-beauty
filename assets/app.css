@@ -13,6 +13,8 @@
 @import 'css/preloader.css';
 @import 'css/formulaire.css';
 @import 'css/admin.css';
+@import 'css/campaign.css';
+@import 'css/builder.css';
 
 @import url('https://cdn.jsdelivr.net/npm/@splidejs/splide@4.0.1/dist/css/splide.min.css');
 
@@ -376,6 +378,10 @@ label.required::after {
     .head-section {
         position: relative !important;
         text-align: center;
+    }
+
+    .head-section h2 {
+        font-size: 40px;
     }
 
     .head-section h2:after {

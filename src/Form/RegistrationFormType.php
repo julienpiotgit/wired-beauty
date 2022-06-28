@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -20,13 +21,30 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('firstname')
-            ->add('name')
-            ->add('age')
-            ->add('height')
-            ->add('weight')
-            ->add('postal_code')
-            ->add('city')
+            ->add('firstname', TextType::class, [
+                'label' => 'form:firstname'
+            ])
+            ->add('name', TextType::class, [
+                'label' => 'form:name'
+            ])
+            ->add('age', IntegerType::class, [
+                'label' => 'form:age'
+            ])
+            ->add('height', IntegerType::class, [
+                'label' => 'form:height'
+            ])
+            ->add('weight', IntegerType::class, [
+                'label' => 'form:weight'
+            ])
+            ->add('postal_code', TextType::class, [
+                'label' => 'form:cp'
+            ])
+            ->add('postal_address', TextType::class, [
+                'label' => 'form:ap'
+            ])
+            ->add('city', TextType::class, [
+                'label' => 'form:city'
+            ])
             ->add('longitude', HiddenType::class, [
                 'required' => false,
 
@@ -38,6 +56,7 @@ class RegistrationFormType extends AbstractType
             ->add('email')
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'label' => 'form:terms',
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
@@ -48,6 +67,7 @@ class RegistrationFormType extends AbstractType
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+                'label' => 'form.password',
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
@@ -62,6 +82,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('submit', SubmitType::class, [
+                'label' => 'button.registration',
                 'attr' => [
                     'class' => 'main-link green'
                 ]

@@ -1,0 +1,44 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+{% block main %}
+    <div class="bg-white p-5 contact-form">
+        <h1 style="text-align: center">Contact form for the creation of campaign</h1>
+        <div class="form-group">
+            {{ form_start(form_contact) }}
+            {{ form_row(form_contact.name_campaign, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form_contact.description_campaign, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form_contact.datestart, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form_contact.dateend, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group d-flex position-relative">
+           {{ form_row(form_contact.file, {'attr': {'class': 'form-control'}}) }}
+            <a style="position: absolute; left:40px" href="Dataa.xlsx" download>File to fill with questions and answers</a>
+        </div>
+        <div class="form-group">
+            {{ form_row(form_contact.sessions, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form_contact.name_product, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form_contact.type, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form_contact.gender, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form_contact.agerange, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form_contact.send, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        {{ form_end(form_contact) }}
+    </div>
+
+
+{% endblock %}

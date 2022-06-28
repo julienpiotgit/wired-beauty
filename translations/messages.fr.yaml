@@ -1,0 +1,39 @@
+nav.home: Accueil
+nav.what: Ce qu'on fait
+nav.about: Qui sommes-nous
+nav.validation: Validation Scientifique
+nav.device: Nos applications
+nav.authenticate: Vous êtes connecté en tant que
+
+header.title: Wired Beauty en Français
+header.button: Devenez un testeur
+
+button.readMore: En savoir plus
+button.login: Connexion
+button.registration: Inscription
+button.dashboardAccess: Mon espace testeur
+button.logout: Déconnexion
+
+titleSection.what: Ce qu'on fait
+titleSection.about: Qui sommes-nous
+titleSection.validation: Validation Scientifique
+titleSection.confidence: Marques de confiance
+titleSection.device: Nos applications
+titleSection.become: Devenez un testeur
+titleSection.connexion: Connectez-vous
+titleSection.register: Inscription
+
+form.password: Mot de passe
+form:firstname: Prénom
+form:name: Nom
+form:age: Âge
+form:height: Taille
+form:weight: Poid
+form:cp: Code postal
+form:ap: Adresse Postal
+form:city: Ville
+form:terms: Accepter les conditions
+form:password: Mot de passe
+
+footer.product: Nos produits
+footer.copyright: Tous droits réservés.

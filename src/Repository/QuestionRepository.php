@@ -73,4 +73,25 @@ class QuestionRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findCampaignQuestion()
+    {
+        return $this->createQueryBuilder('q')
+//            ->addSelect('*')
+            ->innerJoin('q.campaign', 'campaign')
+            ->andWhere('q.campaign = :campaign')
+            ->setParameter('campaign', "2")
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getQuestionsByCampaign(int $campaign_id)
+    {
+        return $this->createQueryBuilder('q')
+            ->select('q.name')
+            ->innerJoin('q.campaign', 'c')
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $campaign_id)
+            ->getQuery()
+            ->getResult();
+    }
 }

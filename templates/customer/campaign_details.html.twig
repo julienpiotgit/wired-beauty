@@ -1,0 +1,89 @@
+{#{% extends '@EasyAdmin/page/content.html.twig' %}#}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous">
+{% endblock %}
+
+{% block main %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>List campaign</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<body>
+
+    <div class="container">
+        <button class="btn btn-primary" style="margin-top: 2%" id="exportButton" type="button">Exporter en PDF</button>
+        <br/><br/>
+        <div id="chartsContainer">
+            <div id="questions" data-questions="{{ question }}">
+             {% for question in questionsArray %}
+                 <canvas id="labels{{ loop.index }}" width="400" height="100"></canvas>
+             {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</body>
+    {% block javascripts %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.min.js"></script>
+        <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+        <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        <script>
+            $("#exportButton").click(function(){
+                html2canvas(document.querySelector("#chartsContainer")).then(canvas => {
+                    var dataURL = canvas.toDataURL();
+                    var pdf = new jsPDF();
+                    pdf.addImage(dataURL, 'JPEG', 20, 20, 180, 280); //addImage(image, format, x-coordinate, y-coordinate, width, height)
+                    pdf.save("Export_stats_questions-reponses.pdf");
+                });
+            });
+
+            let questions = document.querySelector("#questions").dataset["questions"];
+            questions = JSON.parse(questions);
+
+            questions = Object.entries(questions).map(([key, value]) => ({key,value}));
+
+            questions.forEach(function (question, key) {
+                console.log(Object.values(question["value"]["occurence"]))
+                    let labels = document.querySelector("#labels"+(key+1))
+                    let labelsGraph = new Chart(labels, {
+                        type: "bar",
+                        data: {
+                             labels: question["value"]["liste_reponse"],
+                            datasets: [{
+                                label: question["key"],
+                                data: Object.values(question["value"]["occurence"]),
+                                backgroundColor: ["#6a5acd7a", "#f1cbc8", "#d2be6e","#FFA07A", "#70c770", "#FA7A7AFF"],
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true,
+                                        stepSize: 1
+                                    }
+                                }]
+                            }
+                        }
+                    })
+            })
+
+
+
+        </script>
+
+    {% endblock %}
+{% endblock %}
+
+
+
+

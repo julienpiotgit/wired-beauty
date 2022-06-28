@@ -73,14 +73,108 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
-
     public function findDetailsCampaign()
     {
         return $this->createQueryBuilder('p')
             ->addSelect('campaign')
             ->innerJoin('p.campaign', 'campaign')
-            ->setMaxResults(1)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
+    }
+
+    public function findCampaignOngoing($user)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('count(campaign)')
+            ->innerJoin('p.campaign', 'campaign')
+            ->innerJoin('campaign.status', 'status')
+            ->andWhere('status.name = :status')
+            ->setParameter('status', "ongoing")
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findCampaignFinish($user)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('count(campaign)')
+            ->innerJoin('p.campaign', 'campaign')
+            ->innerJoin('campaign.status', 'status')
+            ->andWhere('status.name = :status')
+            ->setParameter('status', "finish")
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findCampaignSoon($user)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('count(campaign)')
+            ->innerJoin('p.campaign', 'campaign')
+            ->innerJoin('campaign.status', 'status')
+            ->andWhere('status.name = :status')
+            ->setParameter('status', "soon")
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findCountCampaigns($user)
+    {
+        return $this->createQueryBuilder('a')
+//            ->addSelect('product')
+//            ->innerJoin('a.product', 'product')
+            ->andWhere('a.user = :user')
+            ->setParameter('user', $user)
+            ->select('count(a)')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findNumberTesterByCampaignFinish($user)
+    {
+        return $this->createQueryBuilder('p')
+            ->addSelect('c.id, c.name, count(c.number_tester)')
+            ->innerJoin('p.campaign', 'c')
+            ->innerJoin('c.status', 's')
+            ->andWhere('s.name = :name')
+            ->setParameter('name', 'finish')
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
+            ->andWhere('c.number_tester = :nb')
+            ->setParameter('nb', 1)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findNumberTesterByCampaignFinish2($user)
+    {
+        return $this->createQueryBuilder('p')
+            ->addSelect('c.id, c.name, count(c.number_tester)')
+            ->innerJoin('p.campaign', 'c')
+            ->innerJoin('c.status', 's')
+            ->andWhere('s.name = :name')
+            ->setParameter('name', 'finish')
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findCampaigns($user)
+    {
+        return $this->createQueryBuilder('p')
+//            ->addSelect('')
+            ->innerJoin('p.campaign', 'c')
+            ->innerJoin('c.status', 's')
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
     }
 }

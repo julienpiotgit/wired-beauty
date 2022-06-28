@@ -14,6 +14,7 @@ import AOS from 'aos/dist/aos';
 import $ from 'jquery';
 
 AOS.init();
+AOS.init({disable: 'mobile'});
 
 
 var confer_window = $(window);

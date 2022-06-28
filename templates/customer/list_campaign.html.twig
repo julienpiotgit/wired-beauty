@@ -1,0 +1,101 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block main %}
+
+    <section class="campaign">
+        <div class="container">
+            <div class="nav">
+                <button class="item selected" onclick="campaignSelect(this)" id="allCampaign">List all campaigns
+                </button>
+                <button class="item" onclick="campaignSelect(this)" id="soon">Campaign soon</button>
+                <button class="item" onclick="campaignSelect(this)" id="finish">Campaigns finish</button>
+            </div>
+            <div class="block" id="allCampaign">
+                {% for campaign in allCampaigns %}
+                    <div class="card">
+                        <div class="container">
+                            <h4><b>{{ campaign.name }}</b></h4>
+                            <p>{{ campaign.description }}</p>
+                            <p>{{ campaign.datestart |date("m/d/Y") }}</p>
+                            <p>{{ campaign.dateend |date("m/d/Y") }}</p>
+                            <p>status :{{ campaign.status.name }}</p>
+                            <button>Détails campaigns</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="block" id="soon">
+                {% for campaignSoon in allCampaignSoon %}
+                    <div class="card">
+                        <div class="container">
+                            <h4><b>{{ campaignSoon.name }}</b></h4>
+                            <p>{{ campaignSoon.description }}</p>
+                            <p>{{ campaignSoon.datestart |date("m/d/Y") }}</p>
+                            <p>{{ campaignSoon.dateend |date("m/d/Y") }}</p>
+                            <p>status :{{ campaignSoon.status.name }}</p>
+                            <button>Voir la liste des sessions</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div id="finish" class="block">
+                {% for campaignFinish in allCampaignFinish %}
+                    <div class="card">
+                        <div class="container">
+                            <h4><b>{{ campaignFinish.name }}</b></h4>
+                            <p>{{ campaignFinish.description }}</p>
+                            <p>{{ campaignFinish.datestart |date("m/d/Y") }}</p>
+                            <p>{{ campaignFinish.dateend |date("m/d/Y") }}</p>
+                            <p>status :{{ campaignFinish.status.name }}</p>
+                            <button>Voir la liste des sessions</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+        {% block javascripts %}
+            <script type="text/javascript">
+                //button
+                let show_allcampaign = document.getElementById("show_allcampaign");
+                let show_campaign_soon = document.getElementById("show_campaign_soon");
+                let show_campaign_finish = document.getElementById("show_campaign_finish");
+
+                //div
+                let allcampaign = document.getElementById("allcampaign");
+                let campaign_soon = document.getElementById("campaign_soon");
+                let campaign_finish = document.getElementById("campaign_finish");
+
+                allcampaign.style.visibility = "visible";
+                campaign_soon.style.visibility = "hidden";
+                campaign_finish.style.visibility = "hidden";
+
+                show_allcampaign.addEventListener("click", function () {
+                    allcampaign.style.visibility = "visible";
+                    campaign_soon.style.visibility = "hidden";
+                    campaign_finish.style.visibility = "hidden";
+                });
+
+                show_campaign_soon.addEventListener("click", function () {
+                    campaign_soon.style.visibility = "visible";
+                    allcampaign.style.visibility = "hidden";
+                    campaign_finish.style.visibility = "hidden";
+                });
+
+                show_campaign_finish.addEventListener("click", function () {
+                    campaign_finish.style.visibility = "visible";
+                    allcampaign.style.visibility = "hidden";
+                    campaign_soon.style.visibility = "hidden";
+                });
+
+            </script>
+
+        {% endblock %}
+
+
+
+

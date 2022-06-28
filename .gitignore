@@ -3,7 +3,6 @@ var
 
 .env
 .idea
-public
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/

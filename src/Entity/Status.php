@@ -8,6 +8,7 @@ use App\Repository\StatusRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
@@ -44,6 +45,12 @@ class Status
      * @Groups({"status_read", "status_details_read", "user_details_read", "campaign_read", "campaign_details_read"})
      */
     private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"status_read", "status_details_read", "user_details_read", "campaign_read", "campaign_details_read"})
+     */
+    private $type;
 
     /**
      * @ORM\OneToMany(targetEntity=Campaign::class, mappedBy="status")
@@ -85,12 +92,31 @@ class Status
         return $this;
     }
 
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function settype(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Campaign>
      */
     public function getCampaigns(): Collection
     {
         return $this->campaigns;
+    }
+
+    public function setCampaign(?Campaign $campaign): self
+    {
+        $this->campaign = $campaign;
+
+        return $this;
     }
 
     public function addCampaign(Campaign $campaign): self

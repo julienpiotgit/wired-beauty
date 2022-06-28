@@ -64,7 +64,7 @@ class Session
 
     public function __toString(): string
     {
-        return $this->getCampaign()->getName();
+        return $this->getName();
     }
 
     public function getId(): ?int

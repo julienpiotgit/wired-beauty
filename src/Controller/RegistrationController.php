@@ -35,12 +35,7 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+            $user->setPassword($form->get('plainPassword')->getData());
 
             $response = $this->client->request('GET', 'https://api-adresse.data.gouv.fr/search/?q=' . $form->get('postal_address')->getData());
             $content = $response->ToArray();

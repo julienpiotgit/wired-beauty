@@ -73,4 +73,17 @@ class CampaignRepository extends ServiceEntityRepository
         ;
     }
     */
+
+//    public function findNumberTesterByCampaignFinish()
+//    {
+//        return $this->createQueryBuilder('c')
+//            ->addSelect('c.id, c.name, c.number_tester')
+//            ->innerJoin('c.status', 's')
+//            ->andWhere('s.name = :name')
+//            ->setParameter('name', 'finish')
+//            ->andWhere('c.number_tester = :nb')
+//            ->setParameter('nb', 1)
+//            ->getQuery()
+//            ->getResult();
+//    }
 }
